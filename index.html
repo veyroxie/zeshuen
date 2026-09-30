@@ -97,10 +97,7 @@
         <span class="cassette__window"><span class="cassette__reel"></span><span class="cassette__reel"></span></span>
       </div>
       <h2 class="mixtape__title" id="MixtapeTitle">a mixtape for you</h2>
-      <ol class="tracklist" id="Tracklist"></ol>
-      <div class="player">
-        <iframe id="MixtapePlayer" title="Mixtape player" loading="lazy" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
-      </div>
+      <iframe class="player" id="MixtapePlayer" title="Mixtape playlist on Spotify" height="352" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
       <p class="mixtape__note" id="MixtapeNote"></p>
     </section>
 
@@ -128,6 +125,9 @@
       <button class="replay" id="Replay" type="button">shake the jars again ✿</button>
     </footer>
   </main>
+
+  <audio id="BackgroundSong" loop preload="auto"></audio>
+  <button class="song-toggle" id="SongToggle" type="button" aria-pressed="false" hidden>❚❚ pause song</button>
 
   <dialog class="jar-dialog" id="JarDialog" aria-labelledby="JarDialogTitle">
     <h3 class="jar-dialog__title" id="JarDialogTitle"></h3>

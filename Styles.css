@@ -265,7 +265,7 @@ main { padding: 0 var(--gutter) 64px; }
 .shelf__jar:hover .jar, .shelf__jar:focus-visible .jar { animation: wobble .6s ease-in-out; }
 
 .shelf__jar:focus-visible, .intro__jar:focus-visible, .envelope:focus-visible, .replay:focus-visible,
-.track:focus-visible, .fridge__photo:focus-visible {
+.fridge__photo:focus-visible {
   outline: 3px dashed var(--strawberry);
   outline-offset: 6px;
   border-radius: 12px;

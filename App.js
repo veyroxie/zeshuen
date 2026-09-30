@@ -1,3 +1,4 @@
+import { initBackgroundSong, startBackgroundSong } from "./BackgroundSong.js";
 import { Content } from "./Content.js";
 import { byId, createElement, isMotionReduced } from "./Dom.js";
 import { createPolaroid, renderFridge } from "./Fridge.js";
@@ -156,6 +157,7 @@ function initIntro() {
   jar.addEventListener("click", () => {
     jar.classList.add(ClassName.JarOpen);
     byId("Intro").classList.add(ClassName.Leaving);
+    startBackgroundSong();
     dropConfetti();
     window.setTimeout(revealMain, isMotionReduced() ? 0 : IntroFadeMs);
   }, { once: true });
@@ -187,6 +189,7 @@ function init() {
   renderVerses();
   renderWorshipPhoto();
   renderMixtape(Content.Mixtape);
+  initBackgroundSong(Content.BackgroundSong);
   renderLetter();
   initIntro();
   initEnvelope();

@@ -3,8 +3,7 @@
 
 /**
  * @typedef {{ Flavour: string, Label: string, Title: string, Lines: string[], HasGuardDog?: boolean }} JarContent
- * @typedef {{ Title: string, Artist: string, VideoId: string }} TrackContent
- * @typedef {{ Note: string, Tracks: TrackContent[] }} MixtapeContent
+ * @typedef {{ Note: string, SpotifyPlaylistId: string }} MixtapeContent
  * @typedef {{ Src: string, Alt: string, Caption: string }} PhotoContent
  * @typedef {{ Text: string, Reference: string }} VerseContent
  */
@@ -156,20 +155,16 @@ export const Content = Object.freeze({
     Caption: "your guard dog, reporting for duty",
   },
 
+  /** Loops from the moment she taps the gift jar. */
+  BackgroundSong: {
+    Src: "Assets/Audio/MiddleOfStartingOver.mp3",
+  },
+
   /** @type {MixtapeContent} */
   Mixtape: {
-    // The first track is always the one the player opens on; the whole list loops.
     Note: "Because it's okay to start over, as many times as you need.",
-    Tracks: [
-      { Title: "The Middle of Starting Over", Artist: "Sabrina Carpenter", VideoId: "4Dlkyl6SyQM" },
-      { Title: "We'll Be the Stars", Artist: "Sabrina Carpenter", VideoId: "W6hBNa6DE6g" },
-      { Title: "Wildest Dreams (Taylor's Version)", Artist: "Taylor Swift", VideoId: "CUr_UwUUXzU" },
-      { Title: "vampire", Artist: "Olivia Rodrigo", VideoId: "RXdABv5O4qc" },
-      { Title: "Lose You To Love Me", Artist: "Selena Gomez", VideoId: "xIj0md1floA" },
-      { Title: "Make Room", Artist: "Community Music ft. Jonathan McReynolds", VideoId: "wrQuKK6jz-4" },
-      { Title: "More Like Jesus", Artist: "Passion ft. Kristian Stanfill", VideoId: "OAwlcswW6sg" },
-      { Title: "What A God", Artist: "SEU Worship", VideoId: "ecFRKeYYSJk" },
-    ],
+    // From open.spotify.com/playlist/<id>. Track order is whatever the playlist has in Spotify.
+    SpotifyPlaylistId: "0KTNBATgUZaGXLRViEWw8H",
   },
 
   // Photos of the handwritten letter, in page order (e.g. "Assets/Letter/Page01.webp").

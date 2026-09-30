@@ -165,39 +165,27 @@
 
 .mixtape__title { margin: 0 0 14px; font: 400 clamp(1.9rem, 7vw, 2.4rem)/1.05 var(--font-head); }
 
-.tracklist { display: grid; gap: 8px; margin: 0 0 18px; padding: 0; list-style: none; counter-reset: track; }
+.player { display: block; width: 100%; height: 352px; border: 0; border-radius: 12px; box-shadow: var(--shadow); }
 
-.track {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  column-gap: 12px;
-  width: 100%;
-  padding: 10px 14px;
-  border: 1.5px dashed var(--ink-soft);
-  border-radius: 10px;
-  background: none;
-  color: inherit;
-  font: 400 1.1rem var(--font-hand);
-  text-align: left;
+.mixtape__note { margin: 14px 0 0; font: 400 1.1rem var(--font-hand); color: var(--ink-soft); }
+
+/* ---------- Background song toggle ---------- */
+.song-toggle {
+  position: fixed;
+  right: 14px;
+  bottom: calc(14px + env(safe-area-inset-bottom));
+  z-index: 60;
+  padding: 7px 14px;
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--ink);
+  font: 400 .95rem var(--font-hand);
+  box-shadow: var(--shadow);
   cursor: pointer;
 }
 
-.track::before {
-  content: counter(track, decimal-leading-zero);
-  counter-increment: track;
-  grid-row: span 2;
-  align-self: center;
-  font: 600 .8rem var(--font-body);
-  color: var(--strawberry);
-}
-
-.track__artist { font: 400 .85rem var(--font-body); color: var(--ink-soft); }
-.track.is-current { border-style: solid; border-color: var(--strawberry); background: color-mix(in srgb, var(--blush) 40%, transparent); }
-
-.player { aspect-ratio: 16 / 9; overflow: hidden; border-radius: 12px; background: #000; box-shadow: var(--shadow); }
-.player iframe { display: block; width: 100%; height: 100%; border: 0; }
-
-.mixtape__note { margin: 14px 0 0; font: 400 1.1rem var(--font-hand); color: var(--ink-soft); }
+.song-toggle:focus-visible { outline: 3px dashed var(--strawberry); outline-offset: 4px; }
 
 /* ---------- Letter ---------- */
 .scrawl { display: inline-block; margin: 0; font: 400 clamp(2.2rem, 9vw, 3rem)/1 var(--font-hand); color: var(--strawberry); transform: rotate(-3deg); }
@@ -217,5 +205,5 @@
 .confetti--round { width: 9px; height: 9px; border-radius: 50%; }
 
 @media print {
-  .player, .fridge__hint { display: none !important; }
+  .player, .fridge__hint, .song-toggle { display: none !important; }
 }
