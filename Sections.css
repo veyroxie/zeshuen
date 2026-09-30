@@ -76,17 +76,16 @@
 }
 
 .dog { width: 80px; overflow: visible; }
-.dog__fur { fill: #E8C49A; stroke: #3B2A2A; stroke-width: 2; stroke-linejoin: round; }
-.dog__ear { fill: #A8733F; stroke: #3B2A2A; stroke-width: 2; stroke-linejoin: round; }
-.dog__ink { fill: #3B2A2A; }
+.dog__fur { fill: #BDB8B0; stroke: #3B2A2A; stroke-width: 2; stroke-linejoin: round; }
+.dog__ear, .dog__patch { fill: #B8773E; stroke: #3B2A2A; stroke-width: 1.6; stroke-linejoin: round; }
+.dog__ink { fill: #1F1614; }
+.dog__nose { fill: #5A3A2C; stroke: #3B2A2A; stroke-width: 1.4; }
 .dog__line { fill: none; stroke: #3B2A2A; stroke-width: 2; stroke-linecap: round; }
-.dog__tongue { fill: #F08A9B; stroke: #3B2A2A; stroke-width: 1.2; }
-.dog__collar { fill: none; stroke: #D6455B; stroke-width: 4; stroke-linecap: round; }
-.dog__tag { fill: #E0A93B; stroke: #3B2A2A; stroke-width: 1.2; }
+.dog__collar { fill: none; stroke: #4A3328; stroke-width: 5; stroke-linecap: round; }
 
 .dog__tail {
   fill: none;
-  stroke: #A8733F;
+  stroke: #9E9A93;
   stroke-width: 6;
   stroke-linecap: round;
   transform-box: fill-box;
@@ -97,7 +96,9 @@
 .is-barking .dog { animation: wobble .35s ease-in-out 3; }
 .is-barking .dog__tail { animation-duration: .25s; }
 
-.jar-dialog__extra { display: flex; justify-content: center; }
+.jar-dialog__extra { display: flex; flex-wrap: wrap; align-items: end; justify-content: center; gap: 14px; }
+.jar-dialog__extra .polaroid { width: 150px; --tilt: -3deg; }
+.jar-dialog__extra .polaroid img { aspect-ratio: 1; }
 .jar-dialog__extra:not(:empty) { margin-top: 18px; }
 
 /* ---------- Fridge door (photos) ---------- */

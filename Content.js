@@ -113,7 +113,7 @@ export const Content = Object.freeze({
       HasGuardDog: true,
       Lines: [
         "\"Cast all your anxiety on Him because He cares for you.\" 1 Peter 5:7",
-        "I'm giving you a guard dog hehe 🐶 Don't worry, it'll scare the scaries away.",
+        "And you've got your guard dog now hehe 🐶 Don't worry, it'll scare the scaries away.",
         "Put on Jireh, lie down, breathe slow.",
         "Text me. I'm probably awake anyway.",
       ],
@@ -148,6 +148,13 @@ export const Content = Object.freeze({
     { Text: "His mercies never come to an end; they are new every morning.", Reference: "Lamentations 3:22–23" },
     { Text: "God is within her, she will not fall; God will help her at break of day.", Reference: "Psalm 46:5" },
   ],
+
+  /** Shown in the can't-sleep jar next to the drawn guard dog. @type {PhotoContent} */
+  GuardDogPhoto: {
+    Src: "Assets/Photos/GuardDog.webp",
+    Alt: "The guard dog, a grey and tan plush, sitting on a blanket",
+    Caption: "your guard dog, reporting for duty",
+  },
 
   /** @type {MixtapeContent} */
   Mixtape: {

@@ -64,7 +64,7 @@ function openJar(button, jar) {
   const extra = byId("JarDialogExtra");
   extra.replaceChildren();
   if (jar.HasGuardDog) {
-    extra.append(createGuardDog());
+    extra.append(createPolaroid(Content.GuardDogPhoto, "polaroid"));
   }
 
   const delay = isMotionReduced() ? 0 : LidOpenMs;

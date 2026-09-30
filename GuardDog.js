@@ -4,24 +4,25 @@ const BarkResetMs = 2600;
 const IsBarkingClass = "is-barking";
 
 const BubbleText = Object.freeze({
-  Idle: "on duty",
+  Idle: "guard dog: on duty",
   Barked: "woof! scaries: scared away ✓",
 });
 
-// Hand-drawn sitting pup; all shapes share one 100×100 box.
+// Hand-drawn guard dog after the real plush: grey herringbone, tan ears and cheeks, big brown nose.
+// All shapes share one 100×100 box.
 const DogMarkup = `
   <path d="M74 78 q16-2 14-20" class="dog__tail"/>
   <path d="M28 94 q-6-32 20-38 q26-2 28 24 q2 14-6 14z" class="dog__fur"/>
   <path d="M42 94 v-13 M58 94 v-13" class="dog__line"/>
-  <ellipse cx="48" cy="40" rx="22" ry="20" class="dog__fur"/>
-  <path d="M29 28 q-11 4-8 23 q8 2 12-10z M67 28 q11 4 8 23 q-8 2-12-10z" class="dog__ear"/>
-  <circle cx="41" cy="38" r="2.6" class="dog__ink"/>
-  <circle cx="55" cy="38" r="2.6" class="dog__ink"/>
-  <ellipse cx="48" cy="46" rx="4" ry="3" class="dog__ink"/>
-  <path d="M48 49 q-4 5-8 2 M48 49 q4 5 8 2" class="dog__line"/>
-  <path d="M46 53 q2 7 4 0z" class="dog__tongue"/>
-  <path d="M34 58 q14 7 28 0" class="dog__collar"/>
-  <circle cx="48" cy="63" r="3.5" class="dog__tag"/>
+  <path d="M34 60 q14 7 28 0" class="dog__collar"/>
+  <path d="M33 27 q-6-20-19-14 q-4 12 10 20z M63 27 q6-20 19-14 q4 12-10 20z" class="dog__ear"/>
+  <ellipse cx="48" cy="40" rx="20" ry="18" class="dog__fur"/>
+  <ellipse cx="40" cy="39" rx="5" ry="4.5" class="dog__patch"/>
+  <ellipse cx="56" cy="39" rx="5" ry="4.5" class="dog__patch"/>
+  <path d="M40 48 q8 10 16 0z" class="dog__patch"/>
+  <circle cx="40" cy="39" r="2.2" class="dog__ink"/>
+  <circle cx="56" cy="39" r="2.2" class="dog__ink"/>
+  <ellipse cx="48" cy="47" rx="5" ry="3.6" class="dog__nose"/>
 `;
 
 /** @returns {SVGSVGElement} */
