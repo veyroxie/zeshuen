@@ -149,7 +149,7 @@ export const Content = Object.freeze({
     { Text: "God is within her, she will not fall; God will help her at break of day.", Reference: "Psalm 46:5" },
   ],
 
-  /** Shown in the can't-sleep jar next to the drawn guard dog. @type {PhotoContent} */
+  /** Photo of the real plush, shown in the can't-sleep jar. @type {PhotoContent} */
   GuardDogPhoto: {
     Src: "Assets/Photos/GuardDog.webp",
     Alt: "The guard dog, a grey and tan plush, sitting on a blanket",

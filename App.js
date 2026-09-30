@@ -1,7 +1,6 @@
 import { Content } from "./Content.js";
 import { byId, createElement, isMotionReduced } from "./Dom.js";
 import { createPolaroid, renderFridge } from "./Fridge.js";
-import { createGuardDog } from "./GuardDog.js";
 import { createJarSvg } from "./JarSvg.js";
 import { renderMixtape } from "./Mixtape.js";
 
@@ -49,7 +48,6 @@ function renderShelf() {
     button.addEventListener("click", () => openJar(button, jar));
     shelf.append(button);
   });
-  byId("ShelfDog").append(createGuardDog());
 }
 
 /**

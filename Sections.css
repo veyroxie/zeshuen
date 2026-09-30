@@ -1,5 +1,5 @@
 /* Per-section headers and the scrapbook pieces: recipe card, shop sign,
-   fridge door, guard dog and mixtape. Each section gets its own look so the
+   fridge door and mixtape. Each section gets its own look so the
    page doesn't repeat one title-and-subtitle pattern all the way down. */
 
 .section--left { text-align: left; }
@@ -50,51 +50,6 @@
 
 .shop-sign::before { left: 20%; transform: rotate(14deg); }
 .shop-sign::after { right: 20%; transform: rotate(-14deg); }
-
-.shelf__dog { display: flex; justify-content: flex-end; margin-top: 18px; }
-
-/* ---------- Guard dog ---------- */
-.guard-dog {
-  display: grid;
-  justify-items: center;
-  gap: 4px;
-  width: 150px;
-  padding: 0;
-  border: 0;
-  background: none;
-  color: inherit;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.guard-dog__bubble {
-  padding: 3px 10px;
-  background: var(--card);
-  border: 1.5px solid var(--ink);
-  border-radius: 12px;
-  font: 400 .95rem/1.25 var(--font-hand);
-}
-
-.dog { width: 80px; overflow: visible; }
-.dog__fur { fill: #BDB8B0; stroke: #3B2A2A; stroke-width: 2; stroke-linejoin: round; }
-.dog__ear, .dog__patch { fill: #B8773E; stroke: #3B2A2A; stroke-width: 1.6; stroke-linejoin: round; }
-.dog__ink { fill: #1F1614; }
-.dog__nose { fill: #5A3A2C; stroke: #3B2A2A; stroke-width: 1.4; }
-.dog__line { fill: none; stroke: #3B2A2A; stroke-width: 2; stroke-linecap: round; }
-.dog__collar { fill: none; stroke: #4A3328; stroke-width: 5; stroke-linecap: round; }
-
-.dog__tail {
-  fill: none;
-  stroke: #9E9A93;
-  stroke-width: 6;
-  stroke-linecap: round;
-  transform-box: fill-box;
-  transform-origin: 0 100%;
-  animation: wag 1.2s ease-in-out infinite;
-}
-
-.is-barking .dog { animation: wobble .35s ease-in-out 3; }
-.is-barking .dog__tail { animation-duration: .25s; }
 
 .jar-dialog__extra { display: flex; flex-wrap: wrap; align-items: end; justify-content: center; gap: 14px; }
 .jar-dialog__extra .polaroid { width: 150px; --tilt: -3deg; }
@@ -261,8 +216,6 @@
 .confetti--strip { width: 5px; height: 16px; }
 .confetti--round { width: 9px; height: 9px; border-radius: 50%; }
 
-@keyframes wag { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(-18deg); } }
-
 @media print {
-  .player, .shelf__dog, .fridge__hint { display: none !important; }
+  .player, .fridge__hint { display: none !important; }
 }
