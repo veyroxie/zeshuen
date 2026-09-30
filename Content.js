@@ -141,14 +141,14 @@ export const Content = Object.freeze({
     { Text: "He will take great delight in you… He will rejoice over you with singing.", Reference: "Zephaniah 3:17" },
     { Text: "I have loved you with an everlasting love.", Reference: "Jeremiah 31:3" },
     { Text: "His mercies never come to an end; they are new every morning.", Reference: "Lamentations 3:22–23" },
-    { Text: "See, I am doing a new thing! Now it springs up; do you not perceive it?", Reference: "Isaiah 43:19" },
+    { Text: "God is within her, she will not fall; God will help her at break of day.", Reference: "Psalm 46:5" },
   ],
 
   Song: {
-    Title: "Jireh",
-    Artist: "Elevation Worship & Maverick City Music",
-    Note: "Because you're already loved, and you'll never be more loved than you are right now.",
-    Url: "https://www.youtube.com/results?search_query=Jireh+Elevation+Worship+Maverick+City",
+    Title: "The Middle of Starting Over",
+    Artist: "Sabrina Carpenter",
+    Note: "Because it's okay to start over, as many times as you need.",
+    Url: "https://www.youtube.com/watch?v=4Dlkyl6SyQM",
   },
 
   Letter: [
