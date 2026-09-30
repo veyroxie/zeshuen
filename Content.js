@@ -2,7 +2,9 @@
 // Anything marked TODO is a placeholder waiting on the real caption or letter.
 
 /**
- * @typedef {{ Flavour: string, Label: string, Title: string, Lines: string[] }} JarContent
+ * @typedef {{ Flavour: string, Label: string, Title: string, Lines: string[], HasGuardDog?: boolean }} JarContent
+ * @typedef {{ Title: string, Artist: string, VideoId: string }} TrackContent
+ * @typedef {{ Note: string, Tracks: TrackContent[] }} MixtapeContent
  * @typedef {{ Src: string, Alt: string, Caption: string }} PhotoContent
  * @typedef {{ Text: string, Reference: string }} VerseContent
  */
@@ -108,6 +110,7 @@ export const Content = Object.freeze({
       Flavour: FlavourType.Plum,
       Label: "Can't sleep",
       Title: "Open when you can't sleep",
+      HasGuardDog: true,
       Lines: [
         "\"Cast all your anxiety on Him because He cares for you.\" 1 Peter 5:7",
         "I'm giving you a guard dog hehe 🐶 Don't worry, it'll scare the scaries away.",
@@ -146,12 +149,26 @@ export const Content = Object.freeze({
     { Text: "God is within her, she will not fall; God will help her at break of day.", Reference: "Psalm 46:5" },
   ],
 
-  Song: {
-    Title: "The Middle of Starting Over",
-    Artist: "Sabrina Carpenter",
+  /** @type {MixtapeContent} */
+  Mixtape: {
+    // The first track is always the one the player opens on; the whole list loops.
     Note: "Because it's okay to start over, as many times as you need.",
-    Url: "https://www.youtube.com/watch?v=4Dlkyl6SyQM",
+    Tracks: [
+      { Title: "The Middle of Starting Over", Artist: "Sabrina Carpenter", VideoId: "4Dlkyl6SyQM" },
+      { Title: "We'll Be the Stars", Artist: "Sabrina Carpenter", VideoId: "W6hBNa6DE6g" },
+      { Title: "Wildest Dreams (Taylor's Version)", Artist: "Taylor Swift", VideoId: "CUr_UwUUXzU" },
+      { Title: "vampire", Artist: "Olivia Rodrigo", VideoId: "RXdABv5O4qc" },
+      { Title: "Lose You To Love Me", Artist: "Selena Gomez", VideoId: "xIj0md1floA" },
+      { Title: "Make Room", Artist: "Community Music ft. Jonathan McReynolds", VideoId: "wrQuKK6jz-4" },
+      { Title: "More Like Jesus", Artist: "Passion ft. Kristian Stanfill", VideoId: "OAwlcswW6sg" },
+      { Title: "What A God", Artist: "SEU Worship", VideoId: "ecFRKeYYSJk" },
+    ],
   },
+
+  // Photos of the handwritten letter, in page order (e.g. "Assets/Letter/Page01.webp").
+  // When this has pages, they're shown and the typed letter below becomes a "read typed version" fold.
+  /** @type {string[]} */
+  LetterPages: [],
 
   Letter: [
     "To my other half,",

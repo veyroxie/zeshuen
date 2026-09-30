@@ -264,7 +264,8 @@ main { padding: 0 var(--gutter) 64px; }
 
 .shelf__jar:hover .jar, .shelf__jar:focus-visible .jar { animation: wobble .6s ease-in-out; }
 
-.shelf__jar:focus-visible, .intro__jar:focus-visible, .envelope:focus-visible, .replay:focus-visible, .song:focus-visible {
+.shelf__jar:focus-visible, .intro__jar:focus-visible, .envelope:focus-visible, .replay:focus-visible,
+.track:focus-visible, .fridge__photo:focus-visible, .guard-dog:focus-visible {
   outline: 3px dashed var(--strawberry);
   outline-offset: 6px;
   border-radius: 12px;
@@ -306,15 +307,6 @@ main { padding: 0 var(--gutter) 64px; }
 }
 
 /* ---------- Polaroids ---------- */
-.polaroids {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 28px 16px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
 .polaroid {
   position: relative;
   margin: 0;
@@ -325,7 +317,6 @@ main { padding: 0 var(--gutter) 64px; }
   transition: transform .3s ease;
 }
 
-.polaroids__item:nth-child(even) .polaroid { --tilt: 2.4deg; }
 .polaroid:hover { transform: rotate(0) scale(1.03); }
 .polaroid img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; }
 .polaroid figcaption { padding: 8px 2px 12px; font: 400 1rem/1.25 var(--font-hand); color: #3B2A2A; }
@@ -356,39 +347,6 @@ main { padding: 0 var(--gutter) 64px; }
   border-radius: 50% 50% 14px 14px / 22px 22px 14px 14px;
   font: 400 1.05rem/1.5 var(--font-head);
 }
-
-.song {
-  display: flex;
-  gap: 16px;
-  align-items: center;
-  max-width: 420px;
-  margin: 40px auto 0;
-  padding: 16px 18px;
-  background: var(--card);
-  border-radius: 18px;
-  box-shadow: var(--shadow);
-  color: inherit;
-  text-align: left;
-  text-decoration: none;
-}
-
-.song__disc {
-  flex: none;
-  display: grid;
-  place-items: center;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: radial-gradient(circle, var(--honey) 0 18%, #3B2A2A 19% 100%);
-  color: transparent;
-  animation: spin 6s linear infinite;
-}
-
-.song__body { display: grid; }
-.song__kicker { font: 400 .95rem var(--font-hand); color: var(--ink-soft); }
-.song__title { font: 400 1.3rem var(--font-head); }
-.song__artist { font-size: .9rem; color: var(--ink-soft); }
-.song__note { margin-top: 6px; font-size: .95rem; }
 
 /* ---------- Letter ---------- */
 .envelope {
@@ -472,7 +430,8 @@ main { padding: 0 var(--gutter) 64px; }
   position: fixed;
   top: -40px;
   z-index: 100;
-  font-size: 1.4rem;
+  width: 9px;
+  height: 12px;
   pointer-events: none;
   animation: fall 2.6s cubic-bezier(.25, .6, .4, 1) forwards;
 }

@@ -1,0 +1,261 @@
+/* Per-section headers and the scrapbook pieces: recipe card, shop sign,
+   fridge door, guard dog and mixtape. Each section gets its own look so the
+   page doesn't repeat one title-and-subtitle pattern all the way down. */
+
+.section--left { text-align: left; }
+
+.scribble { margin: 4px 8px 22px; font: 400 1.05rem var(--font-hand); color: var(--ink-soft); transform: rotate(-2deg); }
+.scribble--right { text-align: right; }
+
+/* ---------- Recipe card (soul notes) ---------- */
+.recipe-card {
+  max-width: 360px;
+  margin: 0 0 40px;
+  padding: 16px 20px 12px;
+  background: repeating-linear-gradient(#FFFDF8 0 27px, #D5DCF0 27px 28px);
+  color: #3B2A2A;
+  border-radius: 4px;
+  box-shadow: var(--shadow);
+  transform: rotate(-1.5deg);
+}
+
+.recipe-card__kicker { margin: 0; font: 600 .75rem var(--font-body); letter-spacing: .16em; text-transform: uppercase; color: #D6455B; }
+.recipe-card__title { margin: 2px 0 10px; padding-bottom: 6px; border-bottom: 2px solid #D6455B; font: 400 clamp(1.9rem, 7vw, 2.4rem)/1.05 var(--font-head); }
+.recipe-card__meta { margin: 0; font: 400 1rem/28px var(--font-hand); }
+.recipe-card__meta span { color: #D6455B; }
+
+/* ---------- Shop sign (jam shelf) ---------- */
+.shop-sign {
+  position: relative;
+  display: inline-block;
+  margin: 44px 0 6px;
+  padding: 10px 26px 12px;
+  background: linear-gradient(var(--wood), var(--wood-dark));
+  color: #FBF6EC;
+  font: 400 clamp(1.8rem, 6.5vw, 2.4rem)/1 var(--font-head);
+  border-radius: 6px;
+  box-shadow: inset 0 0 0 3px rgba(0, 0, 0, .12), var(--shadow);
+  transform: rotate(-2deg);
+}
+
+/* the two twine strings it hangs from */
+.shop-sign::before, .shop-sign::after {
+  content: "";
+  position: absolute;
+  top: -42px;
+  width: 2px;
+  height: 44px;
+  background: #C9A36B;
+}
+
+.shop-sign::before { left: 20%; transform: rotate(14deg); }
+.shop-sign::after { right: 20%; transform: rotate(-14deg); }
+
+.shelf__dog { display: flex; justify-content: flex-end; margin-top: 18px; }
+
+/* ---------- Guard dog ---------- */
+.guard-dog {
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+  width: 150px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.guard-dog__bubble {
+  padding: 3px 10px;
+  background: var(--card);
+  border: 1.5px solid var(--ink);
+  border-radius: 12px;
+  font: 400 .95rem/1.25 var(--font-hand);
+}
+
+.dog { width: 80px; overflow: visible; }
+.dog__fur { fill: #E8C49A; stroke: #3B2A2A; stroke-width: 2; stroke-linejoin: round; }
+.dog__ear { fill: #A8733F; stroke: #3B2A2A; stroke-width: 2; stroke-linejoin: round; }
+.dog__ink { fill: #3B2A2A; }
+.dog__line { fill: none; stroke: #3B2A2A; stroke-width: 2; stroke-linecap: round; }
+.dog__tongue { fill: #F08A9B; stroke: #3B2A2A; stroke-width: 1.2; }
+.dog__collar { fill: none; stroke: #D6455B; stroke-width: 4; stroke-linecap: round; }
+.dog__tag { fill: #E0A93B; stroke: #3B2A2A; stroke-width: 1.2; }
+
+.dog__tail {
+  fill: none;
+  stroke: #A8733F;
+  stroke-width: 6;
+  stroke-linecap: round;
+  transform-box: fill-box;
+  transform-origin: 0 100%;
+  animation: wag 1.2s ease-in-out infinite;
+}
+
+.is-barking .dog { animation: wobble .35s ease-in-out 3; }
+.is-barking .dog__tail { animation-duration: .25s; }
+
+.jar-dialog__extra { display: flex; justify-content: center; }
+.jar-dialog__extra:not(:empty) { margin-top: 18px; }
+
+/* ---------- Fridge door (photos) ---------- */
+.magnets { display: flex; flex-wrap: wrap; justify-content: center; gap: 2px; margin: 0; font: 400 clamp(2.4rem, 10vw, 3.2rem)/1 var(--font-hand); }
+.magnets span { display: inline-block; text-shadow: 0 3px 0 rgba(0, 0, 0, .2); transform: rotate(var(--r, -4deg)); }
+.magnets span:nth-child(5n + 1) { color: #D6455B; }
+.magnets span:nth-child(5n + 2) { color: #F2A65A; --r: 5deg; }
+.magnets span:nth-child(5n + 3) { color: #5B6BB5; --r: -2deg; }
+.magnets span:nth-child(5n + 4) { color: #9DB38A; --r: 7deg; }
+.magnets span:nth-child(5n) { color: #E0A93B; --r: -6deg; }
+.magnets .magnets__gap { width: 16px; }
+
+.fridge {
+  position: relative;
+  margin: 20px -4px 0;
+  padding: 36px 12px 22px;
+  border: 2px solid #CBD9CF;
+  border-radius: 28px 28px 18px 18px;
+  background: linear-gradient(90deg, #E6EFE9, #F7FBF8 45%, #E1EBE4);
+  box-shadow: inset -10px 0 18px -12px rgba(0, 0, 0, .2), var(--shadow);
+}
+
+.fridge__handle {
+  position: absolute;
+  top: 44px;
+  right: -6px;
+  width: 8px;
+  height: 130px;
+  border-radius: 6px;
+  background: linear-gradient(90deg, #BCC8C2, #F4F8F6, #AEBBB4);
+}
+
+.fridge__photos {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 640px) { .fridge__photos { grid-template-columns: repeat(3, 1fr); } }
+
+/* hand-placed scatter, so it looks stuck on rather than laid out */
+.fridge__item:nth-child(6n + 1) { --tilt: -4deg; --nudge: 0; }
+.fridge__item:nth-child(6n + 2) { --tilt: 3deg; --nudge: 22px; }
+.fridge__item:nth-child(6n + 3) { --tilt: 2deg; --nudge: -4px; }
+.fridge__item:nth-child(6n + 4) { --tilt: -2.5deg; --nudge: 14px; }
+.fridge__item:nth-child(6n + 5) { --tilt: 4.5deg; --nudge: -8px; }
+.fridge__item:nth-child(6n) { --tilt: -3deg; --nudge: 10px; }
+
+.fridge__photo {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  transform: translateY(var(--nudge, 0)) rotate(var(--tilt, 0));
+  transition: transform .3s cubic-bezier(.3, 1.4, .6, 1);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.fridge__photo.is-lifted { z-index: 5; transform: translateY(var(--nudge, 0)) rotate(0) scale(1.14); }
+
+.polaroid--magnet, .polaroid--magnet:hover { transform: none; }
+.polaroid--magnet figcaption { min-height: 2.6em; text-align: center; }
+
+/* a round fridge magnet instead of washi tape */
+.polaroid--magnet::before {
+  top: -10px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, .75) 0 16%, transparent 18%), var(--magnet);
+  box-shadow: 0 3px 4px rgba(0, 0, 0, .3);
+  transform: translateX(-50%);
+  opacity: 1;
+}
+
+.fridge__hint { margin: 22px 0 0; text-align: center; color: #7A6660; transform: rotate(-1deg); }
+
+/* ---------- Mixtape ---------- */
+.cassette {
+  display: grid;
+  gap: 10px;
+  width: min(290px, 84vw);
+  margin: 0 0 22px;
+  padding: 14px 14px 16px;
+  border: 2px solid rgba(255, 255, 255, .08);
+  border-radius: 12px;
+  background: #3B2A2A;
+  box-shadow: var(--shadow);
+  transform: rotate(-2deg);
+}
+
+.cassette__label {
+  padding: 6px 10px 12px;
+  background: linear-gradient(#FFFDF6 0 70%, #F4C7CF 70%);
+  border-radius: 4px;
+  color: #3B2A2A;
+  font: 400 1.05rem var(--font-hand);
+}
+
+.cassette__window { display: flex; justify-content: space-around; margin: 0 16%; padding: 6px; border-radius: 999px; background: #1F1614; }
+.cassette__reel { width: 38px; aspect-ratio: 1; border: 3px dashed #FBF6EC; border-radius: 50%; animation: spin 5s linear infinite; }
+
+.mixtape__title { margin: 0 0 14px; font: 400 clamp(1.9rem, 7vw, 2.4rem)/1.05 var(--font-head); }
+
+.tracklist { display: grid; gap: 8px; margin: 0 0 18px; padding: 0; list-style: none; counter-reset: track; }
+
+.track {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 12px;
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px dashed var(--ink-soft);
+  border-radius: 10px;
+  background: none;
+  color: inherit;
+  font: 400 1.1rem var(--font-hand);
+  text-align: left;
+  cursor: pointer;
+}
+
+.track::before {
+  content: counter(track, decimal-leading-zero);
+  counter-increment: track;
+  grid-row: span 2;
+  align-self: center;
+  font: 600 .8rem var(--font-body);
+  color: var(--strawberry);
+}
+
+.track__artist { font: 400 .85rem var(--font-body); color: var(--ink-soft); }
+.track.is-current { border-style: solid; border-color: var(--strawberry); background: color-mix(in srgb, var(--blush) 40%, transparent); }
+
+.player { aspect-ratio: 16 / 9; overflow: hidden; border-radius: 12px; background: #000; box-shadow: var(--shadow); }
+.player iframe { display: block; width: 100%; height: 100%; border: 0; }
+
+.mixtape__note { margin: 14px 0 0; font: 400 1.1rem var(--font-hand); color: var(--ink-soft); }
+
+/* ---------- Letter ---------- */
+.scrawl { display: inline-block; margin: 0; font: 400 clamp(2.2rem, 9vw, 3rem)/1 var(--font-hand); color: var(--strawberry); transform: rotate(-3deg); }
+.letter__page { width: 100%; margin: 0 0 16px; border-radius: 4px; box-shadow: var(--shadow); }
+.letter__typed summary { cursor: pointer; color: var(--strawberry); }
+.letter__typed[open] summary { margin-bottom: 34px; }
+
+/* ---------- Paper confetti ---------- */
+.confetti--square { width: 10px; height: 10px; }
+.confetti--strip { width: 5px; height: 16px; }
+.confetti--round { width: 9px; height: 9px; border-radius: 50%; }
+
+@keyframes wag { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(-18deg); } }
+
+@media print {
+  .player, .shelf__dog, .fridge__hint { display: none !important; }
+}

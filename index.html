@@ -11,6 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Itim&family=DM+Serif+Display:ital@0;1&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="Styles.css">
+  <link rel="stylesheet" href="Sections.css">
   <script type="module" src="App.js"></script>
 </head>
 <body>
@@ -46,25 +47,36 @@
       <p class="stamp"><span data-bind="ShipName"></span><small>est. forever</small></p>
     </header>
 
-    <!-- 3. Her beautiful soul -->
-    <section class="section" aria-labelledby="SoulTitle">
-      <h2 class="section__title" id="SoulTitle">Your beautiful soul</h2>
-      <p class="section__lead">a few of the ingredients that make you, <em>you</em></p>
+    <!-- 3. Her beautiful soul: written up like a recipe card -->
+    <section class="section section--left" aria-labelledby="SoulTitle">
+      <div class="recipe-card">
+        <p class="recipe-card__kicker">Recipe for:</p>
+        <h2 class="recipe-card__title" id="SoulTitle">your beautiful soul</h2>
+        <p class="recipe-card__meta"><span>serves:</span> everyone lucky enough to know you</p>
+      </div>
       <ul class="notes" id="SoulNotes"></ul>
     </section>
 
-    <!-- 4. The jam shelf -->
+    <!-- 4. The jam shelf: hanging shop sign -->
     <section class="section" aria-labelledby="ShelfTitle">
-      <h2 class="section__title" id="ShelfTitle">The Jam Shelf</h2>
-      <p class="section__lead">tap a jar to twist it open</p>
+      <h2 class="shop-sign" id="ShelfTitle">The Jam Shelf</h2>
+      <p class="scribble scribble--right">tap a jar to twist it open ↓</p>
       <div class="shelf" id="Shelf"></div>
+      <div class="shelf__dog" id="ShelfDog"></div>
     </section>
 
-    <!-- 5. Preserved moments -->
-    <section class="section" aria-labelledby="PhotoTitle">
-      <h2 class="section__title" id="PhotoTitle">Preserved moments</h2>
-      <p class="section__lead">canned at peak sweetness</p>
-      <ul class="polaroids" id="Polaroids"></ul>
+    <!-- 5. Photos on the fridge door -->
+    <section class="section" aria-labelledby="FridgeTitle">
+      <h2 class="magnets" id="FridgeTitle" aria-label="Our fridge">
+        <span aria-hidden="true">o</span><span aria-hidden="true">u</span><span aria-hidden="true">r</span>
+        <span class="magnets__gap" aria-hidden="true"></span>
+        <span aria-hidden="true">f</span><span aria-hidden="true">r</span><span aria-hidden="true">i</span><span aria-hidden="true">d</span><span aria-hidden="true">g</span><span aria-hidden="true">e</span>
+      </h2>
+      <div class="fridge">
+        <span class="fridge__handle" aria-hidden="true"></span>
+        <ul class="fridge__photos" id="FridgePhotos"></ul>
+        <p class="scribble fridge__hint">tap one to take a closer look</p>
+      </div>
     </section>
 
     <!-- 6. Honey jar: faith -->
@@ -77,20 +89,25 @@
       </blockquote>
       <ul class="verses" id="Verses"></ul>
       <figure class="polaroid polaroid--wide" id="WorshipPhoto"></figure>
-      <a class="song" id="Song" target="_blank" rel="noopener">
-        <span class="song__disc" aria-hidden="true">♫</span>
-        <span class="song__body">
-          <span class="song__kicker">a song for you</span>
-          <strong class="song__title" data-bind-song="Title"></strong>
-          <span class="song__artist" data-bind-song="Artist"></span>
-          <span class="song__note" data-bind-song="Note"></span>
-        </span>
-      </a>
     </section>
 
-    <!-- 7. Letter -->
-    <section class="section" aria-labelledby="LetterTitle">
-      <h2 class="section__title" id="LetterTitle">One more thing…</h2>
+    <!-- 7. Mixtape -->
+    <section class="section section--left" aria-labelledby="MixtapeTitle">
+      <div class="cassette" aria-hidden="true">
+        <span class="cassette__label">for alyssa ♡ side A</span>
+        <span class="cassette__window"><span class="cassette__reel"></span><span class="cassette__reel"></span></span>
+      </div>
+      <h2 class="mixtape__title" id="MixtapeTitle">a mixtape for you</h2>
+      <ol class="tracklist" id="Tracklist"></ol>
+      <div class="player">
+        <iframe id="MixtapePlayer" title="Mixtape player" loading="lazy" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+      </div>
+      <p class="mixtape__note" id="MixtapeNote"></p>
+    </section>
+
+    <!-- 8. Letter -->
+    <section class="section section--left" aria-labelledby="LetterTitle">
+      <h2 class="scrawl" id="LetterTitle">one more thing…</h2>
       <button class="envelope" id="Envelope" type="button" aria-expanded="false" aria-controls="Letter">
         <span class="envelope__flap" aria-hidden="true"></span>
         <span class="envelope__seal" aria-hidden="true">♡</span>
@@ -102,7 +119,7 @@
       </article>
     </section>
 
-    <!-- 8. Ending -->
+    <!-- 9. Ending -->
     <footer class="ending">
       <div class="ending__label">
         <p class="ending__made">Made with love for</p>
@@ -116,6 +133,7 @@
   <dialog class="jar-dialog" id="JarDialog" aria-labelledby="JarDialogTitle">
     <h3 class="jar-dialog__title" id="JarDialogTitle"></h3>
     <ul class="jar-dialog__lines" id="JarDialogLines"></ul>
+    <div class="jar-dialog__extra" id="JarDialogExtra"></div>
     <form method="dialog"><button class="jar-dialog__close" type="submit">put the lid back on</button></form>
   </dialog>
 </body>

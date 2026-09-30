@@ -1,12 +1,20 @@
 import { Content } from "./Content.js";
+import { byId, createElement, isMotionReduced } from "./Dom.js";
+import { createPolaroid, renderFridge } from "./Fridge.js";
+import { createGuardDog } from "./GuardDog.js";
 import { createJarSvg } from "./JarSvg.js";
+import { renderMixtape } from "./Mixtape.js";
 
-const ConfettiPieces = Object.freeze(["🍓", "🫐", "🍋", "💗", "✿", "🍑"]);
-const ConfettiCount = 36;
+// Paper-cutout confetti in the jam palette, instead of emoji.
+const ConfettiColours = Object.freeze(["#D6455B", "#F4C7CF", "#F2A65A", "#F2C94C", "#5B6BB5", "#9DB38A"]);
+const ConfettiShapes = Object.freeze(["confetti--square", "confetti--strip", "confetti--round"]);
+const ConfettiCount = 44;
 const ConfettiMaxDelayMs = 900;
+const ConfettiDriftVw = 40;
 const LidOpenMs = 450;
 const IntroFadeMs = 700;
 const GiftLabel = "for you ♡";
+const TypedLetterSummary = "read the typed version";
 
 const ClassName = Object.freeze({
   JarOpen: "is-open",
@@ -14,33 +22,10 @@ const ClassName = Object.freeze({
   EnvelopeOpen: "is-open",
 });
 
-const isMotionReduced = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-const byId = (id) => document.getElementById(id);
-
-/**
- * Creates an element with optional class and text.
- * @param {string} tag
- * @param {string} className
- * @param {string} text
- * @returns {HTMLElement}
- */
-function createElement(tag, className, text = "") {
-  const element = document.createElement(tag);
-  element.className = className;
-  element.textContent = text;
-
-  return element;
-}
-
 function bindText() {
   document.querySelectorAll("[data-bind]").forEach((node) => {
     node.textContent = String(Content[node.dataset.bind] ?? "");
   });
-  document.querySelectorAll("[data-bind-song]").forEach((node) => {
-    node.textContent = Content.Song[node.dataset.bindSong] ?? "";
-  });
-  byId("Song").href = Content.Song.Url;
   byId("MainVerseText").textContent = `“${Content.MainVerse.Text}”`;
   byId("MainVerseRef").textContent = Content.MainVerse.Reference;
 }
@@ -63,6 +48,7 @@ function renderShelf() {
     button.addEventListener("click", () => openJar(button, jar));
     shelf.append(button);
   });
+  byId("ShelfDog").append(createGuardDog());
 }
 
 /**
@@ -73,8 +59,13 @@ function renderShelf() {
 function openJar(button, jar) {
   button.classList.add(ClassName.JarOpen);
   byId("JarDialogTitle").textContent = jar.Title;
-  const lines = byId("JarDialogLines");
-  lines.replaceChildren(...jar.Lines.map((line) => createElement("li", "", line)));
+  byId("JarDialogLines").replaceChildren(...jar.Lines.map((line) => createElement("li", "", line)));
+  const extra = byId("JarDialogExtra");
+  extra.replaceChildren();
+  if (jar.HasGuardDog) {
+    extra.append(createGuardDog());
+  }
+
   const delay = isMotionReduced() ? 0 : LidOpenMs;
   window.setTimeout(() => byId("JarDialog").showModal(), delay);
 }
@@ -83,30 +74,7 @@ function closeAllJars() {
   document.querySelectorAll(".shelf__jar").forEach((jar) => jar.classList.remove(ClassName.JarOpen));
 }
 
-/**
- * @param {import("./Content.js").PhotoContent} photo
- * @param {string} className
- * @returns {HTMLElement}
- */
-function createPolaroid(photo, className) {
-  const figure = createElement("figure", className);
-  const image = document.createElement("img");
-  image.src = photo.Src;
-  image.alt = photo.Alt;
-  image.loading = "lazy";
-  image.decoding = "async";
-  figure.append(image, createElement("figcaption", "", photo.Caption));
-
-  return figure;
-}
-
-function renderPhotos() {
-  const list = byId("Polaroids");
-  Content.Photos.forEach((photo) => {
-    const item = createElement("li", "polaroids__item");
-    item.append(createPolaroid(photo, "polaroid"));
-    list.append(item);
-  });
+function renderWorshipPhoto() {
   const worship = createPolaroid(Content.WorshipPhoto, "");
   byId("WorshipPhoto").replaceChildren(...worship.childNodes);
 }
@@ -120,9 +88,48 @@ function renderVerses() {
   });
 }
 
+/** Typed paragraphs, or photos of the handwritten pages with the typed text folded underneath. */
 function renderLetter() {
   const body = byId("LetterBody");
-  Content.Letter.forEach((paragraph) => body.append(createElement("p", "", paragraph)));
+  const paragraphs = Content.Letter.map((paragraph) => createElement("p", "", paragraph));
+  const isTypedOnly = Content.LetterPages.length === 0;
+  if (isTypedOnly) {
+    body.append(...paragraphs);
+
+    return;
+  }
+
+  Content.LetterPages.forEach((src, index) => body.append(createLetterPage(src, index)));
+  const typed = createElement("details", "letter__typed");
+  typed.append(createElement("summary", "", TypedLetterSummary), ...paragraphs);
+  body.append(typed);
+}
+
+/**
+ * @param {string} src
+ * @param {number} index
+ * @returns {HTMLImageElement}
+ */
+function createLetterPage(src, index) {
+  const image = /** @type {HTMLImageElement} */ (createElement("img", "letter__page"));
+  image.src = src;
+  image.alt = `Handwritten letter, page ${index + 1}`;
+  image.loading = "lazy";
+
+  return image;
+}
+
+/** @param {number} index */
+function createConfettiPiece(index) {
+  const shape = ConfettiShapes[index % ConfettiShapes.length];
+  const piece = createElement("span", `confetti ${shape}`);
+  piece.style.left = `${Math.random() * 100}vw`;
+  piece.style.background = ConfettiColours[index % ConfettiColours.length];
+  piece.style.animationDelay = `${Math.random() * ConfettiMaxDelayMs}ms`;
+  piece.style.setProperty("--drift", `${(Math.random() - 0.5) * ConfettiDriftVw}vw`);
+  piece.addEventListener("animationend", () => piece.remove());
+
+  return piece;
 }
 
 function dropConfetti() {
@@ -131,12 +138,7 @@ function dropConfetti() {
   }
 
   for (let index = 0; index < ConfettiCount; index += 1) {
-    const piece = createElement("span", "confetti", ConfettiPieces[index % ConfettiPieces.length]);
-    piece.style.left = `${Math.random() * 100}vw`;
-    piece.style.animationDelay = `${Math.random() * ConfettiMaxDelayMs}ms`;
-    piece.style.setProperty("--drift", `${(Math.random() - 0.5) * 40}vw`);
-    piece.addEventListener("animationend", () => piece.remove());
-    document.body.append(piece);
+    document.body.append(createConfettiPiece(index));
   }
 }
 
@@ -179,8 +181,10 @@ function init() {
   bindText();
   renderSoulNotes();
   renderShelf();
-  renderPhotos();
+  renderFridge(Content.Photos);
   renderVerses();
+  renderWorshipPhoto();
+  renderMixtape(Content.Mixtape);
   renderLetter();
   initIntro();
   initEnvelope();
