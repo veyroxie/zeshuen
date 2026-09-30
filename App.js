@@ -20,6 +20,7 @@ const ClassName = Object.freeze({
   JarOpen: "is-open",
   Leaving: "is-leaving",
   EnvelopeOpen: "is-open",
+  HandwrittenLetter: "letter--handwritten",
 });
 
 function bindText() {
@@ -99,9 +100,12 @@ function renderLetter() {
     return;
   }
 
+  byId("Letter").classList.add(ClassName.HandwrittenLetter);
   Content.LetterPages.forEach((src, index) => body.append(createLetterPage(src, index)));
   const typed = createElement("details", "letter__typed");
-  typed.append(createElement("summary", "", TypedLetterSummary), ...paragraphs);
+  // The handwritten pages already carry the signature, so the typed one moves into the fold.
+  const signOff = document.querySelector(".letter__sign");
+  typed.append(createElement("summary", "", TypedLetterSummary), ...paragraphs, signOff);
   body.append(typed);
 }
 

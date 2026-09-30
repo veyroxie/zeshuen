@@ -245,9 +245,15 @@
 
 /* ---------- Letter ---------- */
 .scrawl { display: inline-block; margin: 0; font: 400 clamp(2.2rem, 9vw, 3rem)/1 var(--font-hand); color: var(--strawberry); transform: rotate(-3deg); }
-.letter__page { width: 100%; margin: 0 0 16px; border-radius: 4px; box-shadow: var(--shadow); }
+/* Real pages replace the ruled paper; the typed transcript folds away underneath. */
+.letter.letter--handwritten { padding: 0; background: none; box-shadow: none; }
+.letter__page { width: 100%; margin: 0 0 22px; border-radius: 3px; box-shadow: var(--shadow); transform: rotate(-.8deg); }
+.letter__page:nth-of-type(even) { transform: rotate(.9deg); }
+
+.letter__typed { padding: 14px 20px; background: var(--card); border-radius: 10px; box-shadow: var(--shadow); font-size: 1.05rem; line-height: 1.6; }
 .letter__typed summary { cursor: pointer; color: var(--strawberry); }
-.letter__typed[open] summary { margin-bottom: 34px; }
+.letter__typed[open] summary { margin-bottom: 18px; }
+.letter__typed p { margin: 0 0 16px; }
 
 /* ---------- Paper confetti ---------- */
 .confetti--square { width: 10px; height: 10px; }

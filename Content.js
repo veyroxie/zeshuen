@@ -168,16 +168,18 @@ export const Content = Object.freeze({
   // Photos of the handwritten letter, in page order (e.g. "Assets/Letter/Page01.webp").
   // When this has pages, they're shown and the typed letter below becomes a "read typed version" fold.
   /** @type {string[]} */
-  LetterPages: [],
+  LetterPages: ["Assets/Letter/Page01.webp", "Assets/Letter/Page02.webp"],
 
+  // Typed transcript of the handwritten pages, shown under "read the typed version".
   Letter: [
     "To my other half,",
-    "Happiest 24th birthday!! I wanted to make you something you could come back to whenever you need a li'l pick-me-up from yours truly hehe, 'cause I kinda go MIA sometimes D: oopsie.",
-    "This year might not have been all that great. But I've watched you refuse to hold on to bitterness, keep pouring out the immense love and care you have for people, keep showing up for the ones you love, and still hold down a full-time job. It must have been so hard. I want you to know that the people around you do see you. They see the effort you make, and how intentional you are in everything you do. I'm so, so proud of you, more than words can say.",
-    "I'm sure God has been guiding you in ways none of us can see. If there's one thing I'm grateful for, it's that He's been leading you through life, even when the path felt a bit precarious. He has a reason for everything, just like there was a reason He led you into my life.",
-    "And here's the thing: you've got this, even when you don't think you do. Whether it's God's help or the sheer willpower and character you have, we all believe in you <3 I've watched you power through everything you've been handed, and honestly, sometimes when I'm down, I think of you and feel inspired.",
-    "But that doesn't mean you have to be at your best all the time. It's okay to not be okay. In fact, it's human. You don't have to prove anything to anyone. There will be off days. There will be days you say the wrong thing, and days when no one seems to get what you're trying to say. And it's still going to be okay. Have a good stress cry (you know I love my stress cries hehe) and let it all out. You can talk to me about it, or not, if you don't feel like it. That's okay too. I just never want you to feel like you have to carry that pressure. It's all part of your story, and it isn't finished yet. The best chapters of your life are still ahead, and I hope to be there for them.",
-    "In the meantime, while you're off on your superhero journey, I'll be right here. Always. I'm always down for more salmon runs, more sleepovers and more yap sessions. Always :>",
+    "Happiest 24th birthday!! I wanted to make you something you could come back to whenever you need a li'l pick-me-up from yours truly hehe, coz I know I kinda go MIA sometimes (oopsie ^^).",
+    "This year might not have been all that great. But I've watched you refuse to hold onto bitterness, keep pouring out the immense love & care you have for people, keep showing up for the ones you love, and STILL hold down a full-time job. It must've been so hard. I want you to know that I, and the people around you, do see you. We all see the effort you make, and how intentional you are in everything you put your mind to. I'm so, so proud of you, more than words can ever say.",
+    "I'm sure God has also been guiding you in ways none of us can see. If there's one thing I'm grateful for, it's that He's been leading you through life, even when the path felt a bit precarious. He has a reason for everything, even for leading you into my life. I'm so glad to have met you.",
+    "And just in case you don't know/think so, you've got this, even when you don't think you do. Whether it's God's help or the sheer willpower + character you have, we all believe in you ♡ I've watched you power through everything you've been handed, and honestly, sometimes when I'm down, I think of you and I feel a new strength.",
+    "On the other hand, that also doesn't mean you have to be at your best all the time. It's okay not to be okay, it's human even. You don't have to prove anything to anyone. There is bound to be off days, days when you accidentally say the wrong thing, and days when it feels like no one seems to get what you're trying to say for some reason, etc. And it's still gonna be okay. Have a good stress cry (IDK if you know this about me but I love my stress cries haha) and let it allll out. You can talk to me, or someone else, or even not anyone at all if you don't feel like it. That's perfectly fine too. I just never want you to feel like you have to carry that pressure to constantly be at 100. It's okay to be at a 10.",
+    "Everything is a part of your story, and it isn't finished yet. The best chapters of your life are still ahead, and I, for one, hope to be there for them.",
+    "In the meantime, I'm always down to go for more salmon runs, more sleepovers, more yap sessions, basically anything that gets me more Alyssa time. Maybe we need to pick a specific day at least once a month :)",
   ],
   LetterSignOff: "Love, Elyesa",
 });
