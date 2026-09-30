@@ -113,7 +113,7 @@ export const Content = Object.freeze({
       Lines: [
         "\"Cast all your anxiety on Him because He cares for you.\" 1 Peter 5:7",
         "And you've got your guard dog now hehe 🐶 Don't worry, it'll scare the scaries away.",
-        "Put on Jireh, lie down, breathe slow.",
+        "Put on some worship songs, lie down and breathe slow. He's got you, even at 3am.",
         "Text me. I'm probably awake anyway.",
       ],
     },
