@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#FBF6EC">
+  <title>Happy Birthday, Alyssa</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍓</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Itim&family=DM+Serif+Display:ital@0;1&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="Styles.css">
+  <script type="module" src="App.js"></script>
+</head>
+<body>
+  <!-- Shared SVG defs: gingham overlay for every jar lid cloth, and paper grain. -->
+  <svg class="defs" aria-hidden="true" focusable="false">
+    <defs>
+      <pattern id="Gingham" width="10" height="10" patternUnits="userSpaceOnUse">
+        <rect width="5" height="10" fill="#fff" opacity=".35"/>
+        <rect width="10" height="5" fill="#fff" opacity=".35"/>
+      </pattern>
+      <filter id="Grain">
+        <feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="3" stitchTiles="stitch"/>
+        <feColorMatrix values="0 0 0 0 .4  0 0 0 0 .3  0 0 0 0 .2  0 0 0 .5 0"/>
+      </filter>
+    </defs>
+  </svg>
+  <div class="grain" aria-hidden="true"><svg width="100%" height="100%"><rect width="100%" height="100%" filter="url(#Grain)"/></svg></div>
+
+  <!-- 1. Gift jar intro -->
+  <section class="intro" id="Intro">
+    <p class="intro__hint">a little something, made just for you</p>
+    <button class="intro__jar" id="IntroJar" type="button" aria-label="Untie the ribbon and open your gift"></button>
+    <p class="intro__tag">for <span data-bind="FullName"></span></p>
+    <p class="intro__tap">tap the jar ♡</p>
+  </section>
+
+  <main id="Main" hidden>
+    <!-- 2. Hero -->
+    <header class="hero">
+      <p class="hero__batch">Batch No. <span data-bind="Age"></span> · <span data-bind="BirthdayLabel"></span></p>
+      <h1 class="hero__title">Happy Birthday,<br><span class="hero__name" data-bind="Name"></span></h1>
+      <p class="hero__sub">from one Alyssa to another</p>
+      <p class="stamp"><span data-bind="ShipName"></span><small>est. forever</small></p>
+    </header>
+
+    <!-- 3. Her beautiful soul -->
+    <section class="section" aria-labelledby="SoulTitle">
+      <h2 class="section__title" id="SoulTitle">Your beautiful soul</h2>
+      <p class="section__lead">a few of the ingredients that make you, <em>you</em></p>
+      <ul class="notes" id="SoulNotes"></ul>
+    </section>
+
+    <!-- 4. The jam shelf -->
+    <section class="section" aria-labelledby="ShelfTitle">
+      <h2 class="section__title" id="ShelfTitle">The Jam Shelf</h2>
+      <p class="section__lead">tap a jar to twist it open</p>
+      <div class="shelf" id="Shelf"></div>
+    </section>
+
+    <!-- 5. Preserved moments -->
+    <section class="section" aria-labelledby="PhotoTitle">
+      <h2 class="section__title" id="PhotoTitle">Preserved moments</h2>
+      <p class="section__lead">canned at peak sweetness</p>
+      <ul class="polaroids" id="Polaroids"></ul>
+    </section>
+
+    <!-- 6. Honey jar: faith -->
+    <section class="section honey" aria-labelledby="HoneyTitle">
+      <h2 class="section__title" id="HoneyTitle">The honey jar</h2>
+      <p class="section__lead">the sweetest thing of all: you are so loved by God</p>
+      <blockquote class="main-verse">
+        <p id="MainVerseText"></p>
+        <cite id="MainVerseRef"></cite>
+      </blockquote>
+      <ul class="verses" id="Verses"></ul>
+      <figure class="polaroid polaroid--wide" id="WorshipPhoto"></figure>
+      <a class="song" id="Song" target="_blank" rel="noopener">
+        <span class="song__disc" aria-hidden="true">♫</span>
+        <span class="song__body">
+          <span class="song__kicker">a song for you</span>
+          <strong class="song__title" data-bind-song="Title"></strong>
+          <span class="song__artist" data-bind-song="Artist"></span>
+          <span class="song__note" data-bind-song="Note"></span>
+        </span>
+      </a>
+    </section>
+
+    <!-- 7. Letter -->
+    <section class="section" aria-labelledby="LetterTitle">
+      <h2 class="section__title" id="LetterTitle">One more thing…</h2>
+      <button class="envelope" id="Envelope" type="button" aria-expanded="false" aria-controls="Letter">
+        <span class="envelope__flap" aria-hidden="true"></span>
+        <span class="envelope__seal" aria-hidden="true">♡</span>
+        <span class="envelope__label">open me</span>
+      </button>
+      <article class="letter" id="Letter" hidden>
+        <div id="LetterBody"></div>
+        <p class="letter__sign" data-bind="LetterSignOff"></p>
+      </article>
+    </section>
+
+    <!-- 8. Ending -->
+    <footer class="ending">
+      <div class="ending__label">
+        <p class="ending__made">Made with love for</p>
+        <p class="ending__name" data-bind="Name"></p>
+        <p class="ending__best">Best before: <strong>never</strong></p>
+      </div>
+      <button class="replay" id="Replay" type="button">shake the jars again ✿</button>
+    </footer>
+  </main>
+
+  <dialog class="jar-dialog" id="JarDialog" aria-labelledby="JarDialogTitle">
+    <h3 class="jar-dialog__title" id="JarDialogTitle"></h3>
+    <ul class="jar-dialog__lines" id="JarDialogLines"></ul>
+    <form method="dialog"><button class="jar-dialog__close" type="submit">put the lid back on</button></form>
+  </dialog>
+</body>
+</html>
