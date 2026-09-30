@@ -53,7 +53,9 @@ export const Content = Object.freeze({
         "Your eyes.",
         "Your laugh.",
         "Your happiness, which is honestly contagious.",
-        "Your love for God.",
+        "How easily you connect with people.",
+        "How you always see the best in others.",
+        "Your singing voice.",
       ],
     },
     {
