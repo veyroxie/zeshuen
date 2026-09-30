@@ -4,136 +4,127 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex, nofollow">
-  <meta name="theme-color" content="#FBF6EC">
+  <meta name="theme-color" content="#E8E4DC">
   <title>Happy Birthday, Alyssa</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍓</text></svg>">
+  <link rel="preload" href="Assets/Fonts/ElyesaHand.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Itim&family=DM+Serif+Display:ital@0;1&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@500&family=DM+Serif+Display&family=Itim&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="Styles.css">
-  <link rel="stylesheet" href="Sections.css">
+  <link rel="stylesheet" href="Fridge.css">
   <script type="module" src="App.js"></script>
 </head>
 <body>
-  <!-- Shared SVG defs: gingham overlay for every jar lid cloth, and paper grain. -->
-  <svg class="defs" aria-hidden="true" focusable="false">
-    <defs>
-      <pattern id="Gingham" width="10" height="10" patternUnits="userSpaceOnUse">
-        <rect width="5" height="10" fill="#fff" opacity=".35"/>
-        <rect width="10" height="5" fill="#fff" opacity=".35"/>
-      </pattern>
-      <filter id="Grain">
-        <feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="3" stitchTiles="stitch"/>
-        <feColorMatrix values="0 0 0 0 .4  0 0 0 0 .3  0 0 0 0 .2  0 0 0 .5 0"/>
-      </filter>
-    </defs>
-  </svg>
-  <div class="grain" aria-hidden="true"><svg width="100%" height="100%"><rect width="100%" height="100%" filter="url(#Grain)"/></svg></div>
+  <!-- 1. Hero -->
+  <header class="hero">
+    <p class="label">batch no. <span data-bind="Age"></span> · <span data-bind="BirthdayLabel"></span></p>
+    <h1 class="hero__title">Happy Birthday, <span class="hero__name" data-bind="Name"></span></h1>
+    <p class="stamp"><span data-bind="ShipName"></span><small>est. forever</small></p>
+    <button class="pill" id="Enter" type="button" data-bind-ui="Enter"></button>
+  </header>
 
-  <!-- 1. Gift jar intro -->
-  <section class="intro" id="Intro">
-    <p class="intro__hint">a little something, made just for you</p>
-    <button class="intro__jar" id="IntroJar" type="button" aria-label="Untie the ribbon and open your gift"></button>
-    <p class="intro__tag">for <span data-bind="FullName"></span></p>
-    <p class="intro__tap">tap the jar ♡</p>
-  </section>
-
-  <main id="Main" hidden>
-    <!-- 2. Hero -->
-    <header class="hero">
-      <p class="hero__batch">Batch No. <span data-bind="Age"></span> · <span data-bind="BirthdayLabel"></span></p>
-      <h1 class="hero__title">Happy Birthday,<br><span class="hero__name" data-bind="Name"></span></h1>
-      <p class="hero__sub">from one Alyssa to another</p>
-      <p class="stamp"><span data-bind="ShipName"></span><small>est. forever</small></p>
-    </header>
-
-    <!-- 3. Her beautiful soul: written up like a recipe card -->
-    <section class="section section--left" aria-labelledby="SoulTitle">
-      <div class="recipe-card">
-        <p class="recipe-card__kicker">Recipe for:</p>
-        <h2 class="recipe-card__title" id="SoulTitle">your beautiful soul</h2>
-        <p class="recipe-card__meta"><span>serves:</span> everyone lucky enough to know you</p>
-      </div>
-      <ul class="notes" id="SoulNotes"></ul>
-    </section>
-
-    <!-- 4. The jam shelf: hanging shop sign -->
-    <section class="section" aria-labelledby="ShelfTitle">
-      <h2 class="shop-sign" id="ShelfTitle">The Jam Shelf</h2>
-      <p class="scribble scribble--right">tap a jar to twist it open ↓</p>
-      <div class="shelf" id="Shelf"></div>
-    </section>
-
-    <!-- 5. Photos on the fridge door -->
-    <section class="section" aria-labelledby="FridgeTitle">
-      <h2 class="magnets" id="FridgeTitle" aria-label="Our fridge">
-        <span aria-hidden="true">o</span><span aria-hidden="true">u</span><span aria-hidden="true">r</span>
-        <span class="magnets__gap" aria-hidden="true"></span>
-        <span aria-hidden="true">f</span><span aria-hidden="true">r</span><span aria-hidden="true">i</span><span aria-hidden="true">d</span><span aria-hidden="true">g</span><span aria-hidden="true">e</span>
-      </h2>
-      <div class="fridge">
-        <span class="fridge__handle" aria-hidden="true"></span>
-        <ul class="fridge__photos" id="FridgePhotos"></ul>
-        <p class="scribble fridge__hint">tap one to take a closer look</p>
-      </div>
-    </section>
-
-    <!-- 6. Honey jar: faith -->
-    <section class="section honey" aria-labelledby="HoneyTitle">
-      <h2 class="section__title" id="HoneyTitle">The honey jar</h2>
-      <p class="section__lead">the sweetest thing of all: you are so loved by God</p>
-      <blockquote class="main-verse">
-        <p id="MainVerseText"></p>
-        <cite id="MainVerseRef"></cite>
-      </blockquote>
-      <ul class="verses" id="Verses"></ul>
-      <figure class="polaroid polaroid--wide" id="WorshipPhoto"></figure>
-    </section>
-
-    <!-- 7. Mixtape -->
-    <section class="section section--left" aria-labelledby="MixtapeTitle">
-      <div class="cassette" aria-hidden="true">
-        <span class="cassette__label">for alyssa ♡ side A</span>
-        <span class="cassette__window"><span class="cassette__reel"></span><span class="cassette__reel"></span></span>
-      </div>
-      <h2 class="mixtape__title" id="MixtapeTitle">a mixtape for you</h2>
-      <iframe class="player" id="MixtapePlayer" title="Mixtape playlist on Spotify" height="352" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
-      <p class="mixtape__note" id="MixtapeNote"></p>
-    </section>
-
-    <!-- 8. Letter -->
-    <section class="section section--left" aria-labelledby="LetterTitle">
-      <h2 class="scrawl" id="LetterTitle">one more thing…</h2>
-      <button class="envelope" id="Envelope" type="button" aria-expanded="false" aria-controls="Letter">
-        <span class="envelope__flap" aria-hidden="true"></span>
-        <span class="envelope__seal" aria-hidden="true">♡</span>
-        <span class="envelope__label">open me</span>
+  <!-- 2. The fridge: photos + recipe outside, radio on top, jars and the letter inside -->
+  <main class="kitchen" id="Kitchen" aria-label="The fridge">
+    <div class="scene">
+      <button class="radio" id="Radio" type="button" aria-label="Open the radio">
+        <svg viewBox="0 0 220 160" aria-hidden="true">
+          <defs>
+            <pattern id="Tolex" width="4" height="4" patternUnits="userSpaceOnUse"><rect width="4" height="4" fill="#1C1B19"/><circle cx="1" cy="1" r=".7" fill="#2A2926"/><circle cx="3" cy="3" r=".6" fill="#252421"/></pattern>
+            <pattern id="Mesh" width="5" height="5" patternUnits="userSpaceOnUse"><rect width="5" height="5" fill="#232220"/><path d="M0 0 L5 5 M5 0 L0 5" stroke="#34322E" stroke-width=".8"/></pattern>
+            <linearGradient id="Brass" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#E9D29A"/><stop offset=".55" stop-color="#C9A45C"/><stop offset="1" stop-color="#A9853F"/></linearGradient>
+          </defs>
+          <!-- leather strap on brass rings -->
+          <path d="M38 26 q0 -24 72 -24 q72 0 72 24" fill="none" stroke="#1C1B19" stroke-width="7" stroke-linecap="round"/>
+          <circle cx="38" cy="27" r="5" fill="none" stroke="url(#Brass)" stroke-width="3"/>
+          <circle cx="182" cy="27" r="5" fill="none" stroke="url(#Brass)" stroke-width="3"/>
+          <!-- black tolex body with cream piping -->
+          <rect x="4" y="30" width="212" height="128" rx="12" fill="url(#Tolex)"/>
+          <rect x="10" y="36" width="200" height="116" rx="8" fill="none" stroke="#EDE6D6" stroke-width="1.4"/>
+          <!-- brass control panel -->
+          <rect x="18" y="42" width="184" height="24" rx="3" fill="url(#Brass)"/>
+          <circle cx="38" cy="54" r="7" fill="#1C1B19"/><path d="M38 54 v-5" stroke="#E9D29A" stroke-width="1.6"/>
+          <circle cx="64" cy="54" r="7" fill="#1C1B19"/><path d="M64 54 l4 -3" stroke="#E9D29A" stroke-width="1.6"/>
+          <circle cx="90" cy="54" r="7" fill="#1C1B19"/><path d="M90 54 l-4 -3" stroke="#E9D29A" stroke-width="1.6"/>
+          <circle cx="116" cy="54" r="7" fill="#1C1B19"/><path d="M116 54 v-5" stroke="#E9D29A" stroke-width="1.6"/>
+          <rect x="150" y="48" width="18" height="12" rx="2" fill="#1C1B19"/>
+          <circle class="radio__power" cx="186" cy="54" r="4"/>
+          <!-- mesh grille with her handwriting where the logo goes -->
+          <rect x="18" y="72" width="184" height="72" rx="4" fill="url(#Mesh)"/>
+          <text class="radio__logo" x="110" y="118" text-anchor="middle">Alyesa</text>
+        </svg>
       </button>
-      <article class="letter" id="Letter" hidden>
-        <div id="LetterBody"></div>
-        <p class="letter__sign" data-bind="LetterSignOff"></p>
-      </article>
-    </section>
 
-    <!-- 9. Ending -->
-    <footer class="ending">
-      <div class="ending__label">
-        <p class="ending__made">Made with love for</p>
-        <p class="ending__name" data-bind="Name"></p>
-        <p class="ending__best">Best before: <strong>never</strong></p>
+      <div class="fridge">
+        <div class="freezer">
+          <button class="recipe" id="Recipe" type="button">
+            <span class="recipe__kicker">recipe for:</span>
+            <span class="recipe__title">your beautiful soul</span>
+            <span class="recipe__meta">serves: everyone lucky enough to know you</span>
+          </button>
+          <span class="handle handle--freezer" aria-hidden="true"></span>
+        </div>
+
+        <div class="compartment">
+          <div class="interior" id="Interior" inert>
+            <div class="shelf" id="ShelfTop"></div>
+            <div class="shelf" id="ShelfMiddle"></div>
+            <div class="shelf" id="ShelfBottom"></div>
+            <button class="crisper" id="Crisper" type="button" aria-label="The crisper drawer"></button>
+          </div>
+
+          <div class="door">
+            <div class="door__face door__front" id="DoorFront">
+              <div class="door__snaps" id="Snaps"></div>
+              <button class="handle handle--door" id="Handle" type="button" aria-label="Open the fridge"></button>
+              <svg class="doodle" viewBox="0 0 90 80" aria-hidden="true">
+                <path pathLength="1" d="M34 52 q20 -10 28 -46 m0 0 l-9 8 m9 -8 l3 11"/>
+                <text x="0" y="74">open me</text>
+              </svg>
+            </div>
+            <div class="door__face door__back" id="DoorBack" inert>
+              <div class="bin">
+                <button class="envelope" id="Envelope" type="button" aria-label="Open the letter">
+                  <svg viewBox="0 0 120 80" aria-hidden="true">
+                    <rect x="2" y="2" width="116" height="76" rx="5" fill="#FFFDF8" stroke="#2B2A27" stroke-width="2"/>
+                    <path d="M2 5 l58 40 l58 -40" fill="none" stroke="#2B2A27" stroke-width="2"/>
+                    <circle cx="60" cy="44" r="11" fill="#C4704F"/>
+                    <text x="60" y="49" text-anchor="middle" font-size="13" fill="#fff">♡</text>
+                    <text class="envelope__to" x="60" y="72" text-anchor="middle">for you</text>
+                  </svg>
+                </button>
+              </div>
+              <div class="bin"></div>
+              <div class="bin"></div>
+            </div>
+          </div>
+        </div>
       </div>
-      <button class="replay" id="Replay" type="button">shake the jars again ✿</button>
-    </footer>
+    </div>
+
+    <p class="kitchen__hint" id="Hint" aria-live="polite"></p>
+    <button class="pill pill--soft" id="ToggleDoor" type="button" aria-expanded="false"></button>
   </main>
 
-  <audio id="BackgroundSong" loop preload="auto"></audio>
-  <button class="song-toggle" id="SongToggle" type="button" aria-pressed="false" hidden>❚❚ pause song</button>
+  <!-- 3. Ending -->
+  <footer class="ending">
+    <div class="ending__label">
+      <p class="ending__made">made with love for</p>
+      <p class="ending__name" data-bind="Name"></p>
+      <p class="ending__best">best before: <strong>never</strong></p>
+    </div>
+  </footer>
 
-  <dialog class="jar-dialog" id="JarDialog" aria-labelledby="JarDialogTitle">
-    <h3 class="jar-dialog__title" id="JarDialogTitle"></h3>
-    <ul class="jar-dialog__lines" id="JarDialogLines"></ul>
-    <div class="jar-dialog__extra" id="JarDialogExtra"></div>
-    <form method="dialog"><button class="jar-dialog__close" type="submit">put the lid back on</button></form>
+  <button class="song-toggle" id="SongToggle" type="button" aria-pressed="false" hidden></button>
+  <audio id="BackgroundSong" loop preload="none"></audio>
+
+  <dialog class="sheet" id="Sheet" aria-labelledby="SheetTitle">
+    <div class="sheet__inner">
+      <span class="label" id="SheetTag"></span>
+      <h2 class="sheet__title" id="SheetTitle"></h2>
+      <div class="sheet__body" id="SheetBody"></div>
+      <form class="sheet__close" method="dialog"><button class="pill" type="submit" data-bind-ui="SheetClose"></button></form>
+    </div>
   </dialog>
 </body>
 </html>

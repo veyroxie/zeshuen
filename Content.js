@@ -1,9 +1,8 @@
 // Every word on the site lives here, so edit this file for copy changes.
-// Anything marked TODO is a placeholder waiting on the real caption or letter.
 
 /**
  * @typedef {{ Flavour: string, Label: string, Title: string, Lines: string[], HasGuardDog?: boolean }} JarContent
- * @typedef {{ Note: string, SpotifyPlaylistId: string }} MixtapeContent
+ * @typedef {{ Note: string, Title: string, SpotifyPlaylistId: string }} MixtapeContent
  * @typedef {{ Src: string, Alt: string, Caption: string }} PhotoContent
  * @typedef {{ Text: string, Reference: string }} VerseContent
  */
@@ -25,7 +24,40 @@ export const Content = Object.freeze({
   BirthdayLabel: "01 · 10 · 2026",
   From: "Alyssa",
 
-  /** "Her beautiful soul" note cards. */
+  /** Short handwritten-font lines around the fridge. */
+  Ui: {
+    Enter: "go to the kitchen ↓",
+    HintClosed: "tap the handle to open the fridge, or tap the photos, the recipe or the radio",
+    HintOpen: "tap a jar to open it. the letter is in the door. tap the door to close it",
+    OpenDoor: "open the fridge",
+    CloseDoor: "close the fridge",
+    Crisper: "my section. don't steal my food (jk)",
+    SheetClose: "back to the fridge",
+    TypedLetter: "read the typed version",
+    PlaySong: "▶ play our song",
+    PauseSong: "❚❚ pause our song",
+    SpotifyLink: "the whole playlist on spotify ↗",
+  },
+
+  /** Pop-up titles for everything that isn't a jam jar. */
+  SheetTitle: {
+    Honey: "The honey jar: you are so loved by God",
+    Recipe: "Recipe for your beautiful soul",
+    Letter: "A letter, tucked in the door",
+    Photos: "Stuck on the fridge",
+  },
+
+  /** Which side each pop-up comes from, shown as its small label. */
+  Side: {
+    Yours: "about you",
+    Mine: "from me",
+    Ours: "us",
+  },
+
+  /** Recipe-card amounts, one per soul note, in order. */
+  Measures: ["a heaping cup", "a big spoonful", "a whole jar", "two cups", "a generous pinch", "to taste, forever"],
+
+  /** "Her beautiful soul" notes, shown as the recipe's ingredients. */
   SoulNotes: [
     "You love God even at your lowest. You trust Him to guide you through, especially on the hard days. Every day I see your faith, I believe a little more.",
     "You make everyone feel like there's someone there for them, me included, even when you've got a lot on your plate.",
@@ -35,7 +67,7 @@ export const Content = Object.freeze({
     "Thank you for being with me at my lowest. I hope I've been able to be there for yours too.",
   ],
 
-  /** The longer note that closes the soul section, shown full width. */
+  /** The longer note, shown as the recipe's method. */
   SoulClosing: [
     "I might be wrong, but it feels like you might be feeling alone right now. You don't really show it, or show that you're hurting even when you are. Maybe it's because you grew up so independent.",
     "But you never need to be ashamed of being hurt, or of feeling your feelings. I will never, ever judge you or shame you for it, and neither will any of your friends.",
@@ -155,20 +187,20 @@ export const Content = Object.freeze({
     Caption: "your guard dog, reporting for duty",
   },
 
-  /** Loops from the moment she taps the gift jar. */
+  /** Loops from the moment she opens the fridge. */
   BackgroundSong: {
     Src: "Assets/Audio/MiddleOfStartingOver.mp3",
   },
 
   /** @type {MixtapeContent} */
   Mixtape: {
+    Title: "Now playing: The Middle of Starting Over",
     Note: "Because it's okay to start over, as many times as you need.",
     // From open.spotify.com/playlist/<id>. Track order is whatever the playlist has in Spotify.
     SpotifyPlaylistId: "0KTNBATgUZaGXLRViEWw8H",
   },
 
-  // Photos of the handwritten letter, in page order (e.g. "Assets/Letter/Page01.webp").
-  // When this has pages, they're shown and the typed letter below becomes a "read typed version" fold.
+  // Photos of the handwritten letter, in page order. The typed transcript below folds away under them.
   /** @type {string[]} */
   LetterPages: ["Assets/Letter/Page01.webp", "Assets/Letter/Page02.webp"],
 

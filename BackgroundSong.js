@@ -1,48 +1,75 @@
+import { Content } from "./Content.js";
 import { byId } from "./Dom.js";
 
-const ToggleLabel = Object.freeze({
-  Pause: "❚❚ pause song",
-  Play: "♫ play song",
-});
+const AudioEvent = Object.freeze({ Play: "play", Pause: "pause" });
+
+/** @returns {HTMLAudioElement} */
+const getAudio = () => /** @type {HTMLAudioElement} */ (byId("BackgroundSong"));
 
 /**
- * Loads the looping background song. It starts on the gift-jar tap,
- * because phones only allow sound after the person taps something.
+ * Wires the looping song and the small floating pause/play button.
+ * Nothing plays until she opens the fridge: phones only allow sound after a tap.
  * @param {{ Src: string }} song
  */
 export function initBackgroundSong(song) {
-  const audio = /** @type {HTMLAudioElement} */ (byId("BackgroundSong"));
+  const audio = getAudio();
   audio.src = song.Src;
   const toggle = byId("SongToggle");
-  audio.addEventListener("play", () => showToggleState(toggle, ToggleLabel.Pause, true));
-  audio.addEventListener("pause", () => showToggleState(toggle, ToggleLabel.Play, false));
-  toggle.addEventListener("click", () => toggleSong(audio));
+  showToggleState(toggle, false);
+  onBackgroundSongChange((isPlaying) => showToggleState(toggle, isPlaying));
+  toggle.addEventListener("click", toggleBackgroundSong);
 }
 
-/** Called from the gift-jar tap. */
-export function startBackgroundSong() {
-  const audio = /** @type {HTMLAudioElement} */ (byId("BackgroundSong"));
-  byId("SongToggle").hidden = false;
-  audio.play().catch((error) => console.warn("Background song could not start:", error));
+/** Starts the song (from a tap). The floating toggle appears once it's actually playing. */
+export function playBackgroundSong() {
+  getAudio().play().catch((error) => console.warn("Background song could not start:", error));
 }
 
-/** @param {HTMLAudioElement} audio */
-function toggleSong(audio) {
-  if (audio.paused) {
-    audio.play().catch((error) => console.warn("Background song could not resume:", error));
+/** Pauses the song if it's playing, otherwise starts it. */
+export function toggleBackgroundSong() {
+  if (isBackgroundSongPaused()) {
+    playBackgroundSong();
 
     return;
   }
 
-  audio.pause();
+  getAudio().pause();
+}
+
+/** @returns {boolean} */
+export function isBackgroundSongPaused() {
+  return getAudio().paused;
 }
 
 /**
+ * Calls the listener with true when the song starts and false when it stops.
+ * @param {(isPlaying: boolean) => void} listener
+ * @returns {() => void} stops listening
+ */
+export function onBackgroundSongChange(listener) {
+  const audio = getAudio();
+  const onPlay = () => listener(true);
+  const onPause = () => listener(false);
+  audio.addEventListener(AudioEvent.Play, onPlay);
+  audio.addEventListener(AudioEvent.Pause, onPause);
+
+  return () => {
+    audio.removeEventListener(AudioEvent.Play, onPlay);
+    audio.removeEventListener(AudioEvent.Pause, onPause);
+  };
+}
+
+/**
+ * Keeps the toggle's label in sync. It stays hidden until the song first plays,
+ * then stays visible so she can always pause or resume.
  * @param {HTMLElement} toggle
- * @param {string} label
  * @param {boolean} isPlaying
  */
-function showToggleState(toggle, label, isPlaying) {
-  toggle.textContent = label;
+function showToggleState(toggle, isPlaying) {
+  if (isPlaying) {
+    toggle.hidden = false;
+  }
+
+  toggle.textContent = isPlaying ? Content.Ui.PauseSong : Content.Ui.PlaySong;
   toggle.setAttribute("aria-pressed", String(isPlaying));
 }
