@@ -21,7 +21,9 @@ const EmbedParam = Object.freeze({
 function buildEmbedUrl(videoIds, startIndex) {
   const ordered = [...videoIds.slice(startIndex), ...videoIds.slice(0, startIndex)];
   const url = new URL(`${EmbedBaseUrl}${ordered[0]}`);
-  url.searchParams.set(EmbedParam.Playlist, ordered.slice(1).join(","));
+  // With loop on, YouTube plays this list from its first entry and moves the path video
+  // to the end, so the list must hold every track, starting with the one in the path.
+  url.searchParams.set(EmbedParam.Playlist, ordered.join(","));
   url.searchParams.set(EmbedParam.InlineOnPhone, "1");
   url.searchParams.set(EmbedParam.RelatedFromSameChannel, "0");
   url.searchParams.set(EmbedParam.Loop, "1");
