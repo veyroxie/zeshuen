@@ -1,6 +1,6 @@
 import { byId } from "./Dom.js";
-import { setHint, walkTo, WalkType } from "./House.js";
-import { animate, Ease, wait } from "./Motion.js";
+import { registerPrepareHook, setHint, walkTo, WalkType } from "./House.js";
+import { animate, clearMotion, Ease, wait } from "./Motion.js";
 import { centerPan } from "./RoomView.js";
 import { RoomId } from "./Rooms.js";
 
@@ -24,6 +24,15 @@ export function initFrontDoor() {
   const center = () => centerPan(byId("DoorPan"), DoorFocusX);
   center();
   window.addEventListener("resize", center);
+  registerPrepareHook(RoomId.Door, closeFrontDoor);
+}
+
+/** Walking back out (with the phone's back button) finds the door shut again, ready to reopen. */
+function closeFrontDoor() {
+  clearMotion(byId("DoorLeaf"), byId("DoorGap"));
+  byId("DoorHandle").hidden = false;
+  isOpening = false;
+  centerPan(byId("DoorPan"), DoorFocusX);
 }
 
 async function openFrontDoor() {

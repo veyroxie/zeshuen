@@ -18,8 +18,6 @@ export const FlavourType = Object.freeze({
 
 export const Content = Object.freeze({
   Name: "Alyssa",
-  FullName: "Alyssa Teoh Ze Shuen",
-  ShipName: "Alyesa",
   Age: 24,
   BirthdayLabel: "01 · 10 · 2026",
   From: "Alyssa",
@@ -35,7 +33,8 @@ export const Content = Object.freeze({
       Entryway: { Name: "entryway", Hint: "tap the mirror. the door on the right goes to the living room" },
       LivingRoom: { Name: "living room", Hint: "tap the sofa or the radio, or head to another room. swipe for the window" },
       Kitchen: { Name: "kitchen", Hint: "tap the fridge" },
-      Bedroom: { Name: "your room", Hint: "there's a letter on your pillow. swipe to look around" },
+      Door: { Name: "front door", Hint: "tap the handle to come in" },
+      Bedroom: { Name: "your room", Hint: "there's a letter on your pillow. turn off the light when you're ready for bed" },
       MyRoom: { Name: "my room", Hint: "same as yours, but pink. across the hall if you need me" },
       Bathroom: { Name: "bathroom", Hint: "the toilet's behind the glass door" },
       Toilet: { Name: "toilet", Hint: "" },
@@ -56,7 +55,6 @@ export const Content = Object.freeze({
       Blanket: "my bed",
       ToMyRoom: "my room",
       Handle: "the handle",
-      Handles: "the handles",
       Crisper: "the crisper",
       ToLivingRoom: "living room",
       ToKitchen: "kitchen",
@@ -73,13 +71,19 @@ export const Content = Object.freeze({
       Blanket: "my bed. no stealing my blanket",
       Crisper: "my section. don't steal my food (jk)",
       Bathtub: "bubble bath sundays, obviously",
-      Knock: "knock first!! 🪥",
-      Hey: "hey!! 👋",
+      Hey: "hey alyssaa, brushing teeth soon? 🪥",
     },
     Stickers: {
       Property: "property of Alyesa",
       Roomie: "hi roomie :)",
       Freezer: "bingsu stash",
+    },
+    Install: {
+      Ios: "for the full experience: tap Share, then “Add to Home Screen”, and open it from there",
+      Android: "for the full experience: tap ⋮, then “Add to Home screen”, and open it from there",
+      Prompt: "for the full experience, add it to your home screen",
+      Button: "add to home screen",
+      Dismiss: "not now",
     },
     LightsOut: {
       Made: "made with love for",
@@ -120,7 +124,6 @@ export const Content = Object.freeze({
   Side: {
     Yours: "about you",
     Mine: "from me",
-    Ours: "us",
   },
 
   /** "Her beautiful soul" notes, on the entryway mirror. */

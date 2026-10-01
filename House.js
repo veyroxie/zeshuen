@@ -14,6 +14,9 @@ import { initToiletView, playToiletPeek, resetToiletPeek } from "./ToiletView.js
 /** Which way the camera moves: in through a doorway, or back out of a close-up. */
 export const WalkType = Object.freeze({ Forward: "Forward", Back: "Back" });
 
+/** Whether a walk adds a step to the browser history (so the phone's back button retraces it). */
+const HistoryMode = Object.freeze({ Push: "Push", Skip: "Skip" });
+
 const WalkMs = 850;
 const ArriveDelayMs = 160;
 const CenterOrigin = "50% 55%";
@@ -23,13 +26,13 @@ const FirstSpotSelector = ".spot:not([hidden])";
 const DoorSwingMs = 1100;
 const FreshHintClass = "is-fresh";
 const DoorPauseMs = 250;
+const LightsOnMs = 700;
 
 // Inner doors swing away from her into the next room, darkening as they turn from the light.
 const DoorSwing = Object.freeze({
   [HingeType.Left]: [{ transform: "rotateY(0deg)", filter: "brightness(1)" }, { transform: "rotateY(82deg)", filter: "brightness(.5)" }],
   [HingeType.Right]: [{ transform: "rotateY(0deg)", filter: "brightness(1)" }, { transform: "rotateY(-82deg)", filter: "brightness(.5)" }],
 });
-const LightsOnMs = 700;
 
 const WalkFrames = Object.freeze({
   [WalkType.Forward]: { Out: ["scale(1)", "scale(1.4)"], In: ["scale(1.12)", "scale(1)"] },
@@ -53,15 +56,53 @@ export function initHouse() {
   byId("Back").addEventListener("click", () => walkTo(RoomId.Kitchen, { origin: CenterOrigin, type: WalkType.Back }));
   byId("LightsOn").addEventListener("click", lightsOn);
   setHint(Content.House.Intro.Hint);
+  // The phone's back button walks back through the flat instead of leaving the site.
+  history.replaceState({ room: RoomId.Door }, "");
+  window.addEventListener("popstate", walkBackInHistory);
+  window.addEventListener("resize", recenterCurrentRoom);
+}
+
+/**
+ * Lets another module reset its view before she walks into it (e.g. the front door closing again).
+ * @param {string} roomId one of RoomId
+ * @param {() => void} prepare
+ */
+export function registerPrepareHook(roomId, prepare) {
+  PrepareHooks.set(roomId, prepare);
+}
+
+/** @param {PopStateEvent} event */
+function walkBackInHistory(event) {
+  const sheet = /** @type {HTMLDialogElement} */ (byId("Sheet"));
+  const isBusy = sheet.open || house.isWalking || house.isSwinging;
+  if (isBusy) {
+    // back closes a pop-up first, and never interrupts a walk
+    sheet.close();
+    history.pushState({ room: house.currentId }, "");
+
+    return;
+  }
+
+  const target = event.state?.room ?? RoomId.Door;
+  walkTo(target, { origin: CenterOrigin, type: WalkType.Back, history: HistoryMode.Skip });
+}
+
+/** Rotating the phone re-centres the room on its main spot. */
+function recenterCurrentRoom() {
+  const built = house.rooms[house.currentId];
+  if (built) {
+    centerRoom(built);
+  }
 }
 
 /**
  * Walks from the current view into another one, like moving through the flat.
  * @param {string} targetId one of RoomId
- * @param {{ origin: string, type: string }} options origin is a CSS transform-origin; type is one of WalkType
+ * @param {{ origin: string, type: string, history?: string }} options origin is a CSS transform-origin;
+ *   type is one of WalkType; history is one of HistoryMode (pushes a step by default)
  * @returns {Promise<void>}
  */
-export async function walkTo(targetId, { origin, type }) {
+export async function walkTo(targetId, { origin, type, history: historyMode = HistoryMode.Push }) {
   const isIgnored = house.isWalking || targetId === house.currentId;
   if (isIgnored) {
     return;
@@ -74,6 +115,10 @@ export async function walkTo(targetId, { origin, type }) {
   await crossWalk(outgoing, incoming, origin, WalkFrames[type]);
   house.currentId = targetId;
   house.isWalking = false;
+  if (historyMode === HistoryMode.Push) {
+    history.pushState({ room: targetId }, "");
+  }
+
   showChrome(targetId);
   ArrivedHooks[targetId]?.();
   // Keyboard users land on the first thing they can tap in the new room.
@@ -107,15 +152,15 @@ function prepareArrival(targetId, incoming) {
   // Lights out belongs to the bedroom; walking away turns them back on.
   clearMotion(byId("LightsOut"));
   byId("LightsOut").hidden = true;
-  const prepare = PrepareHooks[targetId] ?? (() => centerRoom(house.rooms[targetId]));
+  const prepare = PrepareHooks.get(targetId) ?? (() => centerRoom(house.rooms[targetId]));
   prepare();
 }
 
 // Views that aren't photo rooms set themselves up before she walks in, and some play once she's there.
-const PrepareHooks = Object.freeze({
-  [RoomId.Fridge]: showClosedFridge,
-  [RoomId.Toilet]: resetToiletPeek,
-});
+const PrepareHooks = new Map([
+  [RoomId.Fridge, showClosedFridge],
+  [RoomId.Toilet, resetToiletPeek],
+]);
 
 const ArrivedHooks = Object.freeze({
   [RoomId.Toilet]: playToiletPeek,
@@ -227,5 +272,8 @@ async function lightsOn() {
   await animate(overlay, [{ opacity: 1 }, { opacity: 0 }], { duration: LightsOnMs, easing: Ease.Settle });
   overlay.hidden = true;
   clearMotion(overlay);
-  setHint(Content.House.Rooms.Bedroom.Hint);
+  // she may have walked off while it faded
+  if (house.currentId === RoomId.Bedroom) {
+    setHint(Content.House.Rooms.Bedroom.Hint);
+  }
 }

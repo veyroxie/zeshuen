@@ -43,6 +43,12 @@
         <p class="label">batch no. <span data-bind="Age"></span> · <span data-bind="BirthdayLabel"></span></p>
         <p class="door-caption__line" data-bind-house="Line"></p>
       </div>
+      <!-- phones only: how to open it full screen from the home screen -->
+      <div class="install" id="Install" hidden>
+        <p class="install__text" id="InstallText"></p>
+        <button class="install__button" id="InstallButton" type="button" data-bind-install="Button" hidden></button>
+        <button class="install__dismiss" id="InstallDismiss" type="button" data-bind-install="Dismiss"></button>
+      </div>
     </section>
 
     <!-- Entryway, living room, kitchen and bedroom are built from Rooms.js. -->
@@ -94,7 +100,6 @@
       <div class="speech" id="ToiletHey" role="status" hidden>
         <span class="label speech__from" data-bind-side="Mine"></span>
         <p class="speech__text" data-bind-toast="Hey"></p>
-        <p class="speech__sub" data-bind-toast="Knock"></p>
       </div>
       <button class="spot spot--exit spot--behind" id="ToiletBack" type="button">
         <span class="spot__arrow">↓</span><span class="spot__label" id="ToiletBackLabel"></span>

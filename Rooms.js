@@ -113,7 +113,7 @@ export const Rooms = Object.freeze({
     Spots: [
       { Key: "Letter", X: 38, Y: 62, Action: ActionType.Letter },
       { Key: "GuardDog", X: 71, Y: 55, Action: ActionType.GuardDog },
-      { Key: "Light", X: 14, Y: 51, Action: ActionType.LightsOut },
+      { Key: "Light", X: 43, Y: 11, Action: ActionType.LightsOut },
       { Key: "ToLivingRoom", X: 50, Y: 90, Action: ActionType.WalkBack, To: RoomId.LivingRoom, Arrow: ArrowType.Behind },
     ],
   },
