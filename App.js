@@ -2,6 +2,7 @@ import { initBackgroundSong } from "./BackgroundSong.js";
 import { Content } from "./Content.js";
 import { initFrontDoor } from "./FrontDoor.js";
 import { initHouse } from "./House.js";
+import { initSheet } from "./Sheet.js";
 
 // [data-bind-*] attribute → where its words live in Content.
 const TextSources = Object.freeze({
@@ -11,6 +12,8 @@ const TextSources = Object.freeze({
   bindSpot: Content.House.Spots,
   bindSticker: Content.House.Stickers,
   bindLights: Content.House.LightsOut,
+  bindToast: Content.House.Toasts,
+  bindSide: Content.Side,
 });
 
 /** Fills every [data-bind-*] element from Content, so all the words stay in one file. */
@@ -25,6 +28,7 @@ function bindText() {
 
 function init() {
   bindText();
+  initSheet();
   initBackgroundSong(Content.BackgroundSong);
   initHouse();
   initFrontDoor();

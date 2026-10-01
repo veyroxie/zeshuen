@@ -1,15 +1,27 @@
+import { Content } from "./Content.js";
 import { byId, createElement } from "./Dom.js";
 
+/** How the pop-up is laid out: notes with a title, or a single photo on its own. */
+export const SheetVariant = Object.freeze({ Notes: "Notes", Photo: "Photo" });
+
+const PhotoClass = "sheet--photo";
+
 /**
- * @typedef {{ tag: string, title: string, children: Node[] }} SheetOptions
+ * @typedef {{ tag: string, title: string, children: Node[], variant?: string }} SheetOptions
  */
+
+/** Labels the X for screen readers. */
+export function initSheet() {
+  byId("SheetClose").setAttribute("aria-label", Content.Ui.SheetClose);
+}
 
 /**
  * Fills the one shared pop-up and opens it.
  * @param {SheetOptions} options
  */
-export function openSheet({ tag, title, children }) {
+export function openSheet({ tag, title, children, variant = SheetVariant.Notes }) {
   const sheet = /** @type {HTMLDialogElement} */ (byId("Sheet"));
+  sheet.classList.toggle(PhotoClass, variant === SheetVariant.Photo);
   byId("SheetTag").textContent = tag;
   byId("SheetTitle").textContent = title;
   byId("SheetBody").replaceChildren(...children);

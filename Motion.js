@@ -5,6 +5,7 @@ export const Ease = Object.freeze({
   Walk: "cubic-bezier(.45, 0, .2, 1)",
   Swing: "cubic-bezier(.55, .05, .25, 1)",
   Settle: "cubic-bezier(.2, .7, .2, 1)",
+  Pop: "cubic-bezier(.3, 1.5, .5, 1)",
 });
 
 /**

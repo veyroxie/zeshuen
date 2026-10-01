@@ -10,16 +10,11 @@ import { createParagraphs, createPhotoFigure, openSheet } from "./Sheet.js";
 const SpotifyPlaylistBaseUrl = "https://open.spotify.com/playlist/";
 
 /**
- * One jam jar's notes; the can't-sleep jar also shows the guard dog photo.
+ * One jam jar's notes. (The guard dog itself waits in the bedroom.)
  * @param {import("./Content.js").JarContent} jar
  */
 export function openJarSheet(jar) {
-  const children = createParagraphs(jar.Lines, "line");
-  if (jar.HasGuardDog) {
-    children.push(createPhotoFigure(Content.GuardDogPhoto));
-  }
-
-  openSheet({ tag: Content.Side.Yours, title: jar.Title, children });
+  openSheet({ tag: Content.Side.Yours, title: jar.Title, children: createParagraphs(jar.Lines, "line") });
 }
 
 /** Entryway shelf: the soul notes, kept like keepsakes. */

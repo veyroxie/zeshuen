@@ -84,8 +84,13 @@
     <section class="view" id="ToiletView" aria-label="The toilet" hidden>
       <div class="view__backdrop" style="background-image: url(Assets/Photos/Teeth01.webp)"></div>
       <div class="toilet" id="ToiletPhotos"></div>
+      <div class="speech" id="ToiletHey" role="status" hidden>
+        <span class="label speech__from" data-bind-side="Mine"></span>
+        <p class="speech__text" data-bind-toast="Hey"></p>
+        <p class="speech__sub" data-bind-toast="Knock"></p>
+      </div>
       <button class="spot spot--exit spot--behind" id="ToiletBack" type="button">
-        <span class="spot__arrow">↓</span><span class="spot__label" data-bind-spot="ToBathroom"></span>
+        <span class="spot__arrow">↓</span><span class="spot__label" id="ToiletBackLabel"></span>
       </button>
     </section>
 
@@ -112,11 +117,11 @@
   <audio id="BackgroundSong" loop preload="none"></audio>
 
   <dialog class="sheet" id="Sheet" aria-labelledby="SheetTitle">
+    <form class="sheet__x-form" method="dialog"><button class="sheet__x" id="SheetClose" type="submit">✕</button></form>
     <div class="sheet__inner">
       <span class="label" id="SheetTag"></span>
       <h2 class="sheet__title" id="SheetTitle"></h2>
       <div class="sheet__body" id="SheetBody"></div>
-      <form class="sheet__close" method="dialog"><button class="pill" type="submit" data-bind-ui="SheetClose"></button></form>
     </div>
   </dialog>
 </body>

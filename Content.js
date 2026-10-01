@@ -1,7 +1,7 @@
 // Every word on the site lives here, so edit this file for copy changes.
 
 /**
- * @typedef {{ Flavour: string, Label: string, Title: string, Lines: string[], HasGuardDog?: boolean }} JarContent
+ * @typedef {{ Flavour: string, Label: string, Title: string, Lines: string[] }} JarContent
  * @typedef {{ Note: string, Title: string, SpotifyPlaylistId: string }} MixtapeContent
  * @typedef {{ Src: string, Alt: string, Caption: string }} PhotoContent
  * @typedef {{ Text: string, Reference: string }} VerseContent
@@ -54,7 +54,7 @@ export const Content = Object.freeze({
       Letter: "a letter",
       GuardDog: "the nightstand",
       Light: "the light",
-      Blanket: "your bed",
+      Blanket: "my bed",
       Handle: "the handle",
       Handles: "the handles",
       Crisper: "the crisper",
@@ -73,11 +73,12 @@ export const Content = Object.freeze({
       Bench: "sit. take your shoes off. stay a while",
       Stove: "who's cooking tonight? (not me)",
       Sink: "you wash, i'll dry. deal",
-      Blanket: "your bed. no stealing my blanket",
+      Blanket: "my bed. no stealing my blanket",
       Crisper: "my section. don't steal my food (jk)",
       Bathtub: "bubble bath sundays, obviously",
       Sinks: "two sinks. no more fighting over the mirror",
       Knock: "knock first!! 🪥",
+      Hey: "hey!! 👋",
     },
     Stickers: {
       Property: "property of Alyesa",
@@ -89,12 +90,14 @@ export const Content = Object.freeze({
       Best: "best before: never",
       On: "turn the lights back on",
     },
+    // Ways back always say where they go, e.g. "back to the living room".
+    BackTo: "back to the",
     GuardDog: "Your guard dog is on night duty hehe 🐶 Don't worry, it'll scare the scaries away.",
   },
 
   /** Short handwritten-font lines for shared controls. */
   Ui: {
-    SheetClose: "close",
+    SheetClose: "Close",
     TypedLetter: "read the typed version",
     PlaySong: "▶ play our song",
     PauseSong: "❚❚ pause our song",
@@ -206,10 +209,9 @@ export const Content = Object.freeze({
       Flavour: FlavourType.Plum,
       Label: "Can't sleep",
       Title: "Open when you can't sleep",
-      HasGuardDog: true,
       Lines: [
         "\"Cast all your anxiety on Him because He cares for you.\" 1 Peter 5:7",
-        "And you've got your guard dog now hehe 🐶 Don't worry, it'll scare the scaries away.",
+        "And you've got a guard dog on night duty now hehe 🐶 Go check your room.",
         "Put on some worship songs, lie down and breathe slow. He's got you, even at 3am.",
         "Text me. I'm probably awake anyway.",
       ],

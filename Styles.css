@@ -163,7 +163,34 @@ img { display: block; max-width: 100%; }
 .sheet__inner { display: grid; gap: 14px; padding: 22px 20px 20px; }
 .sheet__title { margin: 0; font: 400 clamp(1.6rem, 6vw, 2.1rem)/1.1 var(--font-head); text-wrap: balance; }
 .sheet__body { display: grid; gap: 12px; min-width: 0; }
-.sheet__close { justify-self: center; margin: 0; }
+.sheet__title:empty, .label:empty { display: none; }
+.sheet__x-form { position: sticky; top: 0; z-index: 2; height: 0; margin: 0; }
+
+/* the X: always in the top-right corner, big enough to hit with a thumb */
+.sheet__x {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--paper);
+  font: 600 1.05rem/1 var(--font-note);
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, .3);
+}
+
+.sheet__inner { padding-top: 26px; }
+.sheet__title { padding-right: 44px; }
+
+/* a single photo: no title, just the polaroid */
+.sheet--photo { width: min(460px, calc(100vw - 2 * var(--gutter))); }
+.sheet--photo .sheet__inner { padding: 18px; }
 
 .line { margin: 0; padding: 12px 14px; background: var(--surface); border-radius: 10px; font-size: 1.15rem; line-height: 1.45; }
 .para { margin: 0; font-size: 1.15rem; line-height: 1.55; }
@@ -184,15 +211,7 @@ img { display: block; max-width: 100%; }
 .player { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
 .player__link { color: var(--clay); font: 400 1.25rem var(--font-hand); }
 
-/* one photo at a time */
-.viewer { display: grid; gap: 14px; touch-action: pan-y; }
-.viewer .photo { animation: slide .3s ease; }
-.viewer__nav { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
-.viewer__btn { width: 52px; height: 52px; padding: 0; font-size: 1.4rem; }
-.viewer__count { font: 500 .85rem var(--font-mono); letter-spacing: .08em; color: var(--muted); font-variant-numeric: tabular-nums; }
-
 @keyframes pop { from { opacity: 0; transform: translateY(18px) scale(.97); } to { opacity: 1; transform: none; } }
-@keyframes slide { from { opacity: 0; transform: translateX(var(--from, 0)); } to { opacity: 1; transform: none; } }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }

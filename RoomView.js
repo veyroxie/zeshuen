@@ -132,7 +132,8 @@ function createSpot(spot, onSpot) {
   const button = /** @type {HTMLButtonElement} */ (createElement("button", spotClass(spot)));
   button.type = "button";
   placeSpot(button, spot);
-  const label = Content.House.Spots[spot.Key];
+  const name = Content.House.Spots[spot.Key];
+  const label = isTurnBack(spot) ? `${Content.House.BackTo} ${name}` : name;
   const marker = spot.Arrow ? createElement("span", "spot__arrow", spot.Arrow) : createElement("span", "spot__dot");
   button.append(marker, createElement("span", "spot__label", label));
   button.addEventListener("click", (event) => onSpot(spot, event));

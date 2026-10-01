@@ -46,8 +46,9 @@ export function initHouse() {
   onBackgroundSongChange((isPlaying) => {
     document.querySelectorAll('[data-prop="Radio"]').forEach((radio) => radio.classList.toggle("is-playing", isPlaying));
   });
+  byId("ToiletBackLabel").textContent = `${Content.House.BackTo} ${Content.House.Rooms.Bathroom.Name}`;
   byId("ToiletBack").addEventListener("click", () => walkTo(RoomId.Bathroom, { origin: CenterOrigin, type: WalkType.Back }));
-  byId("BackLabel").textContent = Content.House.Rooms.Kitchen.Name;
+  byId("BackLabel").textContent = `${Content.House.BackTo} ${Content.House.Rooms.Kitchen.Name}`;
   byId("Back").addEventListener("click", () => walkTo(RoomId.Kitchen, { origin: CenterOrigin, type: WalkType.Back }));
   byId("LightsOn").addEventListener("click", lightsOn);
   setHint(Content.House.Intro.Hint);
