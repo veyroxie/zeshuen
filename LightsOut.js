@@ -2,6 +2,7 @@ import { Content } from "./Content.js";
 import { byId } from "./Dom.js";
 import { animate, clearMotion, Ease } from "./Motion.js";
 import { playClick } from "./Sound.js";
+import { playVoice } from "./Voice.js";
 
 // The bedroom light switch is the ending: the room goes dark, "best before: never".
 const LightsOffMs = 1200;
@@ -19,6 +20,7 @@ export function initLightsOut({ isInBedroom, onHint }) {
 
 export function lightsOut() {
   playClick();
+  playVoice("Goodnight");
   const overlay = byId("LightsOut");
   overlay.hidden = false;
   lights.onHint("");

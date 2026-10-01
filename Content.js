@@ -87,6 +87,7 @@ export const Content = Object.freeze({
       RanOff: "the rest ran off! 🏃 find them before they spoil",
       ChoreChart: "chore chart",
       Freezer: "bingsu stash",
+      Eggs: "we ran outta eggs!! 🥚",
     },
     /** Knock twice and the door opens. */
     Knock: { Hint: "knock twice", Second: "one more…" },
@@ -294,6 +295,15 @@ export const Content = Object.freeze({
     { Src: "Assets/Photos/Teeth01.webp", Alt: "Me at the bathroom sink, back to the door", Caption: "" },
     { Src: "Assets/Photos/Teeth02.webp", Alt: "Me turning round, mid-brush, toothbrush in mouth", Caption: "" },
   ],
+
+  /** Voice notes from me, by where they play. */
+  Voice: {
+    Welcome: "Assets/Voice/Recording11.m4a",
+    Toilet: "Assets/Voice/Recording12.m4a",
+    Radio: "Assets/Voice/Recording13.m4a",
+    Letter: "Assets/Voice/Recording14.m4a",
+    Goodnight: "Assets/Voice/Recording10.m4a",
+  },
 
   /** Views out of the living-room window (Unsplash, free licence: Igor Savelev, Hans Reniers,
    *  Jason Hudson, Andris Gangis, Caroline Ross, Mike Enerio, Chanuwat Srithong, Darya Jum). */

@@ -155,4 +155,5 @@
 
 .chore-card::before { content: ""; position: absolute; top: -6px; left: 50%; width: 40%; height: 14px; background: rgba(238, 207, 124, .8); translate: -50%; }
 
+.sticker--eggs { left: 32%; top: 86%; font-size: clamp(.7rem, 3.4vw, .95rem); --tilt: 3deg; background: #F7C9D0; }
 .sticker--drawer { left: 22%; top: 72%; font-size: clamp(.7rem, 3.6vw, 1rem); --tilt: -5deg; }

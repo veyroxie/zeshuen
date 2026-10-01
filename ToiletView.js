@@ -1,6 +1,7 @@
 import { Content } from "./Content.js";
 import { byId, createElement } from "./Dom.js";
 import { animate, clearMotion, Ease, wait } from "./Motion.js";
+import { playVoice } from "./Voice.js";
 
 // She walks in on me at the sink; a beat later I turn round mid-brush.
 const TurnRoundDelayMs = 1500;
@@ -56,6 +57,7 @@ export async function playToiletPeek() {
 function sayHey() {
   const hey = byId("ToiletHey");
   hey.hidden = false;
+  playVoice("Toilet");
   animate(hey, HeyFrames, { duration: TurnRoundMs, easing: Ease.Pop });
 }
 

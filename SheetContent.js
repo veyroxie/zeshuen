@@ -6,6 +6,7 @@ import {
 import { Content } from "./Content.js";
 import { byId, createElement } from "./Dom.js";
 import { fogOver } from "./MirrorFog.js";
+import { playVoice } from "./Voice.js";
 import { createViewSlideshow } from "./WindowViews.js";
 import { createParagraphs, createPhotoFigure, openSheet } from "./Sheet.js";
 
@@ -63,6 +64,7 @@ export function openLetterSheet() {
   const paragraphs = createParagraphs([...Content.Letter, Content.LetterSignOff], "para");
   typed.append(createElement("summary", "", Content.Ui.TypedLetter), ...paragraphs);
   openSheet({ tag: Content.Side.Mine, title: Content.SheetTitle.Letter, children: [...pages, typed] });
+  playVoice("Letter");
 }
 
 /** Bedroom nightstand: the real guard dog, on night duty. */
@@ -82,6 +84,7 @@ export function openRadioSheet() {
   row.append(toggle, createPlaylistLink());
   const note = createElement("p", "para", Content.Mixtape.Note);
   openSheet({ tag: Content.Side.Mine, title: Content.Mixtape.Title, children: [note, row] });
+  playVoice("Radio");
 }
 
 /** @returns {HTMLAnchorElement} */
