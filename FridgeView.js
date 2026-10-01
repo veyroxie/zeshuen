@@ -15,7 +15,7 @@ const RightSwing = Object.freeze([{ transform: "rotateY(0deg)" }, { transform: "
 const LightOn = Object.freeze([{ opacity: 0 }, { opacity: 1 }]);
 
 // What can be tapped from the outside (closed) and from the inside (open).
-const OutsideIds = Object.freeze(["DoorLeftFront", "DoorRightFront", "FridgeHandle", "ChoreChart"]);
+const OutsideIds = Object.freeze(["DoorLeftFront", "DoorRightFront", "FridgeHandle", "ChoreChart", "ReplySticky"]);
 const InsideIds = Object.freeze(["DoorLeftBack", "DoorRightBack", "FridgeInside"]);
 
 const FridgeState = Object.freeze({ Closed: "Closed", Opening: "Opening", Open: "Open", Closing: "Closing" });

@@ -120,6 +120,15 @@ export const Content = Object.freeze({
 
     JarCounter: "{found}/{total} jars",
 
+    Reply: {
+      Sticky: "leave me a note ✏️",
+      Title: "Leave a note on the fridge",
+      Placeholder: "write anything. i'll see it ♡",
+      Send: "stick it on the fridge",
+      Sent: "stuck on the fridge! i'll read it soon ♡",
+      Failed: "that didn't go through. check your internet and try again?",
+    },
+
     Install: {
       Ios: "for the full experience: tap Share, then “Add to Home Screen”, and open it from there",
       Android: "for the full experience: tap ⋮, then “Add to Home screen”, and open it from there",
@@ -296,13 +305,20 @@ export const Content = Object.freeze({
     { Src: "Assets/Photos/Teeth02.webp", Alt: "Me turning round, mid-brush, toothbrush in mouth", Caption: "" },
   ],
 
+  /** Where her fridge notes go: from the Google Form's pre-filled link,
+   *  docs.google.com/forms/d/e/<FormId>/viewform?usp=pp_url&entry.<EntryId>=... */
+  ReplyForm: {
+    FormId: "",
+    EntryId: "",
+  },
+
   /** Voice notes from me, by where they play. */
   Voice: {
-    Welcome: "Assets/Voice/Recording11.m4a",
-    Toilet: "Assets/Voice/Recording12.m4a",
-    Radio: "Assets/Voice/Recording13.m4a",
+    Welcome: "Assets/Voice/Recording10.m4a",
+    Toilet: "Assets/Voice/Recording11.m4a",
+    Radio: "Assets/Voice/Recording12.m4a",
+    Goodnight: "Assets/Voice/Recording13.m4a",
     Letter: "Assets/Voice/Recording14.m4a",
-    Goodnight: "Assets/Voice/Recording10.m4a",
   },
 
   /** Views out of the living-room window (Unsplash, free licence: Igor Savelev, Hans Reniers,

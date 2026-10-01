@@ -4,6 +4,7 @@ import { initFrontDoor } from "./FrontDoor.js";
 import { initFullscreen } from "./Fullscreen.js";
 import { initInstallHint } from "./InstallHint.js";
 import { initHouse } from "./House.js";
+import { initReplyNote } from "./ReplyNote.js";
 import { initSheet } from "./Sheet.js";
 import { initTimeOfDay } from "./TimeOfDay.js";
 
@@ -16,6 +17,7 @@ const TextSources = Object.freeze({
   bindSticker: Content.House.Stickers,
   bindLights: Content.House.LightsOut,
   bindInstall: Content.House.Install,
+  bindReply: Content.House.Reply,
   bindToast: Content.House.Toasts,
   bindSide: Content.Side,
 });
@@ -39,6 +41,7 @@ function init() {
   initFrontDoor();
   initFullscreen();
   initInstallHint();
+  initReplyNote();
 }
 
 init();

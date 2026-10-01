@@ -247,3 +247,8 @@ img { display: block; max-width: 100%; }
 /* the window pop-up: a big, slow slideshow of the view */
 .view-show { position: relative; margin: 0; aspect-ratio: 3 / 2; overflow: hidden; border-radius: 12px; background: #141311; }
 .view-show figcaption { position: absolute; left: 12px; bottom: 10px; z-index: 1; padding: .2rem .7rem; border-radius: 999px; background: rgba(20, 19, 17, .55); color: #F7F3EA; font: 400 1rem/1.2 var(--font-hand); }
+
+/* leave-me-a-note */
+.reply { display: grid; gap: 12px; justify-items: center; }
+.reply__text { width: 100%; padding: .8rem; border: 0; border-radius: 4px; background: repeating-linear-gradient(#FFF6B8 0 1.9rem, #EBDC94 1.9rem calc(1.9rem + 1px)); color: #2B2A27; font: 400 1.15rem/1.9rem var(--font-hand); resize: vertical; box-shadow: 0 6px 14px -8px rgba(0, 0, 0, .45); }
+.reply__status { margin: 0; min-height: 1.3em; color: var(--muted); font: 400 1.05rem var(--font-hand); text-align: center; }
