@@ -77,6 +77,26 @@
   backdrop-filter: blur(6px);
 }
 
+/* exits: a doorway tag with an arrow, so the way out is never a guess */
+.spot--exit {
+  gap: 6px;
+  padding: 7px 14px 7px 11px;
+  border-radius: 999px;
+  background: rgba(247, 243, 234, .95);
+  color: #2B2A27;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, .35), 0 0 0 4px rgba(255, 246, 220, .25);
+  transform: translate(-50%, -50%);
+  animation: exit-glow 2.6s ease-in-out infinite;
+}
+
+.spot--exit .spot__label { padding: 0; background: none; color: inherit; font-size: 1.15rem; -webkit-backdrop-filter: none; backdrop-filter: none; }
+/* turning back is always in the same corner, above the hint */
+.spot--behind { top: auto; left: 16px; bottom: calc(118px + env(safe-area-inset-bottom, 0px)); z-index: 6; transform: none; }
+
+.spot__arrow { font: 600 1.05rem/1 var(--font-note); color: #C4704F; }
+
+@keyframes exit-glow { 0%, 100% { box-shadow: 0 6px 18px rgba(0, 0, 0, .35), 0 0 0 4px rgba(255, 246, 220, .2); } 50% { box-shadow: 0 6px 18px rgba(0, 0, 0, .35), 0 0 0 8px rgba(255, 246, 220, .35); } }
+
 /* ---------- Front door ---------- */
 .door-gap, .door-leaf { position: absolute; left: 39.4%; top: 18.3%; width: 27.6%; height: 72.85%; }
 
@@ -136,98 +156,6 @@
 .door-caption .label { color: #E9E1D2; }
 .door-caption__line { margin: 0; color: #FFFBF3; font: 400 1.35rem/1.25 var(--font-hand); text-shadow: 0 2px 12px rgba(0, 0, 0, .7); }
 
-/* ---------- Fridge: closed, with photos on both doors ---------- */
-.fridge-shot { position: absolute; inset: 0; z-index: 1; }
-
-#ClosedShot {
-  display: flex;
-  justify-content: center;
-  padding: calc(64px + env(safe-area-inset-top, 0px)) 0 150px;
-  overflow-x: hidden;
-  overflow-y: auto;
-  scrollbar-width: none;
-}
-
-.fridge-frame { position: relative; flex: none; align-self: flex-start; width: min(84vw, 460px); aspect-ratio: 560 / 1500; perspective: 1800px; filter: drop-shadow(0 30px 40px rgba(0, 0, 0, .55)); }
-.fridge-frame__photo { width: 100%; }
-
-.fridge-door, .fridge-inside { position: absolute; left: .5%; top: 1.1%; width: 81.6%; height: 56.1%; }
-.fridge-door { z-index: 3; transform-origin: right center; transform-style: preserve-3d; }
-.fridge-door__face { position: absolute; inset: 0; background: url("Assets/Rooms/FridgeClosed.webp") 2.72% 2.5% / 122.55% 178.25%; backface-visibility: hidden; }
-.fridge-upper { position: absolute; inset: 0; backface-visibility: hidden; }
-
-/* the lit inside, seen past the swinging door */
-.fridge-inside {
-  z-index: 2;
-  opacity: 0;
-  background: linear-gradient(#FFFDF7, #E4EAEC);
-  box-shadow: inset 0 0 0 5px #C3C8CB, inset 0 40px 70px rgba(255, 236, 190, .9);
-}
-
-.fridge-lower { position: absolute; z-index: 1; left: .5%; top: 57.6%; width: 81.6%; height: 40.4%; }
-
-.snap {
-  position: absolute;
-  width: 42%;
-  padding: 5px 5px 18px;
-  border: 0;
-  background: #FFFDF8;
-  box-shadow: 0 8px 14px -8px rgba(0, 0, 0, .6);
-  cursor: pointer;
-  transform: rotate(var(--tilt, 0deg));
-  transition: transform .25s ease;
-}
-
-.snap:hover, .snap:focus-visible { z-index: 2; transform: rotate(0deg) scale(1.05); }
-.snap img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; }
-
-.magnet { position: absolute; top: -12px; left: 50%; width: 28px; height: 28px; translate: -50%; filter: drop-shadow(0 2px 2px rgba(40, 30, 20, .4)); }
-
-/* ---------- Fridge: open close-up of the lit shelves ---------- */
-#OpenShot { overflow: hidden; }
-.open-scene { position: absolute; container-type: inline-size; }
-.open-scene__photo { width: 100%; height: 100%; }
-
-.fridge-light {
-  position: absolute;
-  left: 9%;
-  top: 3%;
-  width: 44%;
-  height: 34%;
-  background: radial-gradient(ellipse at 50% 15%, rgba(255, 240, 200, .55), transparent 70%);
-  mix-blend-mode: screen;
-  pointer-events: none;
-  animation: fridge-light 1.1s ease-out both;
-}
-
-.shelf-jar { position: absolute; z-index: 3; width: 10%; padding: 0; border: 0; background: none; color: #2B2A27; cursor: pointer; }
-.shelf-jar:hover .jar__art, .shelf-jar:focus-visible .jar__art { animation: wobble .6s ease-in-out; }
-
-.jar__art { width: 100%; overflow: visible; filter: drop-shadow(0 .4cqw .4cqw rgba(60, 48, 30, .35)); }
-.jar__cloth { fill: var(--cloth); stroke: currentColor; stroke-width: 1.8; stroke-linejoin: round; }
-.jar__glass { fill: #FFFFFF; fill-opacity: .55; stroke: currentColor; stroke-width: 2; stroke-linejoin: round; }
-.jar__jam { fill: var(--jam); }
-.jar__shine { fill: none; stroke: #FFFFFF; stroke-width: 4; stroke-linecap: round; opacity: .6; }
-.jar__label { fill: #FFFDF8; stroke: currentColor; stroke-width: 1.4; }
-.jar__text { fill: #2B2A27; font: 400 11.5px var(--font-hand); text-anchor: middle; }
-
-.sticker {
-  position: absolute;
-  z-index: 2;
-  margin: 0;
-  padding: .3cqw .8cqw;
-  background: #FFF4A3;
-  color: #2B2A27;
-  font: 400 1.9cqw/1.15 var(--font-hand);
-  white-space: nowrap;
-  box-shadow: 0 .3cqw .6cqw rgba(0, 0, 0, .25);
-  transform: translate(-50%, -50%) rotate(var(--tilt, 0deg));
-  pointer-events: none;
-}
-
-/* the sliver of open door on the right: tap it to close the fridge */
-.open-door { position: absolute; z-index: 4; left: 54%; top: 2%; width: 34%; height: 56%; padding: 0; border: 0; background: none; cursor: pointer; }
-
 /* ---------- Bedroom lights out ---------- */
 .lights-out {
   position: absolute;
@@ -255,7 +183,6 @@
 
 @keyframes beacon { 0%, 100% { transform: scale(.9); opacity: .85; } 50% { transform: scale(1.12); opacity: 1; } }
 @keyframes wobble { 0%, 100% { transform: rotate(0); } 25% { transform: rotate(-5deg); } 75% { transform: rotate(5deg); } }
-@keyframes fridge-light { 0% { opacity: 0; } 30% { opacity: .9; } 40% { opacity: .5; } 100% { opacity: 1; } }
 
 /* ---------- Doors inside the flat ---------- */
 .room-gap, .room-leaf { position: absolute; }

@@ -1,9 +1,9 @@
 import { Content } from "./Content.js";
-import { byId, createElement } from "./Dom.js";
+import { byId } from "./Dom.js";
 import { initFridgeView, showClosedFridge } from "./FridgeView.js";
 import { animate, clearMotion, Ease, wait } from "./Motion.js";
 import { centerRoom, buildRooms } from "./RoomView.js";
-import { ActionType, HingeType, NavRooms, RoomId } from "./Rooms.js";
+import { ActionType, HingeType, RoomId } from "./Rooms.js";
 import {
   openGuardDogSheet, openLetterSheet, openMirrorSheet, openPianoSheet, openSofaSheet, openWindowSheet,
 } from "./SheetContent.js";
@@ -39,8 +39,7 @@ const house = { currentId: RoomId.Door, isWalking: false, isSwinging: false, roo
 export function initHouse() {
   house.rooms = buildRooms(handleSpot);
   initFridgeView({ onHint: setHint });
-  renderRoomNav();
-  byId("Back").textContent = `← ${Content.House.Rooms.Kitchen.Name}`;
+  byId("BackLabel").textContent = Content.House.Rooms.Kitchen.Name;
   byId("Back").addEventListener("click", () => walkTo(RoomId.Kitchen, { origin: CenterOrigin, type: WalkType.Back }));
   byId("LightsOn").addEventListener("click", lightsOn);
   setHint(Content.House.Intro.Hint);
@@ -115,30 +114,14 @@ function viewFor(id) {
 }
 
 /**
- * Shows the bar once she's inside, with the back chip only at the fridge.
+ * Shows the bar once she's inside, with the way back only at the fridge.
  * @param {string} id one of RoomId
  */
 function showChrome(id) {
   const isFridge = id === RoomId.Fridge;
   byId("Bar").hidden = id === RoomId.Door;
-  byId("Back").hidden = !isFridge;
-  byId("RoomNav").querySelectorAll("button").forEach((chip) => {
-    chip.setAttribute("aria-current", String(chip.dataset.room === id));
-  });
   const hint = isFridge ? Content.House.Rooms.Fridge.HintClosed : Content.House.Rooms[id]?.Hint;
   setHint(hint ?? "");
-}
-
-function renderRoomNav() {
-  const chips = NavRooms.map((id) => {
-    const chip = createElement("button", "chip", Content.House.Rooms[id].Name);
-    chip.type = "button";
-    chip.dataset.room = id;
-    chip.addEventListener("click", () => walkTo(id, { origin: CenterOrigin, type: WalkType.Forward }));
-
-    return chip;
-  });
-  byId("RoomNav").replaceChildren(...chips);
 }
 
 /** @param {string} text */

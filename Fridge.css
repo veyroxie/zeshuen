@@ -1,0 +1,138 @@
+/* The fridge close-up: French doors covered in photos that swing open on their real
+   hinges, and the lit inside with glass shelves, the jam jars and a crisper. */
+
+/* ---------- Fridge: French doors with photos; open, the lit shelves ---------- */
+.fridge-stage {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  padding: calc(60px + env(safe-area-inset-top, 0px)) 0 calc(110px + env(safe-area-inset-bottom, 0px));
+}
+
+/* sized to fit the screen's height, and as wide as the phone allows */
+.fridge-frame {
+  position: relative;
+  width: min(84vw, 440px, calc((100svh - 190px) * 900 / 1717));
+  aspect-ratio: 900 / 1717;
+  perspective: 1500px;
+  filter: drop-shadow(0 30px 40px rgba(0, 0, 0, .55));
+}
+
+.fridge-frame__photo { width: 100%; height: 100%; }
+
+/* the inside, behind both doors: cool white light, glass shelves, a crisper */
+.fridge-inside {
+  position: absolute;
+  left: .4%;
+  top: .1%;
+  width: 99.2%;
+  height: 62%;
+  overflow: hidden;
+  opacity: 0;
+  container-type: inline-size;
+  background: linear-gradient(#FBFCFC, #E7EDEF 70%, #DCE4E7);
+  box-shadow: inset 0 0 0 4px #D2D8DB, inset 0 0 26px rgba(120, 140, 150, .35);
+}
+
+.fridge-inside__light { position: absolute; inset: 0 10% auto; height: 55%; background: radial-gradient(ellipse at 50% 0%, rgba(255, 244, 214, .95), transparent 70%); pointer-events: none; }
+
+.glass-shelf {
+  position: absolute;
+  left: 3%;
+  right: 3%;
+  height: 2.2%;
+  border-radius: 2px;
+  background: linear-gradient(rgba(190, 214, 216, .75), rgba(190, 214, 216, .35));
+  box-shadow: 0 2px 0 rgba(120, 146, 150, .55), 0 6px 10px -4px rgba(80, 100, 104, .3);
+}
+
+.crisper {
+  position: absolute;
+  left: 4%;
+  right: 4%;
+  top: 80%;
+  bottom: 3%;
+  padding: 0;
+  border: 0;
+  border-radius: 6px 6px 10px 10px;
+  background: linear-gradient(rgba(190, 214, 216, .5), rgba(190, 214, 216, .25));
+  box-shadow: inset 0 0 0 1.5px rgba(110, 136, 140, .5);
+  cursor: pointer;
+}
+
+.crisper::after { content: ""; position: absolute; top: 18%; left: 50%; width: 22%; height: 9%; border-radius: 4px; background: rgba(110, 136, 140, .45); translate: -50%; }
+
+.fridge-jars { position: absolute; inset: 0; }
+.shelf-jar { position: absolute; z-index: 2; width: 25%; padding: 0; border: 0; background: none; color: #2B2A27; cursor: pointer; }
+.shelf-jar:hover .jar__art, .shelf-jar:focus-visible .jar__art { animation: wobble .6s ease-in-out; }
+
+/* the two French doors; their photo faces are cut from the fridge photo so they line up exactly */
+.fridge-door { position: absolute; z-index: 3; top: .1%; height: 62%; transform-style: preserve-3d; }
+.fridge-door--left { left: .4%; width: 49.3%; transform-origin: left center; }
+.fridge-door--right { left: 50%; width: 49.6%; transform-origin: right center; }
+
+.fridge-door__front, .fridge-door__back { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.fridge-door__front { background-image: url("Assets/Rooms/Fridge.webp"); background-size: 202.8% 161.3%; }
+.fridge-door--left .fridge-door__front { background-position: .79% .26%; }
+.fridge-door--right .fridge-door__front { background-position: 99.2% .26%; }
+
+/* the inside of each door, seen once it swings past halfway */
+.fridge-door__back {
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  gap: 6%;
+  padding: 14% 8% 10%;
+  background: linear-gradient(90deg, #EEF2F3, #E2E8EA);
+  box-shadow: inset 0 0 0 3px #D2D8DB;
+  cursor: pointer;
+  transform: rotateY(180deg);
+  container-type: inline-size;
+}
+
+.door-bin { position: relative; align-self: end; height: 26%; border-radius: 0 0 4px 4px; background: linear-gradient(rgba(200, 222, 224, .7), rgba(200, 222, 224, .35)); box-shadow: inset 0 -2px 0 rgba(110, 136, 140, .6); }
+.door-snaps { position: absolute; inset: 0; }
+
+.snap {
+  position: absolute;
+  width: 52%;
+  padding: 5px 5px 16px;
+  border: 0;
+  background: #FFFDF8;
+  box-shadow: 0 8px 14px -8px rgba(0, 0, 0, .6);
+  cursor: pointer;
+  transform: rotate(var(--tilt, 0deg));
+  transition: transform .25s ease;
+}
+
+.snap:hover, .snap:focus-visible { z-index: 2; transform: rotate(0deg) scale(1.05); }
+.snap img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; }
+
+.magnet { position: absolute; top: -12px; left: 50%; width: 26px; height: 26px; translate: -50%; filter: drop-shadow(0 2px 2px rgba(40, 30, 20, .4)); }
+
+.jar__art { width: 100%; overflow: visible; filter: drop-shadow(0 4px 4px rgba(60, 48, 30, .3)); }
+.jar__cloth { fill: var(--cloth); stroke: currentColor; stroke-width: 1.8; stroke-linejoin: round; }
+.jar__glass { fill: #FFFFFF; fill-opacity: .55; stroke: currentColor; stroke-width: 2; stroke-linejoin: round; }
+.jar__jam { fill: var(--jam); }
+.jar__shine { fill: none; stroke: #FFFFFF; stroke-width: 4; stroke-linecap: round; opacity: .6; }
+.jar__label { fill: #FFFDF8; stroke: currentColor; stroke-width: 1.4; }
+.jar__text { fill: #2B2A27; font: 400 11.5px var(--font-hand); text-anchor: middle; }
+
+.sticker {
+  position: absolute;
+  z-index: 2;
+  margin: 0;
+  padding: .25em .6em;
+  background: #FFF4A3;
+  color: #2B2A27;
+  font: 400 4.6cqw/1.15 var(--font-hand);
+  white-space: nowrap;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, .25);
+  transform: translate(-50%, -50%) rotate(var(--tilt, -3deg));
+  pointer-events: none;
+}
+
+.sticker--wall { left: 50%; top: 6.5%; }
+.sticker--roomie { left: 80%; top: 77%; z-index: 3; --tilt: 5deg; }
+.sticker--drawer { left: 22%; top: 72%; font-size: clamp(.7rem, 3.6vw, 1rem); --tilt: -5deg; }

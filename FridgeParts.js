@@ -5,32 +5,33 @@ import { createJarSvg } from "./JarSvg.js";
 import { openPhotoViewer } from "./PhotoViewer.js";
 import { openJarSheet } from "./SheetContent.js";
 
-// Photos 1-4 ride on the upper door (so they swing with it); 5-6 sit on the lower door.
-// Left/top are % of their door, and every photo stays inside the door's edges.
-const UpperSnaps = Object.freeze([
-  { Left: 5, Top: 4, Tilt: -4 },
-  { Left: 46, Top: 2, Tilt: 3 },
-  { Left: 4, Top: 41, Tilt: 2 },
-  { Left: 52, Top: 43, Tilt: -3 },
+// Three photos per French door, as % of that door. The handles sit by the middle seam
+// (the left door's right edge, the right door's left edge), so photos keep to the outer side.
+const LeftDoorSnaps = Object.freeze([
+  { Left: 6, Top: 3, Tilt: -4 },
+  { Left: 14, Top: 35, Tilt: 3 },
+  { Left: 5, Top: 67, Tilt: -2 },
 ]);
 
-const LowerSnaps = Object.freeze([
-  { Left: 6, Top: 8, Tilt: 3 },
-  { Left: 52, Top: 12, Tilt: -4 },
+const RightDoorSnaps = Object.freeze([
+  { Left: 40, Top: 5, Tilt: 3 },
+  { Left: 33, Top: 37, Tilt: -3 },
+  { Left: 42, Top: 68, Tilt: 4 },
 ]);
 
-// Jam jars standing on the two lit glass shelves, as % of the open-fridge photo.
+// Jars standing on the two glass shelves, as % of the inside of the fridge.
 const JarSpots = Object.freeze([
-  { Left: 14.5, Top: 16.4 }, { Left: 25, Top: 16.4 }, { Left: 35.5, Top: 16.4 },
-  { Left: 14.5, Top: 28.4 }, { Left: 25, Top: 28.4 }, { Left: 35.5, Top: 28.4 },
+  { Left: 8.5, Top: 13.8 }, { Left: 37.5, Top: 13.8 }, { Left: 66.5, Top: 13.8 },
+  { Left: 8.5, Top: 47.8 }, { Left: 37.5, Top: 47.8 }, { Left: 66.5, Top: 47.8 },
 ]);
 
 /** Sticks the photos on both doors and puts the jars on the shelves. */
 export function renderFridgeParts() {
-  const upperCount = UpperSnaps.length;
-  byId("UpperSnaps").replaceChildren(...UpperSnaps.map((spot, index) => createSnap(spot, index)));
-  byId("LowerSnaps").replaceChildren(...LowerSnaps.map((spot, index) => createSnap(spot, index + upperCount)));
-  byId("Jars").replaceChildren(...Content.Jars.slice(0, JarSpots.length).map((jar, index) => createJar(jar, JarSpots[index])));
+  const rightStart = LeftDoorSnaps.length;
+  byId("SnapsLeft").replaceChildren(...LeftDoorSnaps.map((spot, index) => createSnap(spot, index)));
+  byId("SnapsRight").replaceChildren(...RightDoorSnaps.map((spot, index) => createSnap(spot, index + rightStart)));
+  const jars = Content.Jars.slice(0, JarSpots.length).map((jar, index) => createJar(jar, JarSpots[index]));
+  byId("Jars").replaceChildren(...jars);
 }
 
 /**

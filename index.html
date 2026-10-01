@@ -14,6 +14,7 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@500&family=DM+Serif+Display&family=Itim&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="Styles.css">
   <link rel="stylesheet" href="House.css">
+  <link rel="stylesheet" href="Fridge.css">
   <script type="module" src="App.js"></script>
 </head>
 <body>
@@ -40,38 +41,43 @@
     <!-- Entryway, living room, kitchen and bedroom are built from Rooms.js. -->
     <div id="Rooms"></div>
 
-    <!-- The fridge: a closed shot with photos on the door, and an open close-up of the shelves. -->
+    <!-- The fridge: French doors with our photos; they swing open on their real hinges to the lit shelves. -->
     <section class="view" id="FridgeView" aria-label="The fridge" hidden>
       <div class="view__backdrop" style="background-image: url(Assets/Rooms/Kitchen.webp)"></div>
-      <div class="fridge-shot" id="ClosedShot">
+      <div class="fridge-stage">
         <div class="fridge-frame" id="FridgeFrame">
-          <img class="fridge-frame__photo" src="Assets/Rooms/FridgeClosed.webp" alt="A tall silver fridge covered in our photos">
-          <div class="fridge-lower" id="LowerSnaps"></div>
-          <div class="fridge-inside" id="FridgeInside"></div>
-          <div class="fridge-door" id="FridgeDoor">
-            <div class="fridge-door__face"></div>
-            <div class="fridge-upper" id="UpperSnaps"></div>
+          <img class="fridge-frame__photo" src="Assets/Rooms/Fridge.webp" alt="A white fridge with French doors, covered in our photos">
+          <div class="fridge-inside" id="FridgeInside" inert>
+            <div class="fridge-inside__light"></div>
+            <p class="sticker sticker--wall" data-bind-sticker="Property"></p>
+            <p class="sticker sticker--roomie" data-bind-sticker="Roomie"></p>
+            <div class="glass-shelf" style="top: 40%"></div>
+            <div class="glass-shelf" style="top: 74%"></div>
+            <div class="fridge-jars" id="Jars"></div>
+            <button class="crisper" id="Crisper" type="button" aria-label="The crisper drawer"></button>
           </div>
+          <div class="fridge-door fridge-door--left" id="DoorLeft">
+            <div class="fridge-door__front" id="DoorLeftFront"><div class="door-snaps" id="SnapsLeft"></div></div>
+            <div class="fridge-door__back" id="DoorLeftBack" inert>
+              <span class="door-bin"></span><span class="door-bin"></span><span class="door-bin"></span>
+            </div>
+          </div>
+          <div class="fridge-door fridge-door--right" id="DoorRight">
+            <div class="fridge-door__front" id="DoorRightFront"><div class="door-snaps" id="SnapsRight"></div></div>
+            <div class="fridge-door__back" id="DoorRightBack" inert>
+              <span class="door-bin"></span><span class="door-bin"></span><span class="door-bin"></span>
+            </div>
+          </div>
+          <p class="sticker sticker--drawer" data-bind-sticker="Freezer"></p>
           <!-- dot only: a label here would cover the photos -->
-          <button class="spot" id="FridgeHandle" type="button" style="left: 1.6%; top: 33%" aria-label="Open the fridge">
+          <button class="spot" id="FridgeHandle" type="button" style="left: 50%; top: 31%" aria-label="Open the fridge">
             <span class="spot__dot"></span>
           </button>
         </div>
       </div>
-      <div class="fridge-shot" id="OpenShot" hidden>
-        <div class="open-scene" id="OpenScene">
-          <img class="open-scene__photo" src="Assets/Rooms/FridgeOpen.webp" alt="The fridge open, its light on">
-          <div class="fridge-light"></div>
-          <div id="Jars"></div>
-          <p class="sticker" style="left: 27%; top: 11.5%; --tilt: -6deg" data-bind-sticker="Logo"></p>
-          <p class="sticker" style="left: 31%; top: 64%; --tilt: 4deg" data-bind-sticker="Freezer"></p>
-          <p class="sticker" style="left: 67%; top: 41.7%; --tilt: -3deg" data-bind-sticker="DoorBin"></p>
-          <button class="spot" id="Crisper" type="button" style="left: 30%; top: 44%">
-            <span class="spot__dot"></span><span class="spot__label" data-bind-spot="Crisper"></span>
-          </button>
-          <button class="open-door" id="OpenDoorEdge" type="button" aria-label="Close the fridge"></button>
-        </div>
-      </div>
+      <button class="spot spot--exit spot--behind" id="Back" type="button">
+        <span class="spot__arrow">↓</span><span class="spot__label" id="BackLabel"></span>
+      </button>
     </section>
 
     <!-- Bedroom lights out: the ending. -->
@@ -86,8 +92,6 @@
   </div>
 
   <header class="bar" id="Bar" hidden>
-    <button class="chip chip--back" id="Back" type="button" hidden></button>
-    <nav class="bar__rooms" id="RoomNav" aria-label="Rooms"></nav>
     <button class="chip chip--song" id="SongToggle" type="button" aria-pressed="false" hidden></button>
   </header>
 

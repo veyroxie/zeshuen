@@ -1,6 +1,6 @@
 import { Content } from "./Content.js";
 import { createElement } from "./Dom.js";
-import { HingeType, Rooms } from "./Rooms.js";
+import { ArrowType, HingeType, Rooms } from "./Rooms.js";
 
 const Percent = 100;
 // Spots right of the middle put their label on the left so it stays on screen.
@@ -41,7 +41,9 @@ function buildRoom(room, onSpot) {
   backdrop.style.backgroundImage = `url(${room.Image})`;
   const pan = createElement("div", "pan");
   pan.append(createScene(room, onSpot));
-  view.append(backdrop, pan);
+  // "Behind" exits mean turning around, so they sit in a fixed corner rather than in the photo.
+  const turnBacks = room.Spots.filter(isTurnBack).map((spot) => createSpot(spot, onSpot));
+  view.append(backdrop, pan, ...turnBacks);
 
   return { view, pan, room };
 }
@@ -56,7 +58,8 @@ function createScene(room, onSpot) {
   const scene = createElement("div", "scene");
   scene.style.setProperty("--ratio", `${room.Width} / ${room.Height}`);
   const doors = room.Spots.filter((spot) => spot.Leaf).flatMap((spot) => createDoor(room, spot));
-  scene.append(createPhoto(room), ...doors, ...room.Spots.map((spot) => createSpot(spot, onSpot)));
+  const inPhoto = room.Spots.filter((spot) => isTurnBack(spot) === false);
+  scene.append(createPhoto(room), ...doors, ...inPhoto.map((spot) => createSpot(spot, onSpot)));
 
   return scene;
 }
@@ -123,16 +126,54 @@ function createPhoto(room) {
  * @returns {HTMLButtonElement}
  */
 function createSpot(spot, onSpot) {
-  const sideClass = spot.X >= LabelFlipX ? "spot spot--left" : "spot";
-  const button = /** @type {HTMLButtonElement} */ (createElement("button", sideClass));
+  const button = /** @type {HTMLButtonElement} */ (createElement("button", spotClass(spot)));
   button.type = "button";
-  button.style.left = `${spot.X}%`;
-  button.style.top = `${spot.Y}%`;
-  button.append(createElement("span", "spot__dot"), createElement("span", "spot__label", Content.House.Spots[spot.Key]));
+  placeSpot(button, spot);
+  const label = Content.House.Spots[spot.Key];
+  const marker = spot.Arrow ? createElement("span", "spot__arrow", spot.Arrow) : createElement("span", "spot__dot");
+  button.append(marker, createElement("span", "spot__label", label));
   button.addEventListener("click", (event) => onSpot(spot, event));
 
   return button;
 }
+
+/**
+ * Exits get a doorway tag with an arrow; everything else a glowing dot, labelled on
+ * whichever side keeps it on screen.
+ * @param {import("./Rooms.js").SpotLayout} spot
+ * @returns {string}
+ */
+function spotClass(spot) {
+  if (isTurnBack(spot)) {
+    return "spot spot--exit spot--behind";
+  }
+
+  if (spot.Arrow) {
+    return "spot spot--exit";
+  }
+
+  return spot.X >= LabelFlipX ? "spot spot--left" : "spot";
+}
+
+/**
+ * Pins a spot to its place in the photo; turn-back exits keep their fixed corner instead.
+ * @param {HTMLElement} button
+ * @param {import("./Rooms.js").SpotLayout} spot
+ */
+function placeSpot(button, spot) {
+  if (isTurnBack(spot)) {
+    return;
+  }
+
+  button.style.left = `${spot.X}%`;
+  button.style.top = `${spot.Y}%`;
+}
+
+/**
+ * @param {import("./Rooms.js").SpotLayout} spot
+ * @returns {boolean}
+ */
+const isTurnBack = (spot) => spot.Arrow === ArrowType.Behind;
 
 /**
  * Scrolls a room's pan so the photo's focus point sits in the middle of the screen.
