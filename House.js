@@ -6,7 +6,7 @@ import { animate, clearMotion, Ease, wait } from "./Motion.js";
 import { centerRoom, buildRooms } from "./RoomView.js";
 import { ActionType, HingeType, RoomId } from "./Rooms.js";
 import {
-  openGuardDogSheet, openLetterSheet, openRadioSheet, openShelfSheet, openSofaSheet, openWindowSheet,
+  openGuardDogSheet, openLetterSheet, openRadioSheet, openMirrorSheet, openSofaSheet, openWindowSheet,
 } from "./SheetContent.js";
 import { showToast } from "./Toast.js";
 import { initToiletView, playToiletPeek, resetToiletPeek } from "./ToiletView.js";
@@ -145,7 +145,7 @@ export function setHint(text) {
 }
 
 const SpotActions = Object.freeze({
-  [ActionType.Shelf]: openShelfSheet,
+  [ActionType.Mirror]: openMirrorSheet,
   [ActionType.Window]: openWindowSheet,
   [ActionType.Radio]: openRadioSheet,
   [ActionType.Sofa]: openSofaSheet,

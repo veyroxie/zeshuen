@@ -17,9 +17,9 @@ export function openJarSheet(jar) {
   openSheet({ tag: Content.Side.Yours, title: jar.Title, children: createParagraphs(jar.Lines, "line") });
 }
 
-/** Entryway shelf: the soul notes, kept like keepsakes. */
-export function openShelfSheet() {
-  openSheet({ tag: Content.Side.Yours, title: Content.SheetTitle.Shelf, children: createParagraphs(Content.SoulNotes, "line") });
+/** Entryway mirror: the soul notes, as what she should see when she looks at herself. */
+export function openMirrorSheet() {
+  openSheet({ tag: Content.Side.Yours, title: Content.SheetTitle.Mirror, children: createParagraphs(Content.SoulNotes, "line") });
 }
 
 /** Living-room window: the verses in the morning light, and the worship photo. */
