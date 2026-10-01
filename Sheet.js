@@ -30,6 +30,22 @@ export function openSheet({ tag, title, children, variant = SheetVariant.Notes }
 }
 
 /**
+ * Runs once the pop-up is closed: right away if it already is. Toasts wait for this,
+ * since anything shown under an open pop-up sits behind its dark backdrop.
+ * @param {() => void} callback
+ */
+export function afterSheetCloses(callback) {
+  const sheet = /** @type {HTMLDialogElement} */ (byId("Sheet"));
+  if (sheet.open) {
+    sheet.addEventListener("close", callback, { once: true });
+
+    return;
+  }
+
+  callback();
+}
+
+/**
  * @param {string[]} texts
  * @param {string} className
  * @returns {HTMLElement[]}

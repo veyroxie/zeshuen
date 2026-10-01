@@ -27,7 +27,8 @@ export function initWindowViews() {
 export function createViewSlideshow() {
   const frame = createElement("figure", "view-show");
   const caption = createElement("figcaption", "");
-  startSlideshow(frame, caption, null);
+  const stop = startSlideshow(frame, caption, null);
+  byId("Sheet").addEventListener("close", stop, { once: true });
   frame.append(caption);
 
   return frame;
@@ -56,10 +57,11 @@ function viewsForNow() {
 }
 
 /**
- * Crossfades through the views inside a box; stops when the box leaves the page.
+ * Crossfades through the views inside a box.
  * @param {HTMLElement} box
  * @param {HTMLElement | null} caption
  * @param {string | null} deferToRoom load with this room instead of right away
+ * @returns {() => void} stops the slideshow
  */
 function startSlideshow(box, caption, deferToRoom) {
   const views = viewsForNow();
@@ -82,13 +84,7 @@ function startSlideshow(box, caption, deferToRoom) {
     index = (index + 1) % slides.length;
   };
   show();
-  const timer = window.setInterval(() => {
-    if (box.isConnected === false) {
-      window.clearInterval(timer);
+  const timer = window.setInterval(show, SlideMs);
 
-      return;
-    }
-
-    show();
-  }, SlideMs);
+  return () => window.clearInterval(timer);
 }

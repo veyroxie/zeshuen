@@ -5,8 +5,7 @@ import { deferImage } from "./Preload.js";
 import { RoomId } from "./Rooms.js";
 import { playVoice } from "./Voice.js";
 
-// She walks in on me at the sink; a beat later I turn round mid-brush.
-const TurnRoundDelayMs = 1500;
+// She walks in on me at the sink; she taps my shoulder and I turn round mid-brush.
 const TurnRoundMs = 450;
 const HeyDelayMs = 250;
 const HeyFrames = Object.freeze([
@@ -14,9 +13,7 @@ const HeyFrames = Object.freeze([
   { opacity: 1, transform: "translate(-50%, 0) scale(1)" },
 ]);
 
-let peekRun = 0;
-
-/** Puts both photos in place; only the first shows until she arrives. */
+/** Puts both photos in place; only the first shows until she taps my shoulder. */
 export function initToiletView() {
   const photos = Content.ToiletPhotos.map((photo, index) => {
     const image = /** @type {HTMLImageElement} */ (createElement("img", "toilet__photo"));
@@ -27,31 +24,24 @@ export function initToiletView() {
     return image;
   });
   byId("ToiletPhotos").replaceChildren(...photos);
+  byId("ToiletShoulder").addEventListener("click", turnRound);
 }
 
 /** Back to the first photo, ready for the next time she opens the door. */
 export function resetToiletPeek() {
-  peekRun += 1;
   const turned = turnedPhoto();
   clearMotion(turned, byId("ToiletHey"));
   turned.style.opacity = "0";
   byId("ToiletHey").hidden = true;
+  byId("ToiletShoulder").hidden = false;
 }
 
-/** Runs the gag once she's through the door. A later walk-in cancels an unfinished one. */
-export async function playToiletPeek() {
-  const run = peekRun;
-  await wait(TurnRoundDelayMs);
-  if (run !== peekRun) {
-    return;
-  }
-
+/** I turn round and say hey. The voice note starts on her tap, since phones block sound that doesn't. */
+async function turnRound() {
+  byId("ToiletShoulder").hidden = true;
+  playVoice("Toilet");
   await animate(turnedPhoto(), [{ opacity: 0, transform: "scale(1.04)" }, { opacity: 1, transform: "scale(1)" }], { duration: TurnRoundMs, easing: Ease.Settle });
   await wait(HeyDelayMs);
-  if (run !== peekRun) {
-    return;
-  }
-
   sayHey();
 }
 
@@ -59,7 +49,6 @@ export async function playToiletPeek() {
 function sayHey() {
   const hey = byId("ToiletHey");
   hey.hidden = false;
-  playVoice("Toilet");
   animate(hey, HeyFrames, { duration: TurnRoundMs, easing: Ease.Pop });
 }
 

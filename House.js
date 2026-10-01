@@ -14,7 +14,7 @@ import {
 import { initLightsOut, lightsOut } from "./LightsOut.js";
 import { playClick, playCreak, playTap } from "./Sound.js";
 import { showToast } from "./Toast.js";
-import { initToiletView, playToiletPeek, resetToiletPeek } from "./ToiletView.js";
+import { initToiletView, resetToiletPeek } from "./ToiletView.js";
 
 /** Which way the camera moves: in through a doorway, or back out of a close-up. */
 export const WalkType = Object.freeze({ Forward: "Forward", Back: "Back" });
@@ -146,7 +146,8 @@ async function crossWalk(outgoing, incoming, origin, frames) {
   outgoing.style.transformOrigin = origin;
   await Promise.all([
     animate(outgoing, [{ transform: frames.Out[0], opacity: 1 }, { transform: frames.Out[1], opacity: 0 }], { duration: WalkMs, easing: Ease.Walk }),
-    animate(incoming, [{ transform: frames.In[0], opacity: 0 }, { transform: frames.In[1], opacity: 1 }], { duration: WalkMs, delay: ArriveDelayMs, easing: Ease.Settle }),
+    // "both" holds the first frame through the delay, so the next room doesn't flash in at full opacity
+    animate(incoming, [{ transform: frames.In[0], opacity: 0 }, { transform: frames.In[1], opacity: 1 }], { duration: WalkMs, delay: ArriveDelayMs, easing: Ease.Settle, fill: "both" }),
   ]);
   outgoing.hidden = true;
   outgoing.classList.remove(IsCurrentClass);
@@ -169,17 +170,14 @@ function prepareArrival(targetId, incoming) {
   prepare();
 }
 
-// Views that aren't photo rooms set themselves up before she walks in, and some play once she's there.
+// Views that aren't photo rooms set themselves up before she walks in, and the toilet's running tap plays once she's there.
 const PrepareHooks = new Map([
   [RoomId.Fridge, showClosedFridge],
   [RoomId.Toilet, resetToiletPeek],
 ]);
 
 const ArrivedHooks = Object.freeze({
-  [RoomId.Toilet]: () => {
-    playTap();
-    playToiletPeek();
-  },
+  [RoomId.Toilet]: playTap,
 });
 
 // Some notes come with a little sound.
@@ -276,6 +274,11 @@ function centerOf(element) {
  * @param {MouseEvent} event
  */
 function handleSpot(spot, event) {
+  // a door mid-swing is about to walk her through it
+  if (house.isSwinging) {
+    return;
+  }
+
   SpotActions[spot.Action](spot, event);
 }
 

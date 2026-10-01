@@ -6,7 +6,6 @@ import { centerPan } from "./RoomView.js";
 import { startPreloading } from "./Preload.js";
 import { RoomId } from "./Rooms.js";
 import { playCreak, playKnock } from "./Sound.js";
-import { playVoice } from "./Voice.js";
 
 const SwingMs = 1300;
 const StepInDelayMs = 350;
@@ -70,7 +69,6 @@ async function openFrontDoor() {
   await animate(byId("DoorLeaf"), LeafSwing, { duration: SwingMs, easing: Ease.Swing });
   await wait(StepInDelayMs);
   await walkTo(RoomId.Entryway, { origin: gapCenter(), type: WalkType.Forward });
-  playVoice("Welcome");
 }
 
 /**

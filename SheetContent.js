@@ -6,7 +6,7 @@ import {
 import { Content } from "./Content.js";
 import { byId, createElement } from "./Dom.js";
 import { fogOver } from "./MirrorFog.js";
-import { playVoice } from "./Voice.js";
+import { playVoice, stopVoice } from "./Voice.js";
 import { createVoicePlayer } from "./VoicePlayer.js";
 import { createViewSlideshow } from "./WindowViews.js";
 import { createParagraphs, createPhotoFigure, openSheet } from "./Sheet.js";
@@ -68,6 +68,8 @@ export function openLetterSheet() {
   typed.append(createElement("summary", "", Content.Ui.TypedLetter), ...paragraphs);
   openSheet({ tag: Content.Side.Mine, title: Content.SheetTitle.Letter, children: [...pages, typed] });
   playVoice("Letter");
+  // putting the letter down stops me reading it, like the lounge player
+  byId("Sheet").addEventListener("close", stopVoice, { once: true });
 }
 
 /** Bedroom nightstand: the real guard dog, on night duty. */
@@ -87,7 +89,6 @@ export function openRadioSheet() {
   row.append(toggle, createPlaylistLink());
   const note = createElement("p", "para", Content.Mixtape.Note);
   openSheet({ tag: Content.Side.Mine, title: Content.Mixtape.Title, children: [note, row] });
-  playVoice("Radio");
 }
 
 /** @returns {HTMLAnchorElement} */

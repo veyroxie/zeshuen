@@ -6,6 +6,9 @@ const AudioEvent = Object.freeze({ Play: "play", Pause: "pause" });
 /** @returns {HTMLAudioElement} */
 const getAudio = () => /** @type {HTMLAudioElement} */ (byId("BackgroundSong"));
 
+// iPhones ignore volume set from code, so a voice note pauses the song instead of ducking it.
+let isHeldForVoice = false;
+
 /**
  * Wires the looping song and the small floating pause/play button.
  * Nothing plays until she starts it from the radio: phones only allow sound after a tap.
@@ -27,6 +30,8 @@ export function playBackgroundSong() {
 
 /** Pauses the song if it's playing, otherwise starts it. */
 export function toggleBackgroundSong() {
+  // her own tap wins over resuming after a voice note
+  isHeldForVoice = false;
   if (isBackgroundSongPaused()) {
     playBackgroundSong();
 
@@ -34,6 +39,26 @@ export function toggleBackgroundSong() {
   }
 
   getAudio().pause();
+}
+
+/** Pauses the song under a voice note, if it's playing. */
+export function holdBackgroundSong() {
+  if (isBackgroundSongPaused()) {
+    return;
+  }
+
+  isHeldForVoice = true;
+  getAudio().pause();
+}
+
+/** Resumes the song after a voice note, only if the note was what paused it. */
+export function releaseBackgroundSong() {
+  if (isHeldForVoice === false) {
+    return;
+  }
+
+  isHeldForVoice = false;
+  playBackgroundSong();
 }
 
 /** @returns {boolean} */

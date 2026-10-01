@@ -1,6 +1,7 @@
+import { holdBackgroundSong, releaseBackgroundSong } from "./BackgroundSong.js";
 import { Content } from "./Content.js";
 import { byId, createElement } from "./Dom.js";
-import { duckSong, stopVoice } from "./Voice.js";
+import { stopVoice } from "./Voice.js";
 
 // A proper little player for the long lounge voice note: play/pause, a bar she can drag,
 // elapsed / total time, and a speed button.
@@ -19,8 +20,8 @@ export function createVoicePlayer(src) {
   audio.preload = "metadata";
   const parts = buildParts();
   wire(audio, parts);
-  // closing the note stops it and brings the song back
-  byId("Sheet").addEventListener("close", () => { audio.pause(); duckSong(false); }, { once: true });
+  // closing the note stops it, and its pause event brings the song back
+  byId("Sheet").addEventListener("close", () => audio.pause(), { once: true });
 
   return parts.root;
 }
@@ -30,7 +31,7 @@ function buildParts() {
   const root = createElement("div", "voice-player");
   const play = /** @type {HTMLButtonElement} */ (createElement("button", "voice-player__play", Content.Ui.PlayIconBig));
   play.type = "button";
-  play.setAttribute("aria-label", Content.Ui.PlayLabel);
+  play.setAttribute("aria-label", Content.Ui.PlayVoiceLabel);
   const bar = /** @type {HTMLInputElement} */ (createElement("input", "voice-player__bar"));
   Object.assign(bar, { type: "range", min: "0", max: String(RangeMax), value: "0" });
   bar.setAttribute("aria-label", Content.Ui.Seek);
@@ -58,8 +59,8 @@ function wire(audio, { play, bar, time, speed }) {
   };
   audio.addEventListener("loadedmetadata", showTime);
   audio.addEventListener("timeupdate", showTime);
-  audio.addEventListener("play", () => { play.textContent = Content.Ui.PauseIconBig; play.setAttribute("aria-label", Content.Ui.PauseLabel); duckSong(true); });
-  audio.addEventListener("pause", () => { play.textContent = Content.Ui.PlayIconBig; play.setAttribute("aria-label", Content.Ui.PlayLabel); duckSong(false); });
+  audio.addEventListener("play", () => { play.textContent = Content.Ui.PauseIconBig; play.setAttribute("aria-label", Content.Ui.PauseVoiceLabel); holdBackgroundSong(); });
+  audio.addEventListener("pause", () => { play.textContent = Content.Ui.PlayIconBig; play.setAttribute("aria-label", Content.Ui.PlayVoiceLabel); releaseBackgroundSong(); });
   audio.addEventListener("ended", () => { audio.currentTime = 0; showTime(); });
   play.addEventListener("click", () => togglePlay(audio));
   bar.addEventListener("input", () => seek(audio, Number(bar.value)));

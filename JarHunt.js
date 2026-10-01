@@ -2,6 +2,7 @@ import { Content } from "./Content.js";
 import { byId, createElement } from "./Dom.js";
 import { createJarSvg } from "./JarSvg.js";
 import { RoomId } from "./Rooms.js";
+import { afterSheetCloses } from "./Sheet.js";
 import { openJarSheet } from "./SheetContent.js";
 import { playFound } from "./Sound.js";
 import { showToast } from "./Toast.js";
@@ -74,15 +75,16 @@ function createHiddenJar(hidden) {
   return button;
 }
 
+/** The pop sounds now; the note waits until she closes the jar, so she actually sees it. */
 function celebrate() {
   playFound();
   if (isLoungeOpen()) {
-    window.setTimeout(() => showToast(Content.House.Toasts.AllJars), AllFoundDelayMs);
+    afterSheetCloses(() => window.setTimeout(() => showToast(Content.House.Toasts.AllJars), AllFoundDelayMs));
 
     return;
   }
 
-  showToast(fill(Content.House.Toasts.JarFound));
+  afterSheetCloses(() => showToast(fill(Content.House.Toasts.JarFound)));
 }
 
 function showProgress() {

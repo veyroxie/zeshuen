@@ -97,10 +97,14 @@
       </button>
     </section>
 
-    <!-- The toilet, behind the bathroom's frosted door: she walks in on me brushing my teeth. -->
+    <!-- The toilet, behind the bathroom's frosted door: she walks in on me brushing my teeth and taps my shoulder. -->
     <section class="view" id="ToiletView" aria-label="The toilet" hidden>
       <div class="view__backdrop" style="background-image: url(Assets/Photos/Teeth01.webp)"></div>
       <div class="toilet" id="ToiletPhotos"></div>
+      <!-- my shoulder in the first photo; near the middle, so it stays put however the photo is cropped -->
+      <button class="spot" id="ToiletShoulder" type="button" style="left: 48%; top: 48%">
+        <span class="spot__dot"></span><span class="spot__label" data-bind-spot="Shoulder"></span>
+      </button>
       <div class="speech" id="ToiletHey" role="status" hidden>
         <span class="label speech__from" data-bind-side="Mine"></span>
         <p class="speech__text" data-bind-toast="Hey"></p>

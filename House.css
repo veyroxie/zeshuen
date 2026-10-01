@@ -242,6 +242,8 @@
 
 .lights-out__label p { margin: 0; font: 400 1.2rem var(--font-hand); }
 .lights-out__label .lights-out__name { margin: 4px 0 8px; padding-bottom: .15em; font: 400 3rem/1.2 var(--font-hand); color: #C4704F; }
+/* the bar and corner button sit above the stage, so the ending hides them itself */
+body:has(#LightsOut:not([hidden])) :is(.bar, .chip--fullscreen) { visibility: hidden; }
 
 @keyframes beacon { 0%, 100% { transform: scale(.9); opacity: .85; } 50% { transform: scale(1.12); opacity: 1; } }
 @keyframes wobble { 0%, 100% { transform: rotate(0); } 25% { transform: rotate(-5deg); } 75% { transform: rotate(5deg); } }
@@ -273,7 +275,7 @@
 .view-slide { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1.6s ease; }
 .view-slide.is-shown { opacity: 1; }
 
-/* the way to her first mission glows a little warmer */
+/* the way to her mission glows a little warmer */
 .spot.is-mission .spot__dot { box-shadow: 0 0 0 6px rgba(238, 207, 124, .55), 0 0 22px 6px rgba(238, 207, 124, .6); }
 .spot--exit.is-mission { animation: mission-glow 1.8s ease-in-out infinite; }
 @keyframes mission-glow { 0%, 100% { box-shadow: 0 6px 18px rgba(0, 0, 0, .35), 0 0 0 4px rgba(238, 207, 124, .5); } 50% { box-shadow: 0 6px 18px rgba(0, 0, 0, .35), 0 0 0 10px rgba(238, 207, 124, .75); } }

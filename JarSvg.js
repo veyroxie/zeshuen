@@ -1,8 +1,8 @@
 import { FlavourType } from "./Content.js";
 import { SvgNamespace } from "./Dom.js";
 
-/** The honey jar isn't a Content flavour; it opens the faith pop-up. */
-export const HoneyFlavour = "Honey";
+/** Fallback colours for a jar whose flavour has no entry below. */
+const HoneyFlavour = "Honey";
 
 // Labels longer than this wrap onto two lines so they stay on the paper label.
 const MaxSingleLineChars = 11;

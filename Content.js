@@ -55,7 +55,6 @@ export const Content = Object.freeze({
       Light: "the light",
       Blanket: "my bed",
       ToMyRoom: "my room",
-      Handle: "the handle",
       Crisper: "the crisper",
       ToLivingRoom: "living room",
       ToKitchen: "kitchen",
@@ -68,6 +67,7 @@ export const Content = Object.freeze({
       ToLounge: "???",
       Knock: "knock knock",
       Bathtub: "the bathtub",
+      Shoulder: "tap my shoulder",
     },
     Toasts: {
       Lamp: "left the light on for you ♡",
@@ -90,7 +90,7 @@ export const Content = Object.freeze({
       Eggs: "we ran outta eggs!! 🥚",
     },
     /** Knock twice and the door opens. */
-    Knock: { Hint: "knock twice", Second: "one more…" },
+    Knock: { Second: "one more…" },
 
     /** The steamed-up mirror she wipes with her finger. */
     Mirror: { Wipe: "wipe the mirror ✋" },
@@ -122,8 +122,8 @@ export const Content = Object.freeze({
 
     /** Until she's found a jar, the hints lead her to the fridge. */
     Mission: {
-      Entryway: "your first mission's in the kitchen. head through to the living room →",
-      LivingRoom: "first mission: go to the kitchen ↑ and check the fridge",
+      Entryway: "your mission's in the kitchen. head through to the living room →",
+      LivingRoom: "your mission: go to the kitchen ↑ and check the fridge",
       Kitchen: "open the fridge. your mission's inside",
     },
 
@@ -170,6 +170,8 @@ export const Content = Object.freeze({
     PauseIcon: "❚❚",
     PlayLabel: "Play our song",
     PauseLabel: "Pause our song",
+    PlayVoiceLabel: "Play the voice note",
+    PauseVoiceLabel: "Pause the voice note",
     SpotifyLink: "the whole playlist on spotify ↗",
   },
 
@@ -179,7 +181,6 @@ export const Content = Object.freeze({
     Window: "Morning light: you are so loved by God",
     Sofa: "Sit with me a sec",
     Letter: "A letter, left on your pillow",
-    Photos: "Stuck on the fridge",
     GuardDog: "On night duty",
   },
 
@@ -326,10 +327,7 @@ export const Content = Object.freeze({
 
   /** Voice notes from me, by where they play. */
   Voice: {
-    Welcome: "Assets/Voice/Recording10.m4a",
     Toilet: "Assets/Voice/Recording11.m4a",
-    Radio: "Assets/Voice/Recording12.m4a",
-    Goodnight: "Assets/Voice/Recording13.m4a",
     Letter: "Assets/Voice/Recording14.m4a",
     // the lounge one only plays when she taps it
     Lounge: "Assets/Voice/Recording16.m4a",
@@ -352,7 +350,7 @@ export const Content = Object.freeze({
     ],
   },
 
-  /** Photo of the real plush, shown in the can't-sleep jar. @type {PhotoContent} */
+  /** Photo of the real plush, shown when she taps the guard dog in her room. @type {PhotoContent} */
   GuardDogPhoto: {
     Src: "Assets/Photos/GuardDog.webp",
     Alt: "The guard dog, a grey and tan plush, sitting on a blanket",
