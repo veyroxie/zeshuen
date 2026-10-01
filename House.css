@@ -266,7 +266,7 @@
 .hidden-jar { position: absolute; z-index: 4; padding: 0; border: 0; background: none; color: #2B2A27; cursor: pointer; -webkit-tap-highlight-color: transparent; }
 .hidden-jar .jar__art { width: 100%; overflow: visible; filter: drop-shadow(0 3px 3px rgba(40, 30, 20, .45)); }
 .hidden-jar .jar__text { display: none; }
-.mug__name { fill: #2B2A27; font: 400 13px var(--font-hand); }
+.mug__name { fill: #2B2A27; font: 400 9.5px var(--font-hand); }
 
 /* views behind the living-room window glass; multiply keeps the plant and frame in front */
 .window-view { position: absolute; z-index: 1; overflow: hidden; mix-blend-mode: multiply; pointer-events: none; }
