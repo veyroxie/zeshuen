@@ -4,6 +4,19 @@ import { deferImage } from "./Preload.js";
 // Things drawn into a room photo. The radio is Marshall-style: black tolex, brass panel,
 // mesh grille, with her handwriting where the logo would be. Its power light follows the song.
 const PropMarkup = Object.freeze({
+  // a pink box left open on her bed, the heart necklace on its cushion
+  JewelleryBox: {
+    ViewBox: "0 0 100 70",
+    Markup: `
+  <g stroke="#2B2A27" stroke-width="2" stroke-linejoin="round">
+    <path d="M14 32 L22 6 H78 L86 32z" fill="#E3B3B8"/>
+    <path d="M22 28 L27 11 H73 L78 28z" fill="#F7E9E6" stroke="none"/>
+    <rect x="10" y="32" width="80" height="32" rx="4" fill="#F2CDD0"/>
+  </g>
+  <path d="M30 28 q20 14 40 0" fill="none" stroke="#C9CDD3" stroke-width="1.4"/>
+  <path d="M50 36 l-6 -6 a3.6 3.6 0 0 1 6 -4.6 a3.6 3.6 0 0 1 6 4.6z" fill="#EEF0F3" stroke="#8A8F98" stroke-width="1.2"/>
+`,
+  },
   // two matching mugs on the counter: hers and mine
   Mugs: {
     ViewBox: "0 0 120 70",

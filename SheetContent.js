@@ -78,6 +78,12 @@ export function openGuardDogSheet() {
   openSheet({ tag: Content.Side.Mine, title: Content.SheetTitle.GuardDog, children });
 }
 
+/** Box on her bed: the real necklace, for the one she never got back. */
+export function openNecklaceSheet() {
+  const children = [...createParagraphs(Content.House.Necklace, "line"), createPhotoFigure(Content.NecklacePhoto)];
+  openSheet({ tag: Content.Side.Mine, title: Content.SheetTitle.Necklace, children });
+}
+
 /** Living-room radio: play or pause our song, or open the whole playlist. */
 export function openRadioSheet() {
   const toggle = createElement("button", "pill", songLabel(!isBackgroundSongPaused()));

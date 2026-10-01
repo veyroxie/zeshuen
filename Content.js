@@ -34,7 +34,7 @@ export const Content = Object.freeze({
       LivingRoom: { Name: "living room", Hint: "tap the sofa or the radio, or head to another room. swipe for the window" },
       Kitchen: { Name: "kitchen", Hint: "tap the fridge" },
       Door: { Name: "front door", Hint: "knock twice to come in" },
-      Bedroom: { Name: "your room", Hint: "there's a letter on your pillow. turn off the light when you're ready for bed" },
+      Bedroom: { Name: "your room", Hint: "there's a letter on your pillow and a little box on your bed. turn off the light when you're ready for bed" },
       MyRoom: { Name: "my room", Hint: "same as yours, but pink. across the hall if you need me" },
       Bathroom: { Name: "bathroom", Hint: "the toilet's behind the glass door" },
       Toilet: { Name: "toilet", Hint: "" },
@@ -52,6 +52,7 @@ export const Content = Object.freeze({
       Sink: "the sink",
       Letter: "a letter",
       GuardDog: "the guard dog",
+      Necklace: "a little box",
       Light: "the light",
       Blanket: "my bed",
       ToMyRoom: "my room",
@@ -166,6 +167,11 @@ export const Content = Object.freeze({
     // Ways back always say where they go, e.g. "back to the living room".
     BackTo: "back to the",
     GuardDog: "Your guard dog is on night duty hehe 🐶 Don't worry, it'll scare the scaries away.",
+    Necklace: [
+      "I know you never got your old necklace back, so this one's here to take its place. It's yours to keep, forever.",
+      "It stands for past, present and future: the uni days when we almost lived together, everything we're doing now, and every birthday still to come.",
+      "Wear it and remember I'm in all three ♡",
+    ],
   },
 
   /** Short handwritten-font lines for shared controls. */
@@ -197,6 +203,7 @@ export const Content = Object.freeze({
     Sofa: "Sit with me a sec",
     Letter: "A letter, left on your pillow",
     GuardDog: "On night duty",
+    Necklace: "Past, present, future",
   },
 
   /** Which side each pop-up comes from, shown as its small label. */
@@ -370,6 +377,13 @@ export const Content = Object.freeze({
     Src: "Assets/Photos/GuardDog.webp",
     Alt: "The guard dog, a grey and tan plush, sitting on a blanket",
     Caption: "your guard dog, reporting for duty",
+  },
+
+  /** Photo of the real necklace, shown when she opens the box on her bed. @type {PhotoContent} */
+  NecklacePhoto: {
+    Src: "Assets/Photos/Necklace.webp",
+    Alt: "A silver necklace with a small sparkling heart pendant",
+    Caption: "yours to keep",
   },
 
   /** Plays (and loops) when she starts it from the radio or the play button. */

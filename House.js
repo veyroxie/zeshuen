@@ -10,7 +10,8 @@ import { initWindowViews } from "./WindowViews.js";
 import { loadRoom } from "./Preload.js";
 import { completeLoungeMission, completeRadioMission, missionHint, showMission } from "./Mission.js";
 import {
-  openGuardDogSheet, openLetterSheet, openLoungeSheet, openMirrorSheet, openRadioSheet, openSofaSheet, openWindowSheet,
+  openGuardDogSheet, openLetterSheet, openLoungeSheet, openMirrorSheet, openNecklaceSheet, openRadioSheet, openSofaSheet,
+  openWindowSheet,
 } from "./SheetContent.js";
 import { initLightsOut, lightsOut } from "./LightsOut.js";
 import { playClick, playCreak, playTap } from "./Sound.js";
@@ -233,6 +234,7 @@ const SpotActions = Object.freeze({
   [ActionType.Sofa]: openSofaSheet,
   [ActionType.Letter]: openLetterSheet,
   [ActionType.GuardDog]: openGuardDogSheet,
+  [ActionType.Necklace]: openNecklaceSheet,
   [ActionType.LightsOut]: lightsOut,
   [ActionType.Lounge]: openLoungeSheet,
   [ActionType.Toast]: (spot) => {

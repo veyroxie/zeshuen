@@ -22,6 +22,7 @@ export const ActionType = Object.freeze({
   Sofa: "Sofa",
   Letter: "Letter",
   GuardDog: "GuardDog",
+  Necklace: "Necklace",
   LightsOut: "LightsOut",
   Toast: "Toast",
   Walk: "Walk",
@@ -108,17 +109,21 @@ export const Rooms = Object.freeze({
       { Key: "ToLivingRoom", X: 50, Y: 90, Action: ActionType.WalkBack, To: RoomId.LivingRoom, Arrow: ArrowType.Behind },
     ],
   },
-  // her room: the letter's on her pillow, the guard dog sits on her bed
+  // her room: the letter's on her pillow, the guard dog sits on her bed, the necklace waits at the foot of it
   [RoomId.Bedroom]: {
     Id: RoomId.Bedroom,
     Image: "Assets/Rooms/Bedroom.webp",
     Width: 1200,
     Height: 1440,
     FocusX: 50,
-    Props: [{ Key: "GuardDog", X: 60, Y: 58.5, W: 12, Image: "Assets/Photos/GuardDogCutout.webp" }],
+    Props: [
+      { Key: "GuardDog", X: 60, Y: 58.5, W: 12, Image: "Assets/Photos/GuardDogCutout.webp" },
+      { Key: "JewelleryBox", X: 40, Y: 70, W: 8 },
+    ],
     Spots: [
       { Key: "Letter", X: 38, Y: 62, Action: ActionType.Letter },
       { Key: "GuardDog", X: 71, Y: 55, Action: ActionType.GuardDog },
+      { Key: "Necklace", X: 44, Y: 72, Action: ActionType.Necklace },
       { Key: "Light", X: 43, Y: 11, Action: ActionType.LightsOut },
       { Key: "ToLivingRoom", X: 50, Y: 90, Action: ActionType.WalkBack, To: RoomId.LivingRoom, Arrow: ArrowType.Behind },
     ],
