@@ -8,6 +8,7 @@ import {
   openGuardDogSheet, openLetterSheet, openMirrorSheet, openPianoSheet, openSofaSheet, openWindowSheet,
 } from "./SheetContent.js";
 import { showToast } from "./Toast.js";
+import { initToiletView, playToiletPeek, resetToiletPeek } from "./ToiletView.js";
 
 /** Which way the camera moves: in through a doorway, or back out of a close-up. */
 export const WalkType = Object.freeze({ Forward: "Forward", Back: "Back" });
@@ -39,6 +40,8 @@ const house = { currentId: RoomId.Door, isWalking: false, isSwinging: false, roo
 export function initHouse() {
   house.rooms = buildRooms(handleSpot);
   initFridgeView({ onHint: setHint });
+  initToiletView();
+  byId("ToiletBack").addEventListener("click", () => walkTo(RoomId.Bathroom, { origin: CenterOrigin, type: WalkType.Back }));
   byId("BackLabel").textContent = Content.House.Rooms.Kitchen.Name;
   byId("Back").addEventListener("click", () => walkTo(RoomId.Kitchen, { origin: CenterOrigin, type: WalkType.Back }));
   byId("LightsOn").addEventListener("click", lightsOn);
@@ -65,6 +68,7 @@ export async function walkTo(targetId, { origin, type }) {
   house.currentId = targetId;
   house.isWalking = false;
   showChrome(targetId);
+  ArrivedHooks[targetId]?.();
   // Keyboard users land on the first thing they can tap in the new room.
   incoming.querySelector(FirstSpotSelector)?.focus({ preventScroll: true });
 }
@@ -96,14 +100,19 @@ function prepareArrival(targetId, incoming) {
   // Lights out belongs to the bedroom; walking away turns them back on.
   clearMotion(byId("LightsOut"));
   byId("LightsOut").hidden = true;
-  if (targetId === RoomId.Fridge) {
-    showClosedFridge();
-
-    return;
-  }
-
-  centerRoom(house.rooms[targetId]);
+  const prepare = PrepareHooks[targetId] ?? (() => centerRoom(house.rooms[targetId]));
+  prepare();
 }
+
+// Views that aren't photo rooms set themselves up before she walks in, and some play once she's there.
+const PrepareHooks = Object.freeze({
+  [RoomId.Fridge]: showClosedFridge,
+  [RoomId.Toilet]: resetToiletPeek,
+});
+
+const ArrivedHooks = Object.freeze({
+  [RoomId.Toilet]: playToiletPeek,
+});
 
 /**
  * @param {string} id

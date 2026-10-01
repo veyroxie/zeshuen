@@ -75,13 +75,14 @@ function createDoor(room, spot) {
   const gap = createElement("div", "room-gap");
   const leaf = createElement("div", "room-leaf");
   [gap, leaf].forEach((element) => placeRect(element, spot.Leaf));
-  gap.style.backgroundImage = `url(${Rooms[spot.To].Image})`;
+  gap.style.backgroundImage = `url(${spot.Leaf.Behind ?? Rooms[spot.To].Image})`;
   gap.dataset.gap = spot.Key;
   leaf.dataset.leaf = spot.Key;
   leaf.style.backgroundImage = `url(${room.Image})`;
   leaf.style.backgroundSize = `${(Percent / spot.Leaf.W) * Percent}% ${(Percent / spot.Leaf.H) * Percent}%`;
   leaf.style.backgroundPosition = `${backgroundOffset(spot.Leaf.X, spot.Leaf.W)}% ${backgroundOffset(spot.Leaf.Y, spot.Leaf.H)}%`;
   leaf.style.transformOrigin = spot.Leaf.Hinge === HingeType.Left ? "left center" : "right center";
+  [gap, leaf].forEach((element) => { element.style.clipPath = spot.Leaf.Clip ?? "none"; });
 
   return [gap, leaf];
 }

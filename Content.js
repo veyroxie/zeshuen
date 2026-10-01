@@ -36,6 +36,8 @@ export const Content = Object.freeze({
       LivingRoom: { Name: "living room", Hint: "tap the window, the piano or the sofa, or head to the kitchen or bedroom. swipe to look around" },
       Kitchen: { Name: "kitchen", Hint: "tap the fridge" },
       Bedroom: { Name: "bedroom", Hint: "there's a letter on your pillow" },
+      Bathroom: { Name: "bathroom", Hint: "the toilet's behind the frosted door" },
+      Toilet: { Name: "toilet", Hint: "" },
       Fridge: { Name: "fridge", HintClosed: "tap a photo, or the handles to open it", HintOpen: "tap a jar. tap a door to close it" },
     },
     Spots: {
@@ -59,6 +61,10 @@ export const Content = Object.freeze({
       ToKitchen: "kitchen",
       ToBedroom: "bedroom",
       ToEntryway: "entryway",
+      ToBathroom: "bathroom",
+      Toilet: "the toilet",
+      Bathtub: "the bathtub",
+      Sinks: "the sinks",
     },
     Toasts: {
       Lamp: "left the light on for you ♡",
@@ -67,6 +73,9 @@ export const Content = Object.freeze({
       Sink: "you wash, i'll dry. deal",
       Blanket: "your bed. no stealing my blanket",
       Crisper: "my section. don't steal my food (jk)",
+      Bathtub: "bubble bath sundays, obviously",
+      Sinks: "two sinks. no more fighting over the mirror",
+      Knock: "knock first!! 🪥",
     },
     Stickers: {
       Property: "property of Alyesa",
@@ -232,6 +241,12 @@ export const Content = Object.freeze({
     { Text: "I have loved you with an everlasting love.", Reference: "Jeremiah 31:3" },
     { Text: "His mercies never come to an end; they are new every morning.", Reference: "Lamentations 3:22–23" },
     { Text: "God is within her, she will not fall; God will help her at break of day.", Reference: "Psalm 46:5" },
+  ],
+
+  /** Walking in on me in the toilet: my back at the sink, then me turning round mid-brush. */
+  ToiletPhotos: [
+    { Src: "Assets/Photos/Teeth01.webp", Alt: "Me at the bathroom sink, back to the door", Caption: "" },
+    { Src: "Assets/Photos/Teeth02.webp", Alt: "Me turning round, mid-brush, toothbrush in mouth", Caption: "" },
   ],
 
   /** Photo of the real plush, shown in the can't-sleep jar. @type {PhotoContent} */

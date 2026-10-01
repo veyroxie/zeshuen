@@ -80,6 +80,15 @@
       </button>
     </section>
 
+    <!-- The toilet, behind the bathroom's frosted door: she walks in on me brushing my teeth. -->
+    <section class="view" id="ToiletView" aria-label="The toilet" hidden>
+      <div class="view__backdrop" style="background-image: url(Assets/Photos/Teeth01.webp)"></div>
+      <div class="toilet" id="ToiletPhotos"></div>
+      <button class="spot spot--exit spot--behind" id="ToiletBack" type="button">
+        <span class="spot__arrow">↓</span><span class="spot__label" data-bind-spot="ToBathroom"></span>
+      </button>
+    </section>
+
     <!-- Bedroom lights out: the ending. -->
     <div class="lights-out" id="LightsOut" hidden>
       <div class="lights-out__label">

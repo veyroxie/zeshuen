@@ -7,7 +7,9 @@ export const RoomId = Object.freeze({
   LivingRoom: "LivingRoom",
   Kitchen: "Kitchen",
   Bedroom: "Bedroom",
+  Bathroom: "Bathroom",
   Fridge: "Fridge",
+  Toilet: "Toilet",
 });
 
 /** What tapping a spot does; House.js maps each to a handler. */
@@ -32,8 +34,10 @@ export const ArrowType = Object.freeze({ Left: "←", Right: "→", Ahead: "↑"
 export const HingeType = Object.freeze({ Left: "Left", Right: "Right" });
 
 /**
- * @typedef {{ X: number, Y: number, W: number, H: number, Hinge: string }} LeafLayout
- *   a door panel in the photo, as % of it, that swings open before walking through
+ * @typedef {{ X: number, Y: number, W: number, H: number, Hinge: string, Clip?: string, Behind?: string }} LeafLayout
+ *   a door panel in the photo, as % of it, that swings open before walking through.
+ *   Clip is a CSS polygon for doors drawn in perspective; Behind is what shows through
+ *   the doorway (the next room's photo when left out).
  * @typedef {{ Key: string, X: number, Y: number, Action: string, To?: string, Toast?: string, Leaf?: LeafLayout, Arrow?: string }} SpotLayout
  *   a spot with an Arrow is an exit to another room, drawn as a tag on the doorway
  * @typedef {{ Id: string, Image: string, Width: number, Height: number, FocusX: number, Spots: SpotLayout[] }} RoomLayout
@@ -102,6 +106,28 @@ export const Rooms = Object.freeze({
       { Key: "Blanket", X: 74, Y: 75, Action: ActionType.Toast, Toast: "Blanket" },
       { Key: "Light", X: 49, Y: 50, Action: ActionType.LightsOut },
       { Key: "ToLivingRoom", X: 50, Y: 90, Action: ActionType.WalkBack, To: RoomId.LivingRoom, Arrow: ArrowType.Behind },
+      { Key: "ToBathroom", X: 92, Y: 52, Action: ActionType.Walk, To: RoomId.Bathroom, Arrow: ArrowType.Right },
+    ],
+  },
+  [RoomId.Bathroom]: {
+    Id: RoomId.Bathroom,
+    Image: "Assets/Rooms/Bathroom.webp",
+    Width: 800,
+    Height: 573,
+    FocusX: 73,
+    Spots: [
+      {
+        Key: "Toilet",
+        X: 87,
+        Y: 58,
+        Action: ActionType.Door,
+        To: RoomId.Toilet,
+        // the frosted door with the gold handle, hinged on its right, drawn in perspective
+        Leaf: { X: 83.1, Y: 14.5, W: 9, H: 82.7, Hinge: HingeType.Right, Clip: "polygon(0 9.3%, 100% 0, 100% 100%, 0 88%)", Behind: "Assets/Photos/Teeth01.webp" },
+      },
+      { Key: "Bathtub", X: 48, Y: 68, Action: ActionType.Toast, Toast: "Bathtub" },
+      { Key: "Sinks", X: 22, Y: 60, Action: ActionType.Toast, Toast: "Sinks" },
+      { Key: "ToBedroom", X: 50, Y: 90, Action: ActionType.WalkBack, To: RoomId.Bedroom, Arrow: ArrowType.Behind },
     ],
   },
 });

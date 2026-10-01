@@ -156,6 +156,12 @@
 .door-caption .label { color: #E9E1D2; }
 .door-caption__line { margin: 0; color: #FFFBF3; font: 400 1.35rem/1.25 var(--font-hand); text-shadow: 0 2px 12px rgba(0, 0, 0, .7); }
 
+/* ---------- Toilet: the two photos stacked, the second fades in ---------- */
+.toilet { position: absolute; inset: 0; display: grid; place-items: center; }
+.toilet__photo { grid-area: 1 / 1; width: 100%; height: 100%; object-fit: cover; }
+.toilet__photo[data-step="1"] { opacity: 0; }
+@media (min-aspect-ratio: 1/1) { .toilet__photo { width: auto; max-width: 100%; object-fit: contain; } }
+
 /* ---------- Bedroom lights out ---------- */
 .lights-out {
   position: absolute;
