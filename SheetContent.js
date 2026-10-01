@@ -22,9 +22,9 @@ export function openJarSheet(jar) {
   openSheet({ tag: Content.Side.Yours, title: jar.Title, children });
 }
 
-/** Entryway mirror: the soul notes, as what she should see when she looks at herself. */
-export function openMirrorSheet() {
-  openSheet({ tag: Content.Side.Yours, title: Content.SheetTitle.Mirror, children: createParagraphs(Content.SoulNotes, "line") });
+/** Entryway shelf: the soul notes, kept like keepsakes. */
+export function openShelfSheet() {
+  openSheet({ tag: Content.Side.Yours, title: Content.SheetTitle.Shelf, children: createParagraphs(Content.SoulNotes, "line") });
 }
 
 /** Living-room window: the verses in the morning light, and the worship photo. */
@@ -55,8 +55,8 @@ export function openGuardDogSheet() {
   openSheet({ tag: Content.Side.Mine, title: Content.SheetTitle.GuardDog, children });
 }
 
-/** Living-room piano: play or pause our song, or open the whole playlist. */
-export function openPianoSheet() {
+/** Living-room radio: play or pause our song, or open the whole playlist. */
+export function openRadioSheet() {
   const toggle = createElement("button", "pill", songLabel(!isBackgroundSongPaused()));
   toggle.type = "button";
   toggle.addEventListener("click", toggleBackgroundSong);

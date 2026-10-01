@@ -32,8 +32,8 @@ export const Content = Object.freeze({
       Hint: "tap the handle to come in",
     },
     Rooms: {
-      Entryway: { Name: "entryway", Hint: "tap the mirror. the door on the left goes to the living room" },
-      LivingRoom: { Name: "living room", Hint: "tap the window, the piano or the sofa, or head to the kitchen or bedroom. swipe to look around" },
+      Entryway: { Name: "entryway", Hint: "tap the shelf. the door on the right goes to the living room" },
+      LivingRoom: { Name: "living room", Hint: "tap the window, the sofa or the radio. swipe for the other rooms" },
       Kitchen: { Name: "kitchen", Hint: "tap the fridge" },
       Bedroom: { Name: "bedroom", Hint: "there's a letter on your pillow" },
       Bathroom: { Name: "bathroom", Hint: "the toilet's behind the frosted door" },
@@ -41,11 +41,12 @@ export const Content = Object.freeze({
       Fridge: { Name: "fridge", HintClosed: "tap a photo, or the handles to open it", HintOpen: "tap a jar. tap a door to close it" },
     },
     Spots: {
-      Mirror: "the mirror",
+      Shelf: "the shelf",
+      Coat: "the coat hook",
       Lamp: "the lamp",
-      Shoes: "the shoes",
+      Bench: "the bench",
       Window: "the window",
-      Piano: "the piano",
+      Radio: "the radio",
       Sofa: "the sofa",
       Fridge: "the fridge",
       Stove: "the stove",
@@ -68,7 +69,8 @@ export const Content = Object.freeze({
     },
     Toasts: {
       Lamp: "left the light on for you ♡",
-      Shoes: "our shoes, side by side",
+      Coat: "hang your coat up. you live here now",
+      Bench: "sit. take your shoes off. stay a while",
       Stove: "who's cooking tonight? (not me)",
       Sink: "you wash, i'll dry. deal",
       Blanket: "your bed. no stealing my blanket",
@@ -105,7 +107,7 @@ export const Content = Object.freeze({
 
   /** Pop-up titles for everything that isn't a jam jar. */
   SheetTitle: {
-    Mirror: "What the mirror should show you",
+    Shelf: "Things I keep about you",
     Window: "Morning light: you are so loved by God",
     Sofa: "Sit with me a sec",
     Letter: "A letter, left on your pillow",
@@ -120,7 +122,7 @@ export const Content = Object.freeze({
     Ours: "us",
   },
 
-  /** "Her beautiful soul" notes, shown on the entryway mirror. */
+  /** "Her beautiful soul" notes, kept on the entryway shelf. */
   SoulNotes: [
     "You love God even at your lowest. You trust Him to guide you through, especially on the hard days. Every day I see your faith, I believe a little more.",
     "You make everyone feel like there's someone there for them, me included, even when you've got a lot on your plate.",

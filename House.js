@@ -1,11 +1,12 @@
 import { Content } from "./Content.js";
 import { byId } from "./Dom.js";
 import { initFridgeView, showClosedFridge } from "./FridgeView.js";
+import { onBackgroundSongChange } from "./BackgroundSong.js";
 import { animate, clearMotion, Ease, wait } from "./Motion.js";
 import { centerRoom, buildRooms } from "./RoomView.js";
 import { ActionType, HingeType, RoomId } from "./Rooms.js";
 import {
-  openGuardDogSheet, openLetterSheet, openMirrorSheet, openPianoSheet, openSofaSheet, openWindowSheet,
+  openGuardDogSheet, openLetterSheet, openRadioSheet, openShelfSheet, openSofaSheet, openWindowSheet,
 } from "./SheetContent.js";
 import { showToast } from "./Toast.js";
 import { initToiletView, playToiletPeek, resetToiletPeek } from "./ToiletView.js";
@@ -41,6 +42,10 @@ export function initHouse() {
   house.rooms = buildRooms(handleSpot);
   initFridgeView({ onHint: setHint });
   initToiletView();
+  // The radio's power light follows the song.
+  onBackgroundSongChange((isPlaying) => {
+    document.querySelectorAll('[data-prop="Radio"]').forEach((radio) => radio.classList.toggle("is-playing", isPlaying));
+  });
   byId("ToiletBack").addEventListener("click", () => walkTo(RoomId.Bathroom, { origin: CenterOrigin, type: WalkType.Back }));
   byId("BackLabel").textContent = Content.House.Rooms.Kitchen.Name;
   byId("Back").addEventListener("click", () => walkTo(RoomId.Kitchen, { origin: CenterOrigin, type: WalkType.Back }));
@@ -139,9 +144,9 @@ export function setHint(text) {
 }
 
 const SpotActions = Object.freeze({
-  [ActionType.Mirror]: openMirrorSheet,
+  [ActionType.Shelf]: openShelfSheet,
   [ActionType.Window]: openWindowSheet,
-  [ActionType.Piano]: openPianoSheet,
+  [ActionType.Radio]: openRadioSheet,
   [ActionType.Sofa]: openSofaSheet,
   [ActionType.Letter]: openLetterSheet,
   [ActionType.GuardDog]: openGuardDogSheet,

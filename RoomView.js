@@ -1,5 +1,6 @@
 import { Content } from "./Content.js";
 import { createElement } from "./Dom.js";
+import { createProp } from "./Props.js";
 import { ArrowType, HingeType, Rooms } from "./Rooms.js";
 
 const Percent = 100;
@@ -59,7 +60,8 @@ function createScene(room, onSpot) {
   scene.style.setProperty("--ratio", `${room.Width} / ${room.Height}`);
   const doors = room.Spots.filter((spot) => spot.Leaf).flatMap((spot) => createDoor(room, spot));
   const inPhoto = room.Spots.filter((spot) => isTurnBack(spot) === false);
-  scene.append(createPhoto(room), ...doors, ...inPhoto.map((spot) => createSpot(spot, onSpot)));
+  const props = (room.Props ?? []).map(createProp);
+  scene.append(createPhoto(room), ...props, ...doors, ...inPhoto.map((spot) => createSpot(spot, onSpot)));
 
   return scene;
 }

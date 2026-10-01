@@ -14,9 +14,9 @@ export const RoomId = Object.freeze({
 
 /** What tapping a spot does; House.js maps each to a handler. */
 export const ActionType = Object.freeze({
-  Mirror: "Mirror",
+  Shelf: "Shelf",
   Window: "Window",
-  Piano: "Piano",
+  Radio: "Radio",
   Sofa: "Sofa",
   Letter: "Letter",
   GuardDog: "GuardDog",
@@ -40,44 +40,51 @@ export const HingeType = Object.freeze({ Left: "Left", Right: "Right" });
  *   the doorway (the next room's photo when left out).
  * @typedef {{ Key: string, X: number, Y: number, Action: string, To?: string, Toast?: string, Leaf?: LeafLayout, Arrow?: string }} SpotLayout
  *   a spot with an Arrow is an exit to another room, drawn as a tag on the doorway
- * @typedef {{ Id: string, Image: string, Width: number, Height: number, FocusX: number, Spots: SpotLayout[] }} RoomLayout
+ * @typedef {{ Key: string, X: number, Y: number, W: number }} PropLayout
+ *   something drawn into the photo (left, top and width as % of it), see Props.js
+ * @typedef {{ Id: string, Image: string, Width: number, Height: number, FocusX: number, Spots: SpotLayout[], Props?: PropLayout[] }} RoomLayout
  */
 
 /** @type {Readonly<Record<string, RoomLayout>>} */
 export const Rooms = Object.freeze({
+  // Every room photo is cropped to 4:3 so the rooms feel the same size.
   [RoomId.Entryway]: {
     Id: RoomId.Entryway,
     Image: "Assets/Rooms/Entryway.webp",
-    Width: 735,
-    Height: 919,
-    FocusX: 36,
+    Width: 1024,
+    Height: 768,
+    FocusX: 30,
     Spots: [
-      { Key: "Mirror", X: 58, Y: 22, Action: ActionType.Mirror },
-      { Key: "Lamp", X: 83, Y: 45, Action: ActionType.Toast, Toast: "Lamp" },
-      { Key: "Shoes", X: 58, Y: 69, Action: ActionType.Toast, Toast: "Shoes" },
+      { Key: "Shelf", X: 17, Y: 40, Action: ActionType.Shelf },
+      { Key: "Coat", X: 35, Y: 66, Action: ActionType.Toast, Toast: "Coat" },
+      { Key: "Lamp", X: 70, Y: 37, Action: ActionType.Toast, Toast: "Lamp" },
+      { Key: "Bench", X: 74, Y: 88, Action: ActionType.Toast, Toast: "Bench" },
       {
         Key: "ToLivingRoom",
-        X: 20,
-        Y: 43,
+        X: 88,
+        Y: 52,
         Action: ActionType.Door,
         To: RoomId.LivingRoom,
-        Arrow: ArrowType.Left,
-        Leaf: { X: 0, Y: 0, W: 9, H: 79.4, Hinge: HingeType.Left },
+        Arrow: ArrowType.Right,
+        // the grey door on the right wall, handle on its left, hinged on its right
+        Leaf: { X: 95.2, Y: 0, W: 4.8, H: 100, Hinge: HingeType.Right },
       },
     ],
   },
   [RoomId.LivingRoom]: {
     Id: RoomId.LivingRoom,
     Image: "Assets/Rooms/LivingRoom.webp",
-    Width: 1024,
-    Height: 683,
-    FocusX: 38,
+    Width: 961,
+    Height: 721,
+    FocusX: 62,
+    Props: [{ Key: "Radio", X: 67, Y: 67.8, W: 9 }],
     Spots: [
-      { Key: "Window", X: 89, Y: 36, Action: ActionType.Window },
-      { Key: "Piano", X: 58, Y: 58, Action: ActionType.Piano },
-      { Key: "Sofa", X: 44, Y: 70, Action: ActionType.Sofa },
-      { Key: "ToKitchen", X: 12, Y: 60, Action: ActionType.Walk, To: RoomId.Kitchen, Arrow: ArrowType.Left },
-      { Key: "ToBedroom", X: 29, Y: 44, Action: ActionType.Walk, To: RoomId.Bedroom, Arrow: ArrowType.Ahead },
+      { Key: "Window", X: 7, Y: 36, Action: ActionType.Window },
+      { Key: "Sofa", X: 48, Y: 72, Action: ActionType.Sofa },
+      { Key: "Radio", X: 71.5, Y: 72, Action: ActionType.Radio },
+      { Key: "ToKitchen", X: 9, Y: 62, Action: ActionType.Walk, To: RoomId.Kitchen, Arrow: ArrowType.Left },
+      { Key: "ToBedroom", X: 92, Y: 40, Action: ActionType.Walk, To: RoomId.Bedroom, Arrow: ArrowType.Right },
+      { Key: "ToBathroom", X: 92, Y: 56, Action: ActionType.Walk, To: RoomId.Bathroom, Arrow: ArrowType.Right },
       { Key: "ToEntryway", X: 50, Y: 90, Action: ActionType.WalkBack, To: RoomId.Entryway, Arrow: ArrowType.Behind },
     ],
   },
@@ -85,12 +92,12 @@ export const Rooms = Object.freeze({
     Id: RoomId.Kitchen,
     Image: "Assets/Rooms/Kitchen.webp",
     Width: 665,
-    Height: 619,
+    Height: 499,
     FocusX: 24,
     Spots: [
-      { Key: "Fridge", X: 9, Y: 52, Action: ActionType.Walk, To: RoomId.Fridge },
-      { Key: "Stove", X: 50, Y: 54, Action: ActionType.Toast, Toast: "Stove" },
-      { Key: "Sink", X: 83, Y: 56, Action: ActionType.Toast, Toast: "Sink" },
+      { Key: "Fridge", X: 9, Y: 54.5, Action: ActionType.Walk, To: RoomId.Fridge },
+      { Key: "Stove", X: 50, Y: 57, Action: ActionType.Toast, Toast: "Stove" },
+      { Key: "Sink", X: 83, Y: 59.5, Action: ActionType.Toast, Toast: "Sink" },
       { Key: "ToLivingRoom", X: 50, Y: 90, Action: ActionType.WalkBack, To: RoomId.LivingRoom, Arrow: ArrowType.Behind },
     ],
   },
@@ -98,36 +105,35 @@ export const Rooms = Object.freeze({
     Id: RoomId.Bedroom,
     Image: "Assets/Rooms/Bedroom.webp",
     Width: 1600,
-    Height: 1456,
+    Height: 1200,
     FocusX: 46,
     Spots: [
       { Key: "Letter", X: 28, Y: 62, Action: ActionType.Letter },
-      { Key: "GuardDog", X: 49, Y: 66, Action: ActionType.GuardDog },
-      { Key: "Blanket", X: 74, Y: 75, Action: ActionType.Toast, Toast: "Blanket" },
-      { Key: "Light", X: 49, Y: 50, Action: ActionType.LightsOut },
+      { Key: "GuardDog", X: 49, Y: 67, Action: ActionType.GuardDog },
+      { Key: "Blanket", X: 74, Y: 78, Action: ActionType.Toast, Toast: "Blanket" },
+      { Key: "Light", X: 49, Y: 47, Action: ActionType.LightsOut },
       { Key: "ToLivingRoom", X: 50, Y: 90, Action: ActionType.WalkBack, To: RoomId.LivingRoom, Arrow: ArrowType.Behind },
-      { Key: "ToBathroom", X: 92, Y: 52, Action: ActionType.Walk, To: RoomId.Bathroom, Arrow: ArrowType.Right },
     ],
   },
   [RoomId.Bathroom]: {
     Id: RoomId.Bathroom,
     Image: "Assets/Rooms/Bathroom.webp",
-    Width: 800,
+    Width: 764,
     Height: 573,
-    FocusX: 73,
+    FocusX: 75,
     Spots: [
       {
         Key: "Toilet",
-        X: 87,
+        X: 91,
         Y: 58,
         Action: ActionType.Door,
         To: RoomId.Toilet,
         // the frosted door with the gold handle, hinged on its right, drawn in perspective
-        Leaf: { X: 83.1, Y: 14.5, W: 9, H: 82.7, Hinge: HingeType.Right, Clip: "polygon(0 9.3%, 100% 0, 100% 100%, 0 88%)", Behind: "Assets/Photos/Teeth01.webp" },
+        Leaf: { X: 87, Y: 14.5, W: 9.4, H: 82.7, Hinge: HingeType.Right, Clip: "polygon(0 9.3%, 100% 0, 100% 100%, 0 88%)", Behind: "Assets/Photos/Teeth01.webp" },
       },
-      { Key: "Bathtub", X: 48, Y: 68, Action: ActionType.Toast, Toast: "Bathtub" },
-      { Key: "Sinks", X: 22, Y: 60, Action: ActionType.Toast, Toast: "Sinks" },
-      { Key: "ToBedroom", X: 50, Y: 90, Action: ActionType.WalkBack, To: RoomId.Bedroom, Arrow: ArrowType.Behind },
+      { Key: "Bathtub", X: 50, Y: 68, Action: ActionType.Toast, Toast: "Bathtub" },
+      { Key: "Sinks", X: 23, Y: 60, Action: ActionType.Toast, Toast: "Sinks" },
+      { Key: "ToLivingRoom", X: 50, Y: 90, Action: ActionType.WalkBack, To: RoomId.LivingRoom, Arrow: ArrowType.Behind },
     ],
   },
 });
