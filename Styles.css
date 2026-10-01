@@ -116,6 +116,8 @@ img { display: block; max-width: 100%; }
 
 .chip--icon { display: grid; place-items: center; width: 2.5rem; height: 2.5rem; padding: 0; font: 400 1rem/1 var(--font-note); }
 .chip--song { margin-left: auto; }
+.chip--counter { margin-left: auto; font-size: .95rem; }
+.chip--counter + .chip--song { margin-left: 0; }
 
 /* sits in the top-left corner on every screen, even the front door */
 .chip--fullscreen {
@@ -230,3 +232,18 @@ img { display: block; max-width: 100%; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+
+/* the steamed-up mirror over the soul notes */
+.fogged { position: relative; display: grid; gap: 12px; }
+.fog { position: absolute; inset: -4px; width: calc(100% + 8px); height: calc(100% + 8px); border-radius: 12px; touch-action: none; cursor: grab; transition: opacity .6s ease; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+.fog.is-clear { opacity: 0; pointer-events: none; }
+.fog__prompt { position: absolute; top: 3rem; left: 50%; translate: -50%; padding: .4rem .9rem; border-radius: 999px; background: rgba(43, 42, 39, .75); color: #F7F3EA; font: 400 1.1rem/1.1 var(--font-hand); pointer-events: none; white-space: nowrap; }
+
+/* the chore chart */
+.chores { width: 100%; border-collapse: collapse; font-size: 1.05rem; }
+.chores th, .chores td { padding: .6rem .4rem; border-bottom: 1.5px dashed color-mix(in srgb, var(--ink) 25%, transparent); text-align: left; vertical-align: top; }
+.chores th { width: 45%; font: 400 1.15rem/1.2 var(--font-hand); color: var(--clay); }
+
+/* the window pop-up: a big, slow slideshow of the view */
+.view-show { position: relative; margin: 0; aspect-ratio: 3 / 2; overflow: hidden; border-radius: 12px; background: #141311; }
+.view-show figcaption { position: absolute; left: 12px; bottom: 10px; z-index: 1; padding: .2rem .7rem; border-radius: 999px; background: rgba(20, 19, 17, .55); color: #F7F3EA; font: 400 1rem/1.2 var(--font-hand); }

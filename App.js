@@ -5,6 +5,7 @@ import { initFullscreen } from "./Fullscreen.js";
 import { initInstallHint } from "./InstallHint.js";
 import { initHouse } from "./House.js";
 import { initSheet } from "./Sheet.js";
+import { initTimeOfDay } from "./TimeOfDay.js";
 
 // [data-bind-*] attribute → where its words live in Content.
 const TextSources = Object.freeze({
@@ -31,6 +32,7 @@ function bindText() {
 
 function init() {
   bindText();
+  initTimeOfDay();
   initSheet();
   initBackgroundSong(Content.BackgroundSong);
   initHouse();

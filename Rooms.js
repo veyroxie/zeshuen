@@ -11,6 +11,7 @@ export const RoomId = Object.freeze({
   Bathroom: "Bathroom",
   Fridge: "Fridge",
   Toilet: "Toilet",
+  Lounge: "Lounge",
 });
 
 /** What tapping a spot does; House.js maps each to a handler. */
@@ -25,6 +26,7 @@ export const ActionType = Object.freeze({
   Toast: "Toast",
   Walk: "Walk",
   WalkBack: "WalkBack",
+  Lounge: "Lounge",
   Door: "Door",
 });
 
@@ -39,7 +41,7 @@ export const HingeType = Object.freeze({ Left: "Left", Right: "Right" });
  *   a door panel in the photo, as % of it, that swings open before walking through.
  *   Clip is a CSS polygon for doors drawn in perspective; Behind is what shows through
  *   the doorway (the next room's photo when left out).
- * @typedef {{ Key: string, X: number, Y: number, Action: string, To?: string, Toast?: string, Leaf?: LeafLayout, Arrow?: string }} SpotLayout
+ * @typedef {{ Key: string, X: number, Y: number, Action: string, To?: string, Toast?: string, Leaf?: LeafLayout, Arrow?: string, IsSecret?: boolean }} SpotLayout
  *   a spot with an Arrow is an exit to another room, drawn as a tag on the doorway
  * @typedef {{ Key: string, X: number, Y: number, W: number, Image?: string }} PropLayout
  *   something placed into the photo (left, top and width as % of it): a drawing from
@@ -87,6 +89,8 @@ export const Rooms = Object.freeze({
       { Key: "ToMyRoom", X: 66, Y: 48, Action: ActionType.Walk, To: RoomId.MyRoom, Arrow: ArrowType.Right },
       { Key: "ToBathroom", X: 31, Y: 40, Action: ActionType.Walk, To: RoomId.Bathroom, Arrow: ArrowType.Left },
       { Key: "ToEntryway", X: 50, Y: 90, Action: ActionType.WalkBack, To: RoomId.Entryway, Arrow: ArrowType.Behind },
+      // hidden until she's found every jar
+      { Key: "ToLounge", X: 52, Y: 30, Action: ActionType.Walk, To: RoomId.Lounge, Arrow: ArrowType.Ahead, IsSecret: true },
     ],
   },
   [RoomId.Kitchen]: {
@@ -95,10 +99,12 @@ export const Rooms = Object.freeze({
     Width: 1200,
     Height: 1440,
     FocusX: 48,
+    Props: [{ Key: "Mugs", X: 27, Y: 66.5, W: 9 }],
     Spots: [
       { Key: "Fridge", X: 42, Y: 56, Action: ActionType.Walk, To: RoomId.Fridge },
       { Key: "Stove", X: 80, Y: 75, Action: ActionType.Toast, Toast: "Stove" },
       { Key: "Sink", X: 79, Y: 62, Action: ActionType.Toast, Toast: "Sink" },
+      { Key: "Mugs", X: 34, Y: 64, Action: ActionType.Toast, Toast: "Mugs" },
       { Key: "ToLivingRoom", X: 50, Y: 90, Action: ActionType.WalkBack, To: RoomId.LivingRoom, Arrow: ArrowType.Behind },
     ],
   },
@@ -145,7 +151,19 @@ export const Rooms = Object.freeze({
         // the dark glass door on the right, hinged on its right
         Leaf: { X: 85.3, Y: 15, W: 14.7, H: 70, Hinge: HingeType.Right, Behind: "Assets/Photos/Teeth01.webp" },
       },
-      { Key: "Bathtub", X: 49, Y: 76, Action: ActionType.Toast, Toast: "Bathtub" },
+      { Key: "Bathtub", X: 30, Y: 74, Action: ActionType.Toast, Toast: "Bathtub" },
+      { Key: "ToLivingRoom", X: 50, Y: 90, Action: ActionType.WalkBack, To: RoomId.LivingRoom, Arrow: ArrowType.Behind },
+    ],
+  },
+  // the secret room: only opens once she's found every jar
+  [RoomId.Lounge]: {
+    Id: RoomId.Lounge,
+    Image: "Assets/Rooms/Lounge.webp",
+    Width: 1200,
+    Height: 1440,
+    FocusX: 48,
+    Spots: [
+      { Key: "Fireplace", X: 50, Y: 61, Action: ActionType.Lounge },
       { Key: "ToLivingRoom", X: 50, Y: 90, Action: ActionType.WalkBack, To: RoomId.LivingRoom, Arrow: ArrowType.Behind },
     ],
   },

@@ -5,6 +5,8 @@ import {
 } from "./BackgroundSong.js";
 import { Content } from "./Content.js";
 import { byId, createElement } from "./Dom.js";
+import { fogOver } from "./MirrorFog.js";
+import { createViewSlideshow } from "./WindowViews.js";
 import { createParagraphs, createPhotoFigure, openSheet } from "./Sheet.js";
 
 const SpotifyPlaylistBaseUrl = "https://open.spotify.com/playlist/";
@@ -17,16 +19,35 @@ export function openJarSheet(jar) {
   openSheet({ tag: Content.Side.Yours, title: jar.Title, children: createParagraphs(jar.Lines, "line") });
 }
 
-/** Entryway mirror: the soul notes, as what she should see when she looks at herself. */
+/** Entryway mirror: the soul notes under steamed-up glass she wipes clear with a finger. */
 export function openMirrorSheet() {
-  openSheet({ tag: Content.Side.Yours, title: Content.SheetTitle.Mirror, children: createParagraphs(Content.SoulNotes, "line") });
+  const notes = createElement("div", "fogged");
+  notes.append(...createParagraphs(Content.SoulNotes, "line"));
+  openSheet({ tag: Content.Side.Yours, title: Content.SheetTitle.Mirror, children: [notes] });
+  fogOver(notes, Content.House.Mirror.Wipe);
 }
 
-/** Living-room window: the verses in the morning light, and the worship photo. */
+/** Taped to the freezer drawer: who does what in the flat. */
+export function openChoreChartSheet() {
+  const table = createElement("table", "chores");
+  Content.House.ChoreChart.Rows.forEach(([chore, who]) => {
+    const row = createElement("tr", "");
+    row.append(createElement("th", "", chore), createElement("td", "", who));
+    table.append(row);
+  });
+  openSheet({ tag: Content.Side.Mine, title: Content.House.ChoreChart.Title, children: [table] });
+}
+
+/** The secret lounge's fireplace: the reward for finding every jar. */
+export function openLoungeSheet() {
+  openSheet({ tag: Content.Side.Mine, title: Content.House.Lounge.Title, children: createParagraphs(Content.House.Lounge.Lines, "para") });
+}
+
+/** Living-room window: the view outside, then the verses and the worship photo. */
 export function openWindowSheet() {
   const main = createVerse(Content.MainVerse, "verse verse--main");
   const others = Content.Verses.map((verse) => createVerse(verse, "verse"));
-  const children = [main, ...others, createPhotoFigure(Content.WorshipPhoto)];
+  const children = [createViewSlideshow(), main, ...others, createPhotoFigure(Content.WorshipPhoto)];
   openSheet({ tag: Content.Side.Yours, title: Content.SheetTitle.Window, children });
 }
 

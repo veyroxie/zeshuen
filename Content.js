@@ -27,18 +27,19 @@ export const Content = Object.freeze({
     Intro: {
       Sign: "happy birthday, alyssa",
       Line: "imagine if we'd moved in together back in uni",
-      Hint: "tap the handle to come in",
+      Hint: "knock twice to come in",
     },
     Rooms: {
       Entryway: { Name: "entryway", Hint: "tap the mirror. the door on the right goes to the living room" },
       LivingRoom: { Name: "living room", Hint: "tap the sofa or the radio, or head to another room. swipe for the window" },
       Kitchen: { Name: "kitchen", Hint: "tap the fridge" },
-      Door: { Name: "front door", Hint: "tap the handle to come in" },
+      Door: { Name: "front door", Hint: "knock twice to come in" },
       Bedroom: { Name: "your room", Hint: "there's a letter on your pillow. turn off the light when you're ready for bed" },
       MyRoom: { Name: "my room", Hint: "same as yours, but pink. across the hall if you need me" },
       Bathroom: { Name: "bathroom", Hint: "the toilet's behind the glass door" },
       Toilet: { Name: "toilet", Hint: "" },
-      Fridge: { Name: "fridge", HintClosed: "tap a photo, or the handles to open it", HintOpen: "tap a jar. tap a door to close it" },
+      Fridge: { Name: "fridge", HintClosed: "tap a photo or the chore chart, or the handles to open it", HintOpen: "only 3 jars made it in here. the other 3 are hiding around the flat. find them before they spoil!" },
+      Lounge: { Name: "secret lounge", Hint: "you found it. tap the fireplace" },
     },
     Spots: {
       Mirror: "the mirror",
@@ -62,6 +63,10 @@ export const Content = Object.freeze({
       ToEntryway: "entryway",
       ToBathroom: "bathroom",
       Toilet: "the toilet",
+      Mugs: "the mugs",
+      Fireplace: "the fireplace",
+      ToLounge: "???",
+      Knock: "knock knock",
       Bathtub: "the bathtub",
     },
     Toasts: {
@@ -71,13 +76,49 @@ export const Content = Object.freeze({
       Blanket: "my bed. no stealing my blanket",
       Crisper: "my section. don't steal my food (jk)",
       Bathtub: "bubble bath sundays, obviously",
+      Mugs: "matching mugs. yours is the one that says alyssa. so is mine",
+      JarFound: "found one! {found} of {total}, still fresh 🫙",
+      AllJars: "you found every jar before they spoiled! something just opened in the living room…",
       Hey: "hey alyssaa, brushing teeth soon? 🪥",
     },
     Stickers: {
       Property: "property of Alyesa",
       Roomie: "hi roomie :)",
+      RanOff: "the rest ran off! 🏃 find them before they spoil",
+      ChoreChart: "chore chart",
       Freezer: "bingsu stash",
     },
+    /** Knock twice and the door opens. */
+    Knock: { Hint: "knock twice", Second: "one more…" },
+
+    /** The steamed-up mirror she wipes with her finger. */
+    Mirror: { Wipe: "wipe the mirror ✋" },
+
+    /** Taped to the fridge's freezer drawer. */
+    ChoreChart: {
+      Title: "Chore chart",
+      Rows: [
+        ["dishes", "i wash, you dry"],
+        ["cooking", "whoever's hungrier"],
+        ["taking out the trash", "rock paper scissors, best of 3"],
+        ["buying bingsu", "both of us, always"],
+        ["hogging the bathroom", "you (with love)"],
+        ["making the bed", "lol"],
+      ],
+    },
+
+    /** The secret room, unlocked by finding every jar. Rewrite these in your own words. */
+    Lounge: {
+      Title: "You found every jar",
+      Lines: [
+        "Of course you did. You've always been good at finding the sweet things, even when they're hiding.",
+        "This is the room I'd keep just for us: blankets, the fireplace, our playlist on, and far too many snacks.",
+        "Stay as long as you want. Happy birthday, roomie ♡",
+      ],
+    },
+
+    JarCounter: "{found}/{total} jars",
+
     Install: {
       Ios: "for the full experience: tap Share, then “Add to Home Screen”, and open it from there",
       Android: "for the full experience: tap ⋮, then “Add to Home screen”, and open it from there",
@@ -253,6 +294,23 @@ export const Content = Object.freeze({
     { Src: "Assets/Photos/Teeth01.webp", Alt: "Me at the bathroom sink, back to the door", Caption: "" },
     { Src: "Assets/Photos/Teeth02.webp", Alt: "Me turning round, mid-brush, toothbrush in mouth", Caption: "" },
   ],
+
+  /** Views out of the living-room window (Unsplash, free licence: Igor Savelev, Hans Reniers,
+   *  Jason Hudson, Andris Gangis, Caroline Ross, Mike Enerio, Chanuwat Srithong, Darya Jum). */
+  Views: {
+    Day: [
+      { Src: "Assets/Views/Day01.webp", Caption: "KL at dusk" },
+      { Src: "Assets/Views/Day02.webp", Caption: "a very calm sea" },
+      { Src: "Assets/Views/Day03.webp", Caption: "misty hills at sunrise" },
+      { Src: "Assets/Views/Day04.webp", Caption: "sunset over the rooftops" },
+      { Src: "Assets/Views/Day05.webp", Caption: "cherry blossoms" },
+    ],
+    Night: [
+      { Src: "Assets/Views/Night01.webp", Caption: "Marina Bay at blue hour" },
+      { Src: "Assets/Views/Night02.webp", Caption: "too many stars" },
+      { Src: "Assets/Views/Night03.webp", Caption: "KL lights at night" },
+    ],
+  },
 
   /** Photo of the real plush, shown in the can't-sleep jar. @type {PhotoContent} */
   GuardDogPhoto: {

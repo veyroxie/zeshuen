@@ -3,6 +3,7 @@ import { byId, createElement } from "./Dom.js";
 import { createFruitMagnet } from "./FruitMagnet.js";
 import { createJarSvg } from "./JarSvg.js";
 import { openPhotoViewer } from "./PhotoViewer.js";
+import { FridgeJarCount, markJarFound } from "./JarHunt.js";
 import { openJarSheet } from "./SheetContent.js";
 
 // Three photos per French door, as % of that door. The handles sit by the middle seam
@@ -30,7 +31,7 @@ export function renderFridgeParts() {
   const rightStart = LeftDoorSnaps.length;
   byId("SnapsLeft").replaceChildren(...LeftDoorSnaps.map((spot, index) => createSnap(spot, index)));
   byId("SnapsRight").replaceChildren(...RightDoorSnaps.map((spot, index) => createSnap(spot, index + rightStart)));
-  const jars = Content.Jars.slice(0, JarSpots.length).map((jar, index) => createJar(jar, JarSpots[index]));
+  const jars = Content.Jars.slice(0, FridgeJarCount).map((jar, index) => createJar(jar, JarSpots[index], index));
   byId("Jars").replaceChildren(...jars);
 }
 
@@ -59,15 +60,19 @@ function createSnap(spot, index) {
 /**
  * @param {import("./Content.js").JarContent} jar
  * @param {{ Left: number, Top: number }} spot
+ * @param {number} index into Content.Jars
  * @returns {HTMLButtonElement}
  */
-function createJar(jar, spot) {
+function createJar(jar, spot, index) {
   const button = /** @type {HTMLButtonElement} */ (createElement("button", "shelf-jar"));
   button.type = "button";
   button.setAttribute("aria-label", `Open the ${jar.Label} jar`);
   placeAt(button, spot.Left, spot.Top);
   button.append(createJarSvg(jar));
-  button.addEventListener("click", () => openJarSheet(jar));
+  button.addEventListener("click", () => {
+    openJarSheet(jar);
+    markJarFound(index);
+  });
 
   return button;
 }

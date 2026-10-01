@@ -131,6 +131,8 @@ function createPhoto(room) {
 function createSpot(spot, onSpot) {
   const button = /** @type {HTMLButtonElement} */ (createElement("button", spotClass(spot)));
   button.type = "button";
+  button.dataset.spot = spot.Key;
+  button.hidden = spot.IsSecret === true;
   placeSpot(button, spot);
   const name = Content.House.Spots[spot.Key];
   const label = isTurnBack(spot) ? `${Content.House.BackTo} ${name}` : name;

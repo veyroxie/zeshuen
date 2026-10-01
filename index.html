@@ -35,7 +35,7 @@
           <div class="door-gap" id="DoorGap"></div>
           <div class="door-leaf" id="DoorLeaf"><p class="door-sign" data-bind-house="Sign"></p></div>
           <button class="spot" id="DoorHandle" type="button" style="left: 45.8%; top: 47.5%">
-            <span class="spot__dot"></span><span class="spot__label" data-bind-spot="Handle"></span>
+            <span class="spot__dot"></span><span class="spot__label" data-bind-spot="Knock"></span>
           </button>
         </div>
       </div>
@@ -64,6 +64,7 @@
             <div class="fridge-inside__light"></div>
             <p class="sticker sticker--wall" data-bind-sticker="Property"></p>
             <p class="sticker sticker--roomie" data-bind-sticker="Roomie"></p>
+            <p class="sticker sticker--ranoff" data-bind-sticker="RanOff"></p>
             <div class="glass-shelf" style="top: 40%"></div>
             <div class="glass-shelf" style="top: 74%"></div>
             <div class="fridge-jars" id="Jars"></div>
@@ -82,6 +83,7 @@
             </div>
           </div>
           <p class="sticker sticker--drawer" data-bind-sticker="Freezer"></p>
+          <button class="chore-card" id="ChoreChart" type="button" data-bind-sticker="ChoreChart"></button>
           <!-- dot only: a label here would cover the photos -->
           <button class="spot" id="FridgeHandle" type="button" style="left: 50%; top: 31%" aria-label="Open the fridge">
             <span class="spot__dot"></span>
@@ -120,6 +122,7 @@
   <button class="chip chip--icon chip--fullscreen" id="Fullscreen" type="button" hidden></button>
 
   <header class="bar" id="Bar" hidden>
+    <span class="chip chip--counter" id="JarCounter" hidden></span>
     <button class="chip chip--song" id="SongToggle" type="button" aria-pressed="false" hidden></button>
   </header>
 

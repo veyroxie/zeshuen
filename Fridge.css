@@ -134,5 +134,25 @@
 }
 
 .sticker--wall { left: 50%; top: 6.5%; }
+.sticker--ranoff { left: 50%; top: 56%; z-index: 3; --tilt: 2deg; white-space: normal; width: 70%; text-align: center; }
 .sticker--roomie { left: 80%; top: 77%; z-index: 3; --tilt: 5deg; }
+/* the chore chart, taped to the freezer drawer */
+.chore-card {
+  position: absolute;
+  left: 58%;
+  top: 68%;
+  z-index: 4;
+  width: 30%;
+  padding: 1.6rem .4rem .5rem;
+  border: 0;
+  background: repeating-linear-gradient(#FFFDF8 0 15px, #DCE4E7 15px 16px);
+  color: #2B2A27;
+  font: 400 .95rem/1.1 var(--font-hand);
+  box-shadow: 0 6px 12px -6px rgba(0, 0, 0, .5);
+  transform: rotate(3deg);
+  cursor: pointer;
+}
+
+.chore-card::before { content: ""; position: absolute; top: -6px; left: 50%; width: 40%; height: 14px; background: rgba(238, 207, 124, .8); translate: -50%; }
+
 .sticker--drawer { left: 22%; top: 72%; font-size: clamp(.7rem, 3.6vw, 1rem); --tilt: -5deg; }

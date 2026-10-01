@@ -1,8 +1,10 @@
 import { byId } from "./Dom.js";
 import { registerPrepareHook, setHint, walkTo, WalkType } from "./House.js";
+import { Content } from "./Content.js";
 import { animate, clearMotion, Ease, wait } from "./Motion.js";
 import { centerPan } from "./RoomView.js";
 import { RoomId } from "./Rooms.js";
+import { playCreak, playKnock } from "./Sound.js";
 
 const SwingMs = 1300;
 const StepInDelayMs = 350;
@@ -16,11 +18,14 @@ const LeafSwing = Object.freeze([
 ]);
 const GapLight = Object.freeze([{ opacity: 0 }, { opacity: 1 }]);
 
+const KnocksToOpen = 2;
+
 let isOpening = false;
+let knocks = 0;
 
 /** Wires the door handle: swing the door, let the warm light out, then step inside. */
 export function initFrontDoor() {
-  byId("DoorHandle").addEventListener("click", openFrontDoor);
+  byId("DoorHandle").addEventListener("click", knock);
   const center = () => centerPan(byId("DoorPan"), DoorFocusX);
   center();
   window.addEventListener("resize", center);
@@ -32,7 +37,21 @@ function closeFrontDoor() {
   clearMotion(byId("DoorLeaf"), byId("DoorGap"));
   byId("DoorHandle").hidden = false;
   isOpening = false;
+  knocks = 0;
   centerPan(byId("DoorPan"), DoorFocusX);
+}
+
+/** Knock, knock, and the door opens. */
+function knock() {
+  playKnock();
+  knocks += 1;
+  if (knocks < KnocksToOpen) {
+    setHint(Content.House.Knock.Second);
+
+    return;
+  }
+
+  openFrontDoor();
 }
 
 async function openFrontDoor() {
@@ -43,6 +62,7 @@ async function openFrontDoor() {
   isOpening = true;
   byId("DoorHandle").hidden = true;
   setHint("");
+  playCreak();
   animate(byId("DoorGap"), GapLight, { duration: SwingMs * 0.7, easing: Ease.Settle });
   await animate(byId("DoorLeaf"), LeafSwing, { duration: SwingMs, easing: Ease.Swing });
   await wait(StepInDelayMs);

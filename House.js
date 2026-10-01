@@ -5,9 +5,13 @@ import { onBackgroundSongChange } from "./BackgroundSong.js";
 import { animate, clearMotion, Ease, wait } from "./Motion.js";
 import { centerRoom, buildRooms } from "./RoomView.js";
 import { ActionType, HingeType, RoomId } from "./Rooms.js";
+import { initJarHunt } from "./JarHunt.js";
+import { initWindowViews } from "./WindowViews.js";
 import {
-  openGuardDogSheet, openLetterSheet, openRadioSheet, openMirrorSheet, openSofaSheet, openWindowSheet,
+  openGuardDogSheet, openLetterSheet, openLoungeSheet, openMirrorSheet, openRadioSheet, openSofaSheet, openWindowSheet,
 } from "./SheetContent.js";
+import { initLightsOut, lightsOut } from "./LightsOut.js";
+import { playClick, playCreak, playTap } from "./Sound.js";
 import { showToast } from "./Toast.js";
 import { initToiletView, playToiletPeek, resetToiletPeek } from "./ToiletView.js";
 
@@ -21,12 +25,10 @@ const WalkMs = 850;
 const ArriveDelayMs = 160;
 const CenterOrigin = "50% 55%";
 const IsCurrentClass = "is-current";
-const LightsOffMs = 1200;
 const FirstSpotSelector = ".spot:not([hidden])";
 const DoorSwingMs = 1100;
 const FreshHintClass = "is-fresh";
 const DoorPauseMs = 250;
-const LightsOnMs = 700;
 
 // Inner doors swing away from her into the next room, darkening as they turn from the light.
 const DoorSwing = Object.freeze({
@@ -39,11 +41,17 @@ const WalkFrames = Object.freeze({
   [WalkType.Back]: { Out: ["scale(1)", "scale(.86)"], In: ["scale(1.25)", "scale(1)"] },
 });
 
+let isUsingKeyboard = false;
+window.addEventListener("keydown", () => { isUsingKeyboard = true; });
+window.addEventListener("pointerdown", () => { isUsingKeyboard = false; });
+
 const house = { currentId: RoomId.Door, isWalking: false, isSwinging: false, rooms: {} };
 
 /** Builds the rooms, the bar and the fridge, and shows the front door. */
 export function initHouse() {
   house.rooms = buildRooms(handleSpot);
+  initJarHunt();
+  initWindowViews();
   initFridgeView({ onHint: setHint });
   initToiletView();
   // The radio's power light follows the song.
@@ -54,7 +62,7 @@ export function initHouse() {
   byId("ToiletBack").addEventListener("click", () => walkTo(RoomId.Bathroom, { origin: CenterOrigin, type: WalkType.Back }));
   byId("BackLabel").textContent = `${Content.House.BackTo} ${Content.House.Rooms.Kitchen.Name}`;
   byId("Back").addEventListener("click", () => walkTo(RoomId.Kitchen, { origin: CenterOrigin, type: WalkType.Back }));
-  byId("LightsOn").addEventListener("click", lightsOn);
+  initLightsOut({ isInBedroom: () => house.currentId === RoomId.Bedroom, onHint: setHint });
   setHint(Content.House.Intro.Hint);
   // The phone's back button walks back through the flat instead of leaving the site.
   history.replaceState({ room: RoomId.Door }, "");
@@ -121,8 +129,10 @@ export async function walkTo(targetId, { origin, type, history: historyMode = Hi
 
   showChrome(targetId);
   ArrivedHooks[targetId]?.();
-  // Keyboard users land on the first thing they can tap in the new room.
-  incoming.querySelector(FirstSpotSelector)?.focus({ preventScroll: true });
+  // Keyboard users land on the first thing they can tap in the new room (touch users don't need the ring).
+  if (isUsingKeyboard) {
+    incoming.querySelector(FirstSpotSelector)?.focus({ preventScroll: true });
+  }
 }
 
 /**
@@ -163,7 +173,16 @@ const PrepareHooks = new Map([
 ]);
 
 const ArrivedHooks = Object.freeze({
-  [RoomId.Toilet]: playToiletPeek,
+  [RoomId.Toilet]: () => {
+    playTap();
+    playToiletPeek();
+  },
+});
+
+// Some notes come with a little sound.
+const ToastSounds = Object.freeze({
+  Sink: playTap,
+  Lamp: playClick,
 });
 
 /**
@@ -203,7 +222,11 @@ const SpotActions = Object.freeze({
   [ActionType.Letter]: openLetterSheet,
   [ActionType.GuardDog]: openGuardDogSheet,
   [ActionType.LightsOut]: lightsOut,
-  [ActionType.Toast]: (spot) => showToast(Content.House.Toasts[spot.Toast]),
+  [ActionType.Lounge]: openLoungeSheet,
+  [ActionType.Toast]: (spot) => {
+    ToastSounds[spot.Toast]?.();
+    showToast(Content.House.Toasts[spot.Toast]);
+  },
   [ActionType.Walk]: (spot, event) => walkTo(spot.To, { origin: originFromTap(event), type: WalkType.Forward }),
   [ActionType.WalkBack]: (spot) => walkTo(spot.To, { origin: CenterOrigin, type: WalkType.Back }),
   [ActionType.Door]: (spot, event) => walkThroughDoor(spot, /** @type {HTMLElement} */ (event.currentTarget)),
@@ -222,6 +245,7 @@ async function walkThroughDoor(spot, button) {
   }
 
   house.isSwinging = true;
+  playCreak();
   const scene = button.closest(".scene");
   const leaf = scene.querySelector(`[data-leaf="${spot.Key}"]`);
   const gap = scene.querySelector(`[data-gap="${spot.Key}"]`);
@@ -258,22 +282,4 @@ function handleSpot(spot, event) {
  */
 function originFromTap(event) {
   return `${event.clientX}px ${event.clientY}px`;
-}
-
-function lightsOut() {
-  const overlay = byId("LightsOut");
-  overlay.hidden = false;
-  setHint("");
-  animate(overlay, [{ opacity: 0 }, { opacity: 1 }], { duration: LightsOffMs, easing: Ease.Settle });
-}
-
-async function lightsOn() {
-  const overlay = byId("LightsOut");
-  await animate(overlay, [{ opacity: 1 }, { opacity: 0 }], { duration: LightsOnMs, easing: Ease.Settle });
-  overlay.hidden = true;
-  clearMotion(overlay);
-  // she may have walked off while it faded
-  if (house.currentId === RoomId.Bedroom) {
-    setHint(Content.House.Rooms.Bedroom.Hint);
-  }
 }

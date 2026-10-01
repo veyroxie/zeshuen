@@ -2,6 +2,8 @@ import { Content } from "./Content.js";
 import { byId } from "./Dom.js";
 import { renderFridgeParts } from "./FridgeParts.js";
 import { animate, clearMotion, Ease } from "./Motion.js";
+import { openChoreChartSheet } from "./SheetContent.js";
+import { playFridgeHum } from "./Sound.js";
 import { showToast } from "./Toast.js";
 
 const SwingMs = 950;
@@ -13,7 +15,7 @@ const RightSwing = Object.freeze([{ transform: "rotateY(0deg)" }, { transform: "
 const LightOn = Object.freeze([{ opacity: 0 }, { opacity: 1 }]);
 
 // What can be tapped from the outside (closed) and from the inside (open).
-const OutsideIds = Object.freeze(["DoorLeftFront", "DoorRightFront", "FridgeHandle"]);
+const OutsideIds = Object.freeze(["DoorLeftFront", "DoorRightFront", "FridgeHandle", "ChoreChart"]);
 const InsideIds = Object.freeze(["DoorLeftBack", "DoorRightBack", "FridgeInside"]);
 
 const FridgeState = Object.freeze({ Closed: "Closed", Opening: "Opening", Open: "Open", Closing: "Closing" });
@@ -32,6 +34,7 @@ export function initFridgeView({ onHint }) {
   byId("DoorLeftBack").addEventListener("click", closeFridge);
   byId("DoorRightBack").addEventListener("click", closeFridge);
   byId("Crisper").addEventListener("click", () => showToast(Content.House.Toasts.Crisper));
+  byId("ChoreChart").addEventListener("click", openChoreChartSheet);
 }
 
 /** Called when she walks up to the fridge: it always starts closed. */
@@ -49,6 +52,7 @@ async function openFridge() {
   }
 
   state = FridgeState.Opening;
+  playFridgeHum();
   setFacesFor(FridgeState.Open);
   animate(byId("FridgeInside"), LightOn, { duration: LightMs, easing: Ease.Settle });
   await swingDoors(LeftSwing, RightSwing);

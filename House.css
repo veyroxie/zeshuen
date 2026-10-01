@@ -250,3 +250,25 @@
 .room-gap, .room-leaf { position: absolute; }
 .room-gap { opacity: 0; background-position: center; background-size: cover; box-shadow: inset 0 0 30px 8px rgba(0, 0, 0, .6); }
 .room-leaf { z-index: 2; }
+
+/* ---------- Time of day: the photos follow her clock ---------- */
+.scene__photo, .room-leaf, .door-leaf, .fridge-frame__photo { transition: filter 1.2s ease; }
+[data-time="Morning"] .scene__photo { filter: brightness(1.04) saturate(.92) hue-rotate(-4deg); }
+[data-time="Evening"] .scene__photo { filter: sepia(.28) saturate(1.15) brightness(.92); }
+[data-time="Night"] .scene__photo { filter: brightness(.58) saturate(.85) sepia(.25); }
+
+/* at night the room glows from its lamps, darker at the edges */
+.scene::after { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; opacity: 0; transition: opacity 1.2s ease; }
+[data-time="Evening"] .scene::after { opacity: 1; background: linear-gradient(transparent 40%, rgba(255, 150, 60, .12)); }
+[data-time="Night"] .scene::after { opacity: 1; background: radial-gradient(ellipse at 50% 45%, rgba(255, 196, 120, .22), rgba(8, 8, 14, .45) 75%); }
+
+/* runaway jars: no glowing dot, she has to spot them */
+.hidden-jar { position: absolute; z-index: 4; padding: 0; border: 0; background: none; color: #2B2A27; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.hidden-jar .jar__art { width: 100%; overflow: visible; filter: drop-shadow(0 3px 3px rgba(40, 30, 20, .45)); }
+.hidden-jar .jar__text { display: none; }
+.mug__name { fill: #2B2A27; font: 400 13px var(--font-hand); }
+
+/* views behind the living-room window glass; multiply keeps the plant and frame in front */
+.window-view { position: absolute; z-index: 1; overflow: hidden; mix-blend-mode: multiply; pointer-events: none; }
+.view-slide { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1.6s ease; }
+.view-slide.is-shown { opacity: 1; }
