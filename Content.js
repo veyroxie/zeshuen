@@ -310,8 +310,8 @@ export const Content = Object.freeze({
   /** Where her fridge notes go: from the Google Form's pre-filled link,
    *  docs.google.com/forms/d/e/<FormId>/viewform?usp=pp_url&entry.<EntryId>=... */
   ReplyForm: {
-    FormId: "",
-    EntryId: "",
+    FormId: "1FAIpQLSdn4VAzU-BcTjwGGNLv56-TLS3Cw1SFB08K040loNo6SV4sVQ",
+    EntryId: "362608031",
   },
 
   /** Voice notes from me, by where they play. */
