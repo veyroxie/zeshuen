@@ -1,4 +1,3 @@
-import { isBackgroundSongPaused, playBackgroundSong } from "./BackgroundSong.js";
 import { Content } from "./Content.js";
 import { byId } from "./Dom.js";
 import { renderFridgeParts } from "./FridgeParts.js";
@@ -50,7 +49,6 @@ async function openFridge() {
   }
 
   state = FridgeState.Opening;
-  startSongFromTap();
   setFacesFor(FridgeState.Open);
   animate(byId("FridgeInside"), LightOn, { duration: LightMs, easing: Ease.Settle });
   await swingDoors(LeftSwing, RightSwing);
@@ -93,11 +91,4 @@ function setFacesFor(doorState) {
   // the handle's glowing dot would float over the shelves
   byId("FridgeHandle").hidden = isOpen;
   InsideIds.forEach((id) => { byId(id).inert = !isOpen; });
-}
-
-// The song starts on this tap; phones only allow sound inside the tap itself, before any await.
-function startSongFromTap() {
-  if (isBackgroundSongPaused()) {
-    playBackgroundSong();
-  }
 }

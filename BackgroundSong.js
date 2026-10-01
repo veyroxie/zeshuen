@@ -8,7 +8,7 @@ const getAudio = () => /** @type {HTMLAudioElement} */ (byId("BackgroundSong"));
 
 /**
  * Wires the looping song and the small floating pause/play button.
- * Nothing plays until she opens the fridge: phones only allow sound after a tap.
+ * Nothing plays until she starts it from the radio: phones only allow sound after a tap.
  * @param {{ Src: string }} song
  */
 export function initBackgroundSong(song) {

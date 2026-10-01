@@ -69,10 +69,10 @@ export const Content = Object.freeze({
     },
     Toasts: {
       Lamp: "left the light on for you ♡",
-      Coat: "hang your coat up. you live here now",
+      Coat: "hang your coat up, get comfy",
       Bench: "sit. take your shoes off. stay a while",
-      Stove: "who's cooking tonight? (not me)",
-      Sink: "you wash, i'll dry. deal",
+      Stove: "who's cooking tonight?",
+      Sink: "i'll wash, you dry. deal",
       Blanket: "my bed. no stealing my blanket",
       Crisper: "my section. don't steal my food (jk)",
       Bathtub: "bubble bath sundays, obviously",
@@ -260,7 +260,7 @@ export const Content = Object.freeze({
     Caption: "your guard dog, reporting for duty",
   },
 
-  /** Starts when she opens the fridge, then loops. */
+  /** Plays (and loops) when she starts it from the radio or the play button. */
   BackgroundSong: {
     Src: "Assets/Audio/MiddleOfStartingOver.mp3",
   },
