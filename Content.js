@@ -24,27 +24,79 @@ export const Content = Object.freeze({
   BirthdayLabel: "01 · 10 · 2026",
   From: "Alyssa",
 
-  /** Short handwritten-font lines around the fridge. */
+  /** Every word of the walk-through: the place we almost had back in uni. */
+  House: {
+    Intro: {
+      Sign: "happy birthday, alyssa",
+      Line: "imagine if we'd moved in together back in uni",
+      Hint: "tap the handle to come in",
+    },
+    Rooms: {
+      Entryway: { Name: "entryway", Hint: "tap the mirror" },
+      LivingRoom: { Name: "living room", Hint: "tap the window, the piano or the sofa. swipe to look around" },
+      Kitchen: { Name: "kitchen", Hint: "tap the fridge" },
+      Bedroom: { Name: "bedroom", Hint: "there's a letter on your pillow" },
+      Fridge: { Name: "fridge", HintClosed: "tap a photo, or the handle to open it", HintOpen: "tap a jar. tap the door to close it" },
+    },
+    Spots: {
+      Mirror: "the mirror",
+      Lamp: "the lamp",
+      Shoes: "the shoes",
+      Window: "the window",
+      Piano: "the piano",
+      Sofa: "the sofa",
+      Fridge: "the fridge",
+      Stove: "the stove",
+      Bar: "the bar",
+      Letter: "a letter",
+      GuardDog: "the nightstand",
+      Light: "the light",
+      Blanket: "your bed",
+      Handle: "the handle",
+      Crisper: "the crisper",
+    },
+    Toasts: {
+      Lamp: "left the light on for you ♡",
+      Shoes: "our shoes, side by side",
+      Stove: "who's cooking tonight? (not me)",
+      Bar: "breakfast for two, every saturday",
+      Blanket: "your bed. no stealing my blanket",
+      Crisper: "my section. don't steal my food (jk)",
+    },
+    Stickers: {
+      Logo: "hi roomie :)",
+      DoorBin: "property of A & A",
+      Freezer: "bingsu stash",
+    },
+    LightsOut: {
+      Made: "made with love for",
+      Best: "best before: never",
+      On: "turn the lights back on",
+    },
+    GuardDog: "Your guard dog is on night duty hehe 🐶 Don't worry, it'll scare the scaries away.",
+  },
+
+  /** Short handwritten-font lines for shared controls. */
   Ui: {
-    Enter: "go to the kitchen ↓",
-    HintClosed: "tap the handle to open the fridge, or tap the photos, the recipe or the radio",
-    HintOpen: "tap a jar to open it. the letter is in the door. tap the door to close it",
-    OpenDoor: "open the fridge",
-    CloseDoor: "close the fridge",
-    Crisper: "my section. don't steal my food (jk)",
-    SheetClose: "back to the fridge",
+    SheetClose: "close",
     TypedLetter: "read the typed version",
     PlaySong: "▶ play our song",
     PauseSong: "❚❚ pause our song",
+    PlayIcon: "♫",
+    PauseIcon: "❚❚",
+    PlayLabel: "Play our song",
+    PauseLabel: "Pause our song",
     SpotifyLink: "the whole playlist on spotify ↗",
   },
 
   /** Pop-up titles for everything that isn't a jam jar. */
   SheetTitle: {
-    Honey: "The honey jar: you are so loved by God",
-    Recipe: "Recipe for your beautiful soul",
-    Letter: "A letter, tucked in the door",
+    Mirror: "What the mirror should show you",
+    Window: "Morning light: you are so loved by God",
+    Sofa: "Sit with me a sec",
+    Letter: "A letter, left on your pillow",
     Photos: "Stuck on the fridge",
+    GuardDog: "On night duty",
   },
 
   /** Which side each pop-up comes from, shown as its small label. */
@@ -54,10 +106,7 @@ export const Content = Object.freeze({
     Ours: "us",
   },
 
-  /** Recipe-card amounts, one per soul note, in order. */
-  Measures: ["a heaping cup", "a big spoonful", "a whole jar", "two cups", "a generous pinch", "to taste, forever"],
-
-  /** "Her beautiful soul" notes, shown as the recipe's ingredients. */
+  /** "Her beautiful soul" notes, shown on the entryway mirror. */
   SoulNotes: [
     "You love God even at your lowest. You trust Him to guide you through, especially on the hard days. Every day I see your faith, I believe a little more.",
     "You make everyone feel like there's someone there for them, me included, even when you've got a lot on your plate.",
@@ -67,7 +116,7 @@ export const Content = Object.freeze({
     "Thank you for being with me at my lowest. I hope I've been able to be there for yours too.",
   ],
 
-  /** The longer note, shown as the recipe's method. */
+  /** The longer note, shown when she sits on the sofa. */
   SoulClosing: [
     "I might be wrong, but it feels like you might be feeling alone right now. You don't really show it, or show that you're hurting even when you are. Maybe it's because you grew up so independent.",
     "But you never need to be ashamed of being hurt, or of feeling your feelings. I will never, ever judge you or shame you for it, and neither will any of your friends.",
@@ -187,7 +236,7 @@ export const Content = Object.freeze({
     Caption: "your guard dog, reporting for duty",
   },
 
-  /** Loops from the moment she opens the fridge. */
+  /** Starts when she opens the fridge, then loops. */
   BackgroundSong: {
     Src: "Assets/Audio/MiddleOfStartingOver.mp3",
   },

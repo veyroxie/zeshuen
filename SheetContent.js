@@ -22,22 +22,25 @@ export function openJarSheet(jar) {
   openSheet({ tag: Content.Side.Yours, title: jar.Title, children });
 }
 
-/** The glowing honey jar: the main verse, the others, and the worship photo. */
-export function openHoneySheet() {
+/** Entryway mirror: the soul notes, as what she should see when she looks at herself. */
+export function openMirrorSheet() {
+  openSheet({ tag: Content.Side.Yours, title: Content.SheetTitle.Mirror, children: createParagraphs(Content.SoulNotes, "line") });
+}
+
+/** Living-room window: the verses in the morning light, and the worship photo. */
+export function openWindowSheet() {
   const main = createVerse(Content.MainVerse, "verse verse--main");
   const others = Content.Verses.map((verse) => createVerse(verse, "verse"));
   const children = [main, ...others, createPhotoFigure(Content.WorshipPhoto)];
-  openSheet({ tag: Content.Side.Yours, title: Content.SheetTitle.Honey, children });
+  openSheet({ tag: Content.Side.Yours, title: Content.SheetTitle.Window, children });
 }
 
-/** The soul notes as ingredients, the long note as the method. */
-export function openRecipeSheet() {
-  const ingredients = Content.SoulNotes.map((note, index) => createIngredient(note, index));
-  const method = [createElement("span", "label", "method"), ...createParagraphs(Content.SoulClosing, "para")];
-  openSheet({ tag: Content.Side.Mine, title: Content.SheetTitle.Recipe, children: [...ingredients, ...method] });
+/** Living-room sofa: the long "you're not alone" note. */
+export function openSofaSheet() {
+  openSheet({ tag: Content.Side.Mine, title: Content.SheetTitle.Sofa, children: createParagraphs(Content.SoulClosing, "para") });
 }
 
-/** Photos of the handwritten pages, with the typed transcript folded underneath. */
+/** Bedroom pillow: photos of the handwritten pages, with the typed transcript folded underneath. */
 export function openLetterSheet() {
   const pages = Content.LetterPages.map((src, index) => createLetterPage(src, index));
   const typed = createElement("details", "typed");
@@ -46,21 +49,33 @@ export function openLetterSheet() {
   openSheet({ tag: Content.Side.Mine, title: Content.SheetTitle.Letter, children: [...pages, typed] });
 }
 
-/** The radio: play or pause the song, or open the whole playlist. */
-export function openRadioSheet() {
+/** Bedroom nightstand: the real guard dog, on night duty. */
+export function openGuardDogSheet() {
+  const children = [createElement("p", "line", Content.House.GuardDog), createPhotoFigure(Content.GuardDogPhoto)];
+  openSheet({ tag: Content.Side.Mine, title: Content.SheetTitle.GuardDog, children });
+}
+
+/** Living-room piano: play or pause our song, or open the whole playlist. */
+export function openPianoSheet() {
   const toggle = createElement("button", "pill", songLabel(!isBackgroundSongPaused()));
   toggle.type = "button";
   toggle.addEventListener("click", toggleBackgroundSong);
   const stopListening = onBackgroundSongChange((isPlaying) => { toggle.textContent = songLabel(isPlaying); });
   byId("Sheet").addEventListener("close", stopListening, { once: true });
+  const row = createElement("div", "player");
+  row.append(toggle, createPlaylistLink());
+  const note = createElement("p", "para", Content.Mixtape.Note);
+  openSheet({ tag: Content.Side.Mine, title: Content.Mixtape.Title, children: [note, row] });
+}
+
+/** @returns {HTMLAnchorElement} */
+function createPlaylistLink() {
   const link = /** @type {HTMLAnchorElement} */ (createElement("a", "player__link", Content.Ui.SpotifyLink));
   link.href = `${SpotifyPlaylistBaseUrl}${Content.Mixtape.SpotifyPlaylistId}`;
   link.target = "_blank";
   link.rel = "noopener";
-  const row = createElement("div", "player");
-  row.append(toggle, link);
-  const note = createElement("p", "para", Content.Mixtape.Note);
-  openSheet({ tag: Content.Side.Mine, title: Content.Mixtape.Title, children: [note, row] });
+
+  return link;
 }
 
 /**
@@ -79,19 +94,6 @@ function createVerse(verse, className) {
   quote.append(createElement("cite", "", verse.Reference));
 
   return quote;
-}
-
-/**
- * @param {string} note
- * @param {number} index
- * @returns {HTMLElement}
- */
-function createIngredient(note, index) {
-  const row = createElement("p", "line ingredient");
-  const measure = Content.Measures[index % Content.Measures.length];
-  row.append(createElement("b", "", measure), createElement("span", "", note));
-
-  return row;
 }
 
 /**

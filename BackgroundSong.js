@@ -70,6 +70,7 @@ function showToggleState(toggle, isPlaying) {
     toggle.hidden = false;
   }
 
-  toggle.textContent = isPlaying ? Content.Ui.PauseSong : Content.Ui.PlaySong;
+  toggle.textContent = isPlaying ? Content.Ui.PauseIcon : Content.Ui.PlayIcon;
+  toggle.setAttribute("aria-label", isPlaying ? Content.Ui.PauseLabel : Content.Ui.PlayLabel);
   toggle.setAttribute("aria-pressed", String(isPlaying));
 }

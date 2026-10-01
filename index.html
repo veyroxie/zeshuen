@@ -2,120 +2,100 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="robots" content="noindex, nofollow">
-  <meta name="theme-color" content="#E8E4DC">
+  <meta name="theme-color" content="#1D1C1A">
   <title>Happy Birthday, Alyssa</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍓</text></svg>">
   <link rel="preload" href="Assets/Fonts/ElyesaHand.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="Assets/Rooms/Door.webp" as="image">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@500&family=DM+Serif+Display&family=Itim&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="Styles.css">
-  <link rel="stylesheet" href="Fridge.css">
+  <link rel="stylesheet" href="House.css">
   <script type="module" src="App.js"></script>
 </head>
 <body>
-  <!-- 1. Hero -->
-  <header class="hero">
-    <p class="label">batch no. <span data-bind="Age"></span> · <span data-bind="BirthdayLabel"></span></p>
-    <h1 class="hero__title">Happy Birthday, <span class="hero__name" data-bind="Name"></span></h1>
-    <p class="stamp"><span data-bind="ShipName"></span><small>est. forever</small></p>
-    <button class="pill" id="Enter" type="button" data-bind-ui="Enter"></button>
-  </header>
-
-  <!-- 2. The fridge: photos + recipe outside, radio on top, jars and the letter inside -->
-  <main class="kitchen" id="Kitchen" aria-label="The fridge">
-    <div class="scene">
-      <button class="radio" id="Radio" type="button" aria-label="Open the radio">
-        <svg viewBox="0 0 220 160" aria-hidden="true">
-          <defs>
-            <pattern id="Tolex" width="4" height="4" patternUnits="userSpaceOnUse"><rect width="4" height="4" fill="#1C1B19"/><circle cx="1" cy="1" r=".7" fill="#2A2926"/><circle cx="3" cy="3" r=".6" fill="#252421"/></pattern>
-            <pattern id="Mesh" width="5" height="5" patternUnits="userSpaceOnUse"><rect width="5" height="5" fill="#232220"/><path d="M0 0 L5 5 M5 0 L0 5" stroke="#34322E" stroke-width=".8"/></pattern>
-            <linearGradient id="Brass" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#E9D29A"/><stop offset=".55" stop-color="#C9A45C"/><stop offset="1" stop-color="#A9853F"/></linearGradient>
-          </defs>
-          <!-- leather strap on brass rings -->
-          <path d="M38 26 q0 -24 72 -24 q72 0 72 24" fill="none" stroke="#1C1B19" stroke-width="7" stroke-linecap="round"/>
-          <circle cx="38" cy="27" r="5" fill="none" stroke="url(#Brass)" stroke-width="3"/>
-          <circle cx="182" cy="27" r="5" fill="none" stroke="url(#Brass)" stroke-width="3"/>
-          <!-- black tolex body with cream piping -->
-          <rect x="4" y="30" width="212" height="128" rx="12" fill="url(#Tolex)"/>
-          <rect x="10" y="36" width="200" height="116" rx="8" fill="none" stroke="#EDE6D6" stroke-width="1.4"/>
-          <!-- brass control panel -->
-          <rect x="18" y="42" width="184" height="24" rx="3" fill="url(#Brass)"/>
-          <circle cx="38" cy="54" r="7" fill="#1C1B19"/><path d="M38 54 v-5" stroke="#E9D29A" stroke-width="1.6"/>
-          <circle cx="64" cy="54" r="7" fill="#1C1B19"/><path d="M64 54 l4 -3" stroke="#E9D29A" stroke-width="1.6"/>
-          <circle cx="90" cy="54" r="7" fill="#1C1B19"/><path d="M90 54 l-4 -3" stroke="#E9D29A" stroke-width="1.6"/>
-          <circle cx="116" cy="54" r="7" fill="#1C1B19"/><path d="M116 54 v-5" stroke="#E9D29A" stroke-width="1.6"/>
-          <rect x="150" y="48" width="18" height="12" rx="2" fill="#1C1B19"/>
-          <circle class="radio__power" cx="186" cy="54" r="4"/>
-          <!-- mesh grille with her handwriting where the logo goes -->
-          <rect x="18" y="72" width="184" height="72" rx="4" fill="url(#Mesh)"/>
-          <text class="radio__logo" x="110" y="118" text-anchor="middle">Alyesa</text>
-        </svg>
-      </button>
-
-      <div class="fridge">
-        <div class="freezer">
-          <button class="recipe" id="Recipe" type="button">
-            <span class="recipe__kicker">recipe for:</span>
-            <span class="recipe__title">your beautiful soul</span>
-            <span class="recipe__meta">serves: everyone lucky enough to know you</span>
+  <div class="stage" id="Stage">
+    <!-- The front door. Its middle panel is a separate layer so it can swing open. -->
+    <section class="view is-current" id="DoorView" aria-label="The front door">
+      <div class="view__backdrop" style="background-image: url(Assets/Rooms/Door.webp)"></div>
+      <div class="pan" id="DoorPan">
+        <div class="scene" style="--ratio: 1200 / 1600">
+          <img class="scene__photo" src="Assets/Rooms/Door.webp" alt="Our front door: pale wood panels with a long black handle">
+          <div class="door-gap" id="DoorGap"></div>
+          <div class="door-leaf" id="DoorLeaf"><p class="door-sign" data-bind-house="Sign"></p></div>
+          <button class="spot" id="DoorHandle" type="button" style="left: 45.8%; top: 47.5%">
+            <span class="spot__dot"></span><span class="spot__label" data-bind-spot="Handle"></span>
           </button>
-          <span class="handle handle--freezer" aria-hidden="true"></span>
-        </div>
-
-        <div class="compartment">
-          <div class="interior" id="Interior" inert>
-            <div class="shelf" id="ShelfTop"></div>
-            <div class="shelf" id="ShelfMiddle"></div>
-            <div class="shelf" id="ShelfBottom"></div>
-            <button class="crisper" id="Crisper" type="button" aria-label="The crisper drawer"></button>
-          </div>
-
-          <div class="door">
-            <div class="door__face door__front" id="DoorFront">
-              <div class="door__snaps" id="Snaps"></div>
-              <button class="handle handle--door" id="Handle" type="button" aria-label="Open the fridge"></button>
-              <svg class="doodle" viewBox="0 0 90 80" aria-hidden="true">
-                <path pathLength="1" d="M34 52 q20 -10 28 -46 m0 0 l-9 8 m9 -8 l3 11"/>
-                <text x="0" y="74">open me</text>
-              </svg>
-            </div>
-            <div class="door__face door__back" id="DoorBack" inert>
-              <div class="bin">
-                <button class="envelope" id="Envelope" type="button" aria-label="Open the letter">
-                  <svg viewBox="0 0 120 80" aria-hidden="true">
-                    <rect x="2" y="2" width="116" height="76" rx="5" fill="#FFFDF8" stroke="#2B2A27" stroke-width="2"/>
-                    <path d="M2 5 l58 40 l58 -40" fill="none" stroke="#2B2A27" stroke-width="2"/>
-                    <circle cx="60" cy="44" r="11" fill="#C4704F"/>
-                    <text x="60" y="49" text-anchor="middle" font-size="13" fill="#fff">♡</text>
-                    <text class="envelope__to" x="60" y="72" text-anchor="middle">for you</text>
-                  </svg>
-                </button>
-              </div>
-              <div class="bin"></div>
-              <div class="bin"></div>
-            </div>
-          </div>
         </div>
       </div>
+      <div class="door-caption">
+        <p class="label">batch no. <span data-bind="Age"></span> · <span data-bind="BirthdayLabel"></span></p>
+        <p class="door-caption__line" data-bind-house="Line"></p>
+      </div>
+    </section>
+
+    <!-- Entryway, living room, kitchen and bedroom are built from Rooms.js. -->
+    <div id="Rooms"></div>
+
+    <!-- The fridge: a closed shot with photos on the door, and an open close-up of the shelves. -->
+    <section class="view" id="FridgeView" aria-label="The fridge" hidden>
+      <div class="view__backdrop" style="background-image: url(Assets/Rooms/Kitchen.webp)"></div>
+      <div class="fridge-shot" id="ClosedShot">
+        <div class="fridge-frame" id="FridgeFrame">
+          <img class="fridge-frame__photo" src="Assets/Rooms/FridgeClosed.webp" alt="A tall silver fridge covered in our photos">
+          <div class="fridge-lower" id="LowerSnaps"></div>
+          <div class="fridge-inside" id="FridgeInside"></div>
+          <div class="fridge-door" id="FridgeDoor">
+            <div class="fridge-door__face"></div>
+            <div class="fridge-upper" id="UpperSnaps"></div>
+          </div>
+          <!-- dot only: a label here would cover the photos -->
+          <button class="spot" id="FridgeHandle" type="button" style="left: 1.6%; top: 33%" aria-label="Open the fridge">
+            <span class="spot__dot"></span>
+          </button>
+        </div>
+      </div>
+      <div class="fridge-shot" id="OpenShot" hidden>
+        <div class="open-scene" id="OpenScene">
+          <img class="open-scene__photo" src="Assets/Rooms/FridgeOpen.webp" alt="The fridge open, its light on">
+          <div class="fridge-light"></div>
+          <div id="Jars"></div>
+          <p class="sticker" style="left: 27%; top: 11.5%; --tilt: -6deg" data-bind-sticker="Logo"></p>
+          <p class="sticker" style="left: 31%; top: 64%; --tilt: 4deg" data-bind-sticker="Freezer"></p>
+          <p class="sticker" style="left: 67%; top: 41.7%; --tilt: -3deg" data-bind-sticker="DoorBin"></p>
+          <button class="spot" id="Crisper" type="button" style="left: 30%; top: 44%">
+            <span class="spot__dot"></span><span class="spot__label" data-bind-spot="Crisper"></span>
+          </button>
+          <button class="open-door" id="OpenDoorEdge" type="button" aria-label="Close the fridge"></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bedroom lights out: the ending. -->
+    <div class="lights-out" id="LightsOut" hidden>
+      <div class="lights-out__label">
+        <p data-bind-lights="Made"></p>
+        <p class="lights-out__name" data-bind="Name"></p>
+        <p data-bind-lights="Best"></p>
+      </div>
+      <button class="pill pill--soft" id="LightsOn" type="button" data-bind-lights="On"></button>
     </div>
+  </div>
 
-    <p class="kitchen__hint" id="Hint" aria-live="polite"></p>
-    <button class="pill pill--soft" id="ToggleDoor" type="button" aria-expanded="false"></button>
-  </main>
+  <header class="bar" id="Bar" hidden>
+    <button class="chip chip--back" id="Back" type="button" hidden></button>
+    <nav class="bar__rooms" id="RoomNav" aria-label="Rooms"></nav>
+    <button class="chip chip--song" id="SongToggle" type="button" aria-pressed="false" hidden></button>
+  </header>
 
-  <!-- 3. Ending -->
-  <footer class="ending">
-    <div class="ending__label">
-      <p class="ending__made">made with love for</p>
-      <p class="ending__name" data-bind="Name"></p>
-      <p class="ending__best">best before: <strong>never</strong></p>
-    </div>
-  </footer>
+  <div class="caption" aria-live="polite">
+    <p class="toast" id="Toast"></p>
+    <p class="hint" id="Hint"></p>
+  </div>
 
-  <button class="song-toggle" id="SongToggle" type="button" aria-pressed="false" hidden></button>
   <audio id="BackgroundSong" loop preload="none"></audio>
 
   <dialog class="sheet" id="Sheet" aria-labelledby="SheetTitle">

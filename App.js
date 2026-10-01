@@ -1,40 +1,33 @@
 import { initBackgroundSong } from "./BackgroundSong.js";
 import { Content } from "./Content.js";
-import { byId, isMotionReduced } from "./Dom.js";
-import { initFridge } from "./Fridge.js";
-import { openLetterSheet, openRadioSheet, openRecipeSheet } from "./SheetContent.js";
+import { initFrontDoor } from "./FrontDoor.js";
+import { initHouse } from "./House.js";
 
-const ScrollBehavior = Object.freeze({ Smooth: "smooth", Instant: "auto" });
+// [data-bind-*] attribute → where its words live in Content.
+const TextSources = Object.freeze({
+  bind: Content,
+  bindUi: Content.Ui,
+  bindHouse: Content.House.Intro,
+  bindSpot: Content.House.Spots,
+  bindSticker: Content.House.Stickers,
+  bindLights: Content.House.LightsOut,
+});
 
-/** Copies simple values from Content into every [data-bind] element. */
+/** Fills every [data-bind-*] element from Content, so all the words stay in one file. */
 function bindText() {
-  document.querySelectorAll("[data-bind]").forEach((node) => {
-    node.textContent = String(Content[node.dataset.bind] ?? "");
+  Object.entries(TextSources).forEach(([datasetKey, source]) => {
+    const attribute = `data-${datasetKey.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`)}`;
+    document.querySelectorAll(`[${attribute}]`).forEach((node) => {
+      node.textContent = String(source[node.dataset[datasetKey]] ?? "");
+    });
   });
-  document.querySelectorAll("[data-bind-ui]").forEach((node) => {
-    node.textContent = Content.Ui[node.dataset.bindUi] ?? "";
-  });
-}
-
-function initHero() {
-  byId("Enter").addEventListener("click", () => {
-    const behavior = isMotionReduced() ? ScrollBehavior.Instant : ScrollBehavior.Smooth;
-    byId("Kitchen").scrollIntoView({ behavior, block: "start" });
-  });
-}
-
-function initFridgeExtras() {
-  byId("Recipe").addEventListener("click", openRecipeSheet);
-  byId("Radio").addEventListener("click", openRadioSheet);
-  byId("Envelope").addEventListener("click", openLetterSheet);
 }
 
 function init() {
   bindText();
   initBackgroundSong(Content.BackgroundSong);
-  initHero();
-  initFridge();
-  initFridgeExtras();
+  initHouse();
+  initFrontDoor();
 }
 
 init();
