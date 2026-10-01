@@ -1,5 +1,6 @@
 import { Content } from "./Content.js";
 import { createElement } from "./Dom.js";
+import { deferImage } from "./Preload.js";
 import { createProp } from "./Props.js";
 import { ArrowType, HingeType, Rooms } from "./Rooms.js";
 
@@ -60,7 +61,7 @@ function createScene(room, onSpot) {
   scene.style.setProperty("--ratio", `${room.Width} / ${room.Height}`);
   const doors = room.Spots.filter((spot) => spot.Leaf).flatMap((spot) => createDoor(room, spot));
   const inPhoto = room.Spots.filter((spot) => isTurnBack(spot) === false);
-  const props = (room.Props ?? []).map(createProp);
+  const props = (room.Props ?? []).map((prop) => createProp(prop, room.Id));
   scene.append(createPhoto(room), ...props, ...doors, ...inPhoto.map((spot) => createSpot(spot, onSpot)));
 
   return scene;
@@ -115,7 +116,7 @@ function backgroundOffset(start, size) {
  */
 function createPhoto(room) {
   const image = /** @type {HTMLImageElement} */ (createElement("img", "scene__photo"));
-  image.src = room.Image;
+  deferImage(image, room.Image, room.Id);
   image.alt = `Our ${Content.House.Rooms[room.Id].Name}`;
   image.decoding = "async";
 

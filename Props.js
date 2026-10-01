@@ -1,4 +1,5 @@
 import { createElement, SvgNamespace } from "./Dom.js";
+import { deferImage } from "./Preload.js";
 
 // Things drawn into a room photo. The radio is Marshall-style: black tolex, brass panel,
 // mesh grille, with her handwriting where the logo would be. Its power light follows the song.
@@ -50,14 +51,15 @@ const PropMarkup = Object.freeze({
 
 /**
  * @param {import("./Rooms.js").PropLayout} prop
+ * @param {string} roomId which room's images it loads with
  * @returns {HTMLElement}
  */
-export function createProp(prop) {
+export function createProp(prop, roomId) {
   const holder = createElement("div", "prop");
   holder.dataset.prop = prop.Key;
   Object.assign(holder.style, { left: `${prop.X}%`, top: `${prop.Y}%`, width: `${prop.W}%` });
   if (prop.Image) {
-    holder.append(createPropImage(prop.Image));
+    holder.append(createPropImage(prop.Image, roomId));
 
     return holder;
   }
@@ -73,11 +75,12 @@ export function createProp(prop) {
 
 /**
  * @param {string} src a cut-out photo with a transparent background
+ * @param {string} roomId
  * @returns {HTMLImageElement}
  */
-function createPropImage(src) {
+function createPropImage(src, roomId) {
   const image = /** @type {HTMLImageElement} */ (createElement("img", "prop__image"));
-  image.src = src;
+  deferImage(image, src, roomId);
   image.alt = "";
 
   return image;

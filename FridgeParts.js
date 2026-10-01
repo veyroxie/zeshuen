@@ -3,6 +3,8 @@ import { byId, createElement } from "./Dom.js";
 import { createFruitMagnet } from "./FruitMagnet.js";
 import { createJarSvg } from "./JarSvg.js";
 import { openPhotoViewer } from "./PhotoViewer.js";
+import { deferImage } from "./Preload.js";
+import { RoomId } from "./Rooms.js";
 import { FridgeJarCount, markJarFound } from "./JarHunt.js";
 import { openJarSheet } from "./SheetContent.js";
 
@@ -49,7 +51,7 @@ function createSnap(spot, index) {
   placeAt(snap, spot.Left, spot.Top);
   snap.style.setProperty("--tilt", `${spot.Tilt}deg`);
   const image = /** @type {HTMLImageElement} */ (createElement("img", ""));
-  image.src = photo.Src;
+  deferImage(image, photo.Src, RoomId.Fridge);
   image.alt = "";
   snap.append(createFruitMagnet(index), image);
   snap.addEventListener("click", () => openPhotoViewer(index));

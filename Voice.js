@@ -9,6 +9,15 @@ const FullVolume = 1;
 /** @type {HTMLAudioElement | null} */
 let speaking = null;
 
+/**
+ * Turns the song down under a voice note, or back up.
+ * @param {boolean} isDucked
+ */
+export function duckSong(isDucked) {
+  const song = /** @type {HTMLAudioElement} */ (byId("BackgroundSong"));
+  song.volume = isDucked ? DuckedVolume : FullVolume;
+}
+
 /** Stops whichever voice note is playing and brings the song back up. */
 export function stopVoice() {
   speaking?.pause();

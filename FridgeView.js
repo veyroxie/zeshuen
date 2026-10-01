@@ -1,11 +1,14 @@
 import { Content } from "./Content.js";
 import { byId } from "./Dom.js";
 import { renderFridgeParts } from "./FridgeParts.js";
+import { deferImage } from "./Preload.js";
+import { RoomId } from "./Rooms.js";
 import { animate, clearMotion, Ease } from "./Motion.js";
 import { openChoreChartSheet } from "./SheetContent.js";
 import { playFridgeHum } from "./Sound.js";
 import { showToast } from "./Toast.js";
 
+const FridgePhotoSrc = "Assets/Rooms/Fridge.webp";
 const SwingMs = 950;
 const LightMs = 700;
 
@@ -29,6 +32,7 @@ let setHint = () => {};
  */
 export function initFridgeView({ onHint }) {
   setHint = onHint;
+  deferImage(/** @type {HTMLImageElement} */ (byId("FridgePhoto")), FridgePhotoSrc, RoomId.Fridge);
   renderFridgeParts();
   byId("FridgeHandle").addEventListener("click", openFridge);
   byId("DoorLeftBack").addEventListener("click", closeFridge);

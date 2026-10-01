@@ -5,8 +5,9 @@ import { onBackgroundSongChange } from "./BackgroundSong.js";
 import { animate, clearMotion, Ease, wait } from "./Motion.js";
 import { centerRoom, buildRooms } from "./RoomView.js";
 import { ActionType, HingeType, RoomId } from "./Rooms.js";
-import { initJarHunt } from "./JarHunt.js";
+import { hasStartedHunt, initJarHunt } from "./JarHunt.js";
 import { initWindowViews } from "./WindowViews.js";
+import { loadRoom } from "./Preload.js";
 import {
   openGuardDogSheet, openLetterSheet, openLoungeSheet, openMirrorSheet, openRadioSheet, openSofaSheet, openWindowSheet,
 } from "./SheetContent.js";
@@ -158,6 +159,8 @@ async function crossWalk(outgoing, incoming, origin, frames) {
  * @param {HTMLElement} incoming
  */
 function prepareArrival(targetId, incoming) {
+  // jump the queue if she gets here before this room has downloaded
+  loadRoom(targetId);
   incoming.hidden = false;
   // Lights out belongs to the bedroom; walking away turns them back on.
   clearMotion(byId("LightsOut"));
@@ -200,8 +203,9 @@ function viewFor(id) {
 function showChrome(id) {
   const isFridge = id === RoomId.Fridge;
   byId("Bar").hidden = id === RoomId.Door;
-  const hint = isFridge ? Content.House.Rooms.Fridge.HintClosed : Content.House.Rooms[id]?.Hint;
-  setHint(hint ?? "");
+  const roomHint = isFridge ? Content.House.Rooms.Fridge.HintClosed : Content.House.Rooms[id]?.Hint;
+  const missionHint = hasStartedHunt() ? undefined : Content.House.Mission[id];
+  setHint(missionHint ?? roomHint ?? "");
 }
 
 /** @param {string} text */

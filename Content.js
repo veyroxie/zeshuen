@@ -120,6 +120,13 @@ export const Content = Object.freeze({
 
     JarCounter: "{found}/{total} jars",
 
+    /** Until she's found a jar, the hints lead her to the fridge. */
+    Mission: {
+      Entryway: "your first mission's in the kitchen. head through to the living room →",
+      LivingRoom: "first mission: go to the kitchen ↑ and check the fridge",
+      Kitchen: "open the fridge. your mission's inside",
+    },
+
     Reply: {
       Sticky: "leave me a note ✏️",
       Title: "Leave a note on the fridge",
@@ -150,8 +157,11 @@ export const Content = Object.freeze({
   Ui: {
     SheetClose: "Close",
     TypedLetter: "read the typed version",
-    PlayVoice: "▶ a voice note from me",
-    PauseVoice: "❚❚ pause",
+    VoiceNote: "a voice note from me",
+    PlayIconBig: "▶",
+    PauseIconBig: "❚❚",
+    Seek: "Position in the voice note",
+    Speed: "Playback speed",
     PlaySong: "▶ play our song",
     PauseSong: "❚❚ pause our song",
     EnterFullscreen: "Full screen",

@@ -3,6 +3,7 @@ import { registerPrepareHook, setHint, walkTo, WalkType } from "./House.js";
 import { Content } from "./Content.js";
 import { animate, clearMotion, Ease, wait } from "./Motion.js";
 import { centerPan } from "./RoomView.js";
+import { startPreloading } from "./Preload.js";
 import { RoomId } from "./Rooms.js";
 import { playCreak, playKnock } from "./Sound.js";
 import { playVoice } from "./Voice.js";
@@ -45,6 +46,7 @@ function closeFrontDoor() {
 /** Knock, knock, and the door opens. */
 function knock() {
   playKnock();
+  startPreloading();
   knocks += 1;
   if (knocks < KnocksToOpen) {
     setHint(Content.House.Knock.Second);

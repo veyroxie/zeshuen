@@ -1,5 +1,7 @@
 import { Content } from "./Content.js";
 import { byId, createElement } from "./Dom.js";
+import { deferImage } from "./Preload.js";
+import { RoomId } from "./Rooms.js";
 import { currentTime, TimeType } from "./TimeOfDay.js";
 
 // What's outside the living-room window, cycling slowly. Daytime views by day,
@@ -15,7 +17,7 @@ export function initWindowViews() {
   const glass = createElement("div", "window-view");
   Object.assign(glass.style, { left: `${WindowGlass.X}%`, top: `${WindowGlass.Y}%`, width: `${WindowGlass.W}%`, height: `${WindowGlass.H}%` });
   byId("LivingRoomView").querySelector(".scene").append(glass);
-  startSlideshow(glass);
+  startSlideshow(glass, null, RoomId.LivingRoom);
 }
 
 /**
@@ -25,10 +27,25 @@ export function initWindowViews() {
 export function createViewSlideshow() {
   const frame = createElement("figure", "view-show");
   const caption = createElement("figcaption", "");
-  startSlideshow(frame, caption);
+  startSlideshow(frame, caption, null);
   frame.append(caption);
 
   return frame;
+}
+
+/**
+ * @param {HTMLImageElement} image
+ * @param {string} src
+ * @param {string | null} deferToRoom
+ */
+function setSource(image, src, deferToRoom) {
+  if (deferToRoom === null) {
+    image.src = src;
+
+    return;
+  }
+
+  deferImage(image, src, deferToRoom);
 }
 
 /** @returns {{ Src: string, Caption: string }[]} */
@@ -41,13 +58,14 @@ function viewsForNow() {
 /**
  * Crossfades through the views inside a box; stops when the box leaves the page.
  * @param {HTMLElement} box
- * @param {HTMLElement} [caption]
+ * @param {HTMLElement | null} caption
+ * @param {string | null} deferToRoom load with this room instead of right away
  */
-function startSlideshow(box, caption) {
+function startSlideshow(box, caption, deferToRoom) {
   const views = viewsForNow();
   const slides = views.map((view) => {
     const image = /** @type {HTMLImageElement} */ (createElement("img", "view-slide"));
-    image.src = view.Src;
+    setSource(image, view.Src, deferToRoom);
     image.alt = view.Caption;
     image.decoding = "async";
 

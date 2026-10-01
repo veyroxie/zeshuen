@@ -272,3 +272,8 @@
 .window-view { position: absolute; z-index: 1; overflow: hidden; mix-blend-mode: multiply; pointer-events: none; }
 .view-slide { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1.6s ease; }
 .view-slide.is-shown { opacity: 1; }
+
+/* the way to her first mission glows a little warmer */
+.spot.is-mission .spot__dot { box-shadow: 0 0 0 6px rgba(238, 207, 124, .55), 0 0 22px 6px rgba(238, 207, 124, .6); }
+.spot--exit.is-mission { animation: mission-glow 1.8s ease-in-out infinite; }
+@keyframes mission-glow { 0%, 100% { box-shadow: 0 6px 18px rgba(0, 0, 0, .35), 0 0 0 4px rgba(238, 207, 124, .5); } 50% { box-shadow: 0 6px 18px rgba(0, 0, 0, .35), 0 0 0 10px rgba(238, 207, 124, .75); } }

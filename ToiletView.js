@@ -1,6 +1,8 @@
 import { Content } from "./Content.js";
 import { byId, createElement } from "./Dom.js";
 import { animate, clearMotion, Ease, wait } from "./Motion.js";
+import { deferImage } from "./Preload.js";
+import { RoomId } from "./Rooms.js";
 import { playVoice } from "./Voice.js";
 
 // She walks in on me at the sink; a beat later I turn round mid-brush.
@@ -18,7 +20,7 @@ let peekRun = 0;
 export function initToiletView() {
   const photos = Content.ToiletPhotos.map((photo, index) => {
     const image = /** @type {HTMLImageElement} */ (createElement("img", "toilet__photo"));
-    image.src = photo.Src;
+    deferImage(image, photo.Src, RoomId.Toilet);
     image.alt = photo.Alt;
     image.dataset.step = String(index);
 
