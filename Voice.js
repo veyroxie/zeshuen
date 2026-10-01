@@ -9,13 +9,23 @@ const FullVolume = 1;
 /** @type {HTMLAudioElement | null} */
 let speaking = null;
 
+/** Stops whichever voice note is playing and brings the song back up. */
+export function stopVoice() {
+  speaking?.pause();
+  speaking?.dispatchEvent(new Event("ended"));
+}
+
+/** @returns {boolean} */
+export const isVoicePlaying = () => speaking !== null;
+
 /**
  * @param {string} key one of Content.Voice's keys
+ * @returns {HTMLAudioElement | null} the note, so a button can follow when it ends
  */
 export function playVoice(key) {
   const src = Content.Voice[key];
   if (src === undefined) {
-    return;
+    return null;
   }
 
   speaking?.pause();
@@ -35,4 +45,6 @@ export function playVoice(key) {
     console.warn("Voice note could not play:", error);
     restore();
   });
+
+  return voice;
 }

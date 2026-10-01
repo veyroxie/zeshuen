@@ -6,7 +6,7 @@ import {
 import { Content } from "./Content.js";
 import { byId, createElement } from "./Dom.js";
 import { fogOver } from "./MirrorFog.js";
-import { playVoice } from "./Voice.js";
+import { isVoicePlaying, playVoice, stopVoice } from "./Voice.js";
 import { createViewSlideshow } from "./WindowViews.js";
 import { createParagraphs, createPhotoFigure, openSheet } from "./Sheet.js";
 
@@ -41,7 +41,13 @@ export function openChoreChartSheet() {
 
 /** The secret lounge's fireplace: the reward for finding every jar. */
 export function openLoungeSheet() {
-  openSheet({ tag: Content.Side.Mine, title: Content.House.Lounge.Title, children: createParagraphs(Content.House.Lounge.Lines, "para") });
+  const listen = createElement("button", "pill", Content.Ui.PlayVoice);
+  listen.type = "button";
+  listen.addEventListener("click", () => toggleLoungeVoice(listen));
+  // closing the note stops the voice note too
+  byId("Sheet").addEventListener("close", stopVoice, { once: true });
+  const children = [...createParagraphs(Content.House.Lounge.Lines, "para"), listen];
+  openSheet({ tag: Content.Side.Mine, title: Content.House.Lounge.Title, children });
 }
 
 /** Living-room window: the view outside, then the verses and the worship photo. */
@@ -95,6 +101,22 @@ function createPlaylistLink() {
   link.rel = "noopener";
 
   return link;
+}
+
+/**
+ * Plays the long lounge voice note, or pauses it.
+ * @param {HTMLElement} button
+ */
+function toggleLoungeVoice(button) {
+  if (isVoicePlaying()) {
+    stopVoice();
+
+    return;
+  }
+
+  const voice = playVoice("Lounge");
+  button.textContent = Content.Ui.PauseVoice;
+  voice?.addEventListener("ended", () => { button.textContent = Content.Ui.PlayVoice; });
 }
 
 /**

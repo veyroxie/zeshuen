@@ -150,6 +150,8 @@ export const Content = Object.freeze({
   Ui: {
     SheetClose: "Close",
     TypedLetter: "read the typed version",
+    PlayVoice: "▶ a voice note from me",
+    PauseVoice: "❚❚ pause",
     PlaySong: "▶ play our song",
     PauseSong: "❚❚ pause our song",
     EnterFullscreen: "Full screen",
@@ -319,6 +321,8 @@ export const Content = Object.freeze({
     Radio: "Assets/Voice/Recording12.m4a",
     Goodnight: "Assets/Voice/Recording13.m4a",
     Letter: "Assets/Voice/Recording14.m4a",
+    // the lounge one only plays when she taps it
+    Lounge: "Assets/Voice/Recording15.m4a",
   },
 
   /** Views out of the living-room window (Unsplash, free licence: Igor Savelev, Hans Reniers,
