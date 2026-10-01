@@ -8,7 +8,7 @@ import { ActionType, HingeType, RoomId } from "./Rooms.js";
 import { initJarHunt } from "./JarHunt.js";
 import { initWindowViews } from "./WindowViews.js";
 import { loadRoom } from "./Preload.js";
-import { completeRadioMission, missionHint, showMission } from "./Mission.js";
+import { completeLoungeMission, completeRadioMission, missionHint, showMission } from "./Mission.js";
 import {
   openGuardDogSheet, openLetterSheet, openLoungeSheet, openMirrorSheet, openRadioSheet, openSofaSheet, openWindowSheet,
 } from "./SheetContent.js";
@@ -53,7 +53,8 @@ const house = { currentId: RoomId.Door, isWalking: false, isSwinging: false, roo
 /** Builds the rooms, the bar and the fridge, and shows the front door. */
 export function initHouse() {
   house.rooms = buildRooms(handleSpot);
-  initJarHunt();
+  // every jar found: the way to the secret lounge lights up wherever she is
+  initJarHunt({ onAllFound: () => showChrome(house.currentId) });
   initWindowViews();
   initFridgeView({ onHint: setHint });
   initToiletView();
@@ -130,8 +131,9 @@ export async function walkTo(targetId, { origin, type, history: historyMode = Hi
     history.pushState({ room: targetId }, "");
   }
 
-  showChrome(targetId);
+  // arrival hooks first, so reaching the lounge clears its glow before the room is shown
   ArrivedHooks[targetId]?.();
+  showChrome(targetId);
   // Keyboard users land on the first thing they can tap in the new room (touch users don't need the ring).
   if (isUsingKeyboard) {
     incoming.querySelector(FirstSpotSelector)?.focus({ preventScroll: true });
@@ -172,7 +174,7 @@ function prepareArrival(targetId, incoming) {
   prepare();
 }
 
-// Views that aren't photo rooms set themselves up before she walks in, and the toilet's running tap plays once she's there.
+// Views that aren't photo rooms set themselves up before she walks in; some rooms do something once she's there.
 const PrepareHooks = new Map([
   [RoomId.Fridge, showClosedFridge],
   [RoomId.Toilet, resetToiletPeek],
@@ -180,6 +182,7 @@ const PrepareHooks = new Map([
 
 const ArrivedHooks = Object.freeze({
   [RoomId.Toilet]: playTap,
+  [RoomId.Lounge]: completeLoungeMission,
 });
 
 // Some notes come with a little sound.

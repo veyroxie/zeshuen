@@ -25,8 +25,15 @@ const HiddenJars = Object.freeze([
 /** @type {Set<number>} */
 const found = readFound();
 
-/** Hides the runaway jars in their rooms and shows progress so far. */
-export function initJarHunt() {
+/** @type {() => void} */
+let onAllFound = () => {};
+
+/**
+ * Hides the runaway jars in their rooms and shows progress so far.
+ * @param {{ onAllFound: () => void }} options onAllFound runs once she closes the last jar
+ */
+export function initJarHunt(options) {
+  onAllFound = options.onAllFound;
   HiddenJars.forEach((hidden) => {
     const scene = byId(`${hidden.Room}View`).querySelector(".scene");
     scene.append(createHiddenJar(hidden));
@@ -77,7 +84,10 @@ function createHiddenJar(hidden) {
 function celebrate() {
   playFound();
   if (isLoungeOpen()) {
-    afterSheetCloses(() => window.setTimeout(() => showToast(Content.House.Toasts.AllJars), AllFoundDelayMs));
+    afterSheetCloses(() => {
+      onAllFound();
+      window.setTimeout(() => showToast(Content.House.Toasts.AllJars), AllFoundDelayMs);
+    });
 
     return;
   }

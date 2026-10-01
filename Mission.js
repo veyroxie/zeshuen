@@ -1,19 +1,26 @@
 import { Content } from "./Content.js";
-import { hasStartedHunt } from "./JarHunt.js";
+import { hasStartedHunt, isLoungeOpen } from "./JarHunt.js";
 
-// The opening missions, in order: turn on the radio, then find the jars in the fridge.
-const MissionStage = Object.freeze({ Radio: "Radio", Fridge: "Fridge", Done: "Done" });
+// The missions, in order: turn on the radio, find the jars in the fridge, then (every jar found) the secret lounge.
+const MissionStage = Object.freeze({ Radio: "Radio", Fridge: "Fridge", Lounge: "Lounge", Done: "Done" });
 
 const StageSpots = Object.freeze({
   [MissionStage.Radio]: '[data-spot="Radio"]',
   [MissionStage.Fridge]: '[data-spot="ToKitchen"], [data-spot="Fridge"]',
+  // #Back is the fridge's way out, in case the last jar was in there
+  [MissionStage.Lounge]: '[data-spot="ToLivingRoom"], [data-spot="ToLounge"], #Back',
 });
 const MissionClass = "is-mission";
 
 let isRadioDone = false;
+let isLoungeFound = false;
 
 /** @returns {string} one of MissionStage */
 function currentStage() {
+  if (isLoungeOpen()) {
+    return isLoungeFound ? MissionStage.Done : MissionStage.Lounge;
+  }
+
   if (hasStartedHunt()) {
     return MissionStage.Done;
   }
@@ -41,4 +48,9 @@ export function showMission() {
 export function completeRadioMission() {
   isRadioDone = true;
   showMission();
+}
+
+/** She's walked into the secret lounge: nothing left to lead her to. */
+export function completeLoungeMission() {
+  isLoungeFound = true;
 }
