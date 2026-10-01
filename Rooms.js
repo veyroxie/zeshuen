@@ -41,8 +41,9 @@ export const HingeType = Object.freeze({ Left: "Left", Right: "Right" });
  *   the doorway (the next room's photo when left out).
  * @typedef {{ Key: string, X: number, Y: number, Action: string, To?: string, Toast?: string, Leaf?: LeafLayout, Arrow?: string }} SpotLayout
  *   a spot with an Arrow is an exit to another room, drawn as a tag on the doorway
- * @typedef {{ Key: string, X: number, Y: number, W: number }} PropLayout
- *   something drawn into the photo (left, top and width as % of it), see Props.js
+ * @typedef {{ Key: string, X: number, Y: number, W: number, Image?: string }} PropLayout
+ *   something placed into the photo (left, top and width as % of it): a drawing from
+ *   Props.js, or a cut-out photo when Image is set
  * @typedef {{ Id: string, Image: string, Width: number, Height: number, FocusX: number, Spots: SpotLayout[], Props?: PropLayout[] }} RoomLayout
  */
 
@@ -101,30 +102,30 @@ export const Rooms = Object.freeze({
       { Key: "ToLivingRoom", X: 50, Y: 90, Action: ActionType.WalkBack, To: RoomId.LivingRoom, Arrow: ArrowType.Behind },
     ],
   },
-  // her room: the letter's on her pillow, the guard dog's on her nightstand
+  // her room: the letter's on her pillow, the guard dog sits on her bed
   [RoomId.Bedroom]: {
     Id: RoomId.Bedroom,
     Image: "Assets/Rooms/Bedroom.webp",
     Width: 1200,
     Height: 1440,
     FocusX: 50,
+    Props: [{ Key: "GuardDog", X: 60, Y: 58.5, W: 12, Image: "Assets/Photos/GuardDogCutout.webp" }],
     Spots: [
-      { Key: "Letter", X: 55, Y: 63, Action: ActionType.Letter },
-      { Key: "GuardDog", X: 85, Y: 67, Action: ActionType.GuardDog },
+      { Key: "Letter", X: 38, Y: 62, Action: ActionType.Letter },
+      { Key: "GuardDog", X: 71, Y: 55, Action: ActionType.GuardDog },
       { Key: "Light", X: 14, Y: 51, Action: ActionType.LightsOut },
       { Key: "ToLivingRoom", X: 50, Y: 90, Action: ActionType.WalkBack, To: RoomId.LivingRoom, Arrow: ArrowType.Behind },
     ],
   },
-  // my room, across the hall
+  // my room, across the hall: same as hers, just pinker
   [RoomId.MyRoom]: {
     Id: RoomId.MyRoom,
     Image: "Assets/Rooms/MyRoom.webp",
     Width: 1200,
     Height: 1440,
-    FocusX: 45,
+    FocusX: 50,
     Spots: [
-      { Key: "Blanket", X: 52, Y: 67, Action: ActionType.Toast, Toast: "Blanket" },
-      { Key: "MyWindow", X: 30, Y: 40, Action: ActionType.Toast, Toast: "MyWindow" },
+      { Key: "Blanket", X: 50, Y: 68, Action: ActionType.Toast, Toast: "Blanket" },
       { Key: "ToLivingRoom", X: 50, Y: 90, Action: ActionType.WalkBack, To: RoomId.LivingRoom, Arrow: ArrowType.Behind },
     ],
   },

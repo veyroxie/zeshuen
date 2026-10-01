@@ -36,7 +36,7 @@ export const Content = Object.freeze({
       LivingRoom: { Name: "living room", Hint: "tap the sofa or the radio, or head to another room. swipe for the window" },
       Kitchen: { Name: "kitchen", Hint: "tap the fridge" },
       Bedroom: { Name: "your room", Hint: "there's a letter on your pillow. swipe to look around" },
-      MyRoom: { Name: "my room", Hint: "across the hall, if you need me" },
+      MyRoom: { Name: "my room", Hint: "same as yours, but pink. across the hall if you need me" },
       Bathroom: { Name: "bathroom", Hint: "the toilet's behind the glass door" },
       Toilet: { Name: "toilet", Hint: "" },
       Fridge: { Name: "fridge", HintClosed: "tap a photo, or the handles to open it", HintOpen: "tap a jar. tap a door to close it" },
@@ -44,7 +44,6 @@ export const Content = Object.freeze({
     Spots: {
       Mirror: "the mirror",
       Lamp: "the light",
-      MyWindow: "the window",
       Window: "the window",
       Radio: "the radio",
       Sofa: "the sofa",
@@ -52,7 +51,7 @@ export const Content = Object.freeze({
       Stove: "the stove",
       Sink: "the sink",
       Letter: "a letter",
-      GuardDog: "the nightstand",
+      GuardDog: "the guard dog",
       Light: "the light",
       Blanket: "my bed",
       ToMyRoom: "my room",
@@ -69,7 +68,6 @@ export const Content = Object.freeze({
     },
     Toasts: {
       Lamp: "left the light on for you ♡",
-      MyWindow: "i'll keep the curtains open so the mornings find you too",
       Stove: "who's cooking tonight?",
       Sink: "i'll wash, you dry. deal",
       Blanket: "my bed. no stealing my blanket",

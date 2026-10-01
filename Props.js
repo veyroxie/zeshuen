@@ -41,6 +41,12 @@ export function createProp(prop) {
   const holder = createElement("div", "prop");
   holder.dataset.prop = prop.Key;
   Object.assign(holder.style, { left: `${prop.X}%`, top: `${prop.Y}%`, width: `${prop.W}%` });
+  if (prop.Image) {
+    holder.append(createPropImage(prop.Image));
+
+    return holder;
+  }
+
   const svg = document.createElementNS(SvgNamespace, "svg");
   svg.setAttribute("viewBox", PropMarkup[prop.Key].ViewBox);
   svg.setAttribute("aria-hidden", "true");
@@ -48,4 +54,16 @@ export function createProp(prop) {
   holder.append(svg);
 
   return holder;
+}
+
+/**
+ * @param {string} src a cut-out photo with a transparent background
+ * @returns {HTMLImageElement}
+ */
+function createPropImage(src) {
+  const image = /** @type {HTMLImageElement} */ (createElement("img", "prop__image"));
+  image.src = src;
+  image.alt = "";
+
+  return image;
 }

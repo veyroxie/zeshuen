@@ -99,6 +99,7 @@
 
 /* things drawn into a photo, like the radio on the coffee table */
 .prop { position: absolute; z-index: 1; pointer-events: none; }
+.prop__image { display: block; width: 100%; filter: drop-shadow(0 8px 6px rgba(40, 30, 20, .35)); }
 .prop svg { display: block; width: 100%; overflow: visible; filter: drop-shadow(0 6px 6px rgba(30, 24, 16, .45)); }
 .radio__power { fill: #5A4A2A; transition: fill .3s; }
 .is-playing .radio__power { fill: #FFB347; }
