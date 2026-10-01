@@ -1,13 +1,20 @@
 import { Content } from "./Content.js";
 import { byId } from "./Dom.js";
+import { getContext } from "./Sound.js";
 
 const AudioEvent = Object.freeze({ Play: "play", Pause: "pause" });
 
 /** @returns {HTMLAudioElement} */
 const getAudio = () => /** @type {HTMLAudioElement} */ (byId("BackgroundSong"));
 
-// iPhones ignore volume set from code, so a voice note pauses the song instead of ducking it.
-let isHeldForVoice = false;
+// iPhones ignore volume set from code, so the song runs through a Web Audio gain that can be turned down.
+const LoweredGain = 0.2;
+const FullGain = 1;
+// fade time constant in seconds: the fade is mostly done after about three of these
+const FadeSeconds = 0.15;
+
+/** @type {GainNode | null} */
+let songGain = null;
 
 /**
  * Wires the looping song and the small floating pause/play button.
@@ -25,13 +32,12 @@ export function initBackgroundSong(song) {
 
 /** Starts the song (from a tap). The floating toggle appears once it's actually playing. */
 export function playBackgroundSong() {
+  routeThroughGain();
   getAudio().play().catch((error) => console.warn("Background song could not start:", error));
 }
 
 /** Pauses the song if it's playing, otherwise starts it. */
 export function toggleBackgroundSong() {
-  // her own tap wins over resuming after a voice note
-  isHeldForVoice = false;
   if (isBackgroundSongPaused()) {
     playBackgroundSong();
 
@@ -41,24 +47,36 @@ export function toggleBackgroundSong() {
   getAudio().pause();
 }
 
-/** Pauses the song under a voice note, if it's playing. */
-export function holdBackgroundSong() {
-  if (isBackgroundSongPaused()) {
-    return;
-  }
-
-  isHeldForVoice = true;
-  getAudio().pause();
+/** Fades the song down under a voice note. */
+export function lowerBackgroundSong() {
+  fadeSongTo(LoweredGain);
 }
 
-/** Resumes the song after a voice note, only if the note was what paused it. */
-export function releaseBackgroundSong() {
-  if (isHeldForVoice === false) {
+/** Fades the song back up after a voice note. */
+export function restoreBackgroundSong() {
+  fadeSongTo(FullGain);
+}
+
+/** @param {number} level */
+function fadeSongTo(level) {
+  if (songGain === null) {
     return;
   }
 
-  isHeldForVoice = false;
-  playBackgroundSong();
+  const now = songGain.context.currentTime;
+  songGain.gain.cancelScheduledValues(now);
+  songGain.gain.setTargetAtTime(level, now, FadeSeconds);
+}
+
+/** Connects the song to the gain the first time it plays; an element can only be connected once. */
+function routeThroughGain() {
+  const context = getContext();
+  if (songGain !== null || context === null) {
+    return;
+  }
+
+  songGain = context.createGain();
+  context.createMediaElementSource(getAudio()).connect(songGain).connect(context.destination);
 }
 
 /** @returns {boolean} */

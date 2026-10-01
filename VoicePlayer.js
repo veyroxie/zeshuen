@@ -1,4 +1,4 @@
-import { holdBackgroundSong, releaseBackgroundSong } from "./BackgroundSong.js";
+import { lowerBackgroundSong, restoreBackgroundSong } from "./BackgroundSong.js";
 import { Content } from "./Content.js";
 import { byId, createElement } from "./Dom.js";
 import { stopVoice } from "./Voice.js";
@@ -20,7 +20,7 @@ export function createVoicePlayer(src) {
   audio.preload = "metadata";
   const parts = buildParts();
   wire(audio, parts);
-  // closing the note stops it, and its pause event brings the song back
+  // closing the note stops it, and its pause event brings the song back up
   byId("Sheet").addEventListener("close", () => audio.pause(), { once: true });
 
   return parts.root;
@@ -59,8 +59,8 @@ function wire(audio, { play, bar, time, speed }) {
   };
   audio.addEventListener("loadedmetadata", showTime);
   audio.addEventListener("timeupdate", showTime);
-  audio.addEventListener("play", () => { play.textContent = Content.Ui.PauseIconBig; play.setAttribute("aria-label", Content.Ui.PauseVoiceLabel); holdBackgroundSong(); });
-  audio.addEventListener("pause", () => { play.textContent = Content.Ui.PlayIconBig; play.setAttribute("aria-label", Content.Ui.PlayVoiceLabel); releaseBackgroundSong(); });
+  audio.addEventListener("play", () => { play.textContent = Content.Ui.PauseIconBig; play.setAttribute("aria-label", Content.Ui.PauseVoiceLabel); lowerBackgroundSong(); });
+  audio.addEventListener("pause", () => { play.textContent = Content.Ui.PlayIconBig; play.setAttribute("aria-label", Content.Ui.PlayVoiceLabel); restoreBackgroundSong(); });
   audio.addEventListener("ended", () => { audio.currentTime = 0; showTime(); });
   play.addEventListener("click", () => togglePlay(audio));
   bar.addEventListener("input", () => seek(audio, Number(bar.value)));

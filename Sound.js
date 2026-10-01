@@ -5,8 +5,8 @@
 /** @type {AudioContext | null} */
 let context = null;
 
-/** @returns {AudioContext | null} */
-function getContext() {
+/** @returns {AudioContext | null} the shared context, started if a tap has allowed it */
+export function getContext() {
   const AudioContextType = window.AudioContext ?? window.webkitAudioContext;
   if (AudioContextType === undefined) {
     return null;

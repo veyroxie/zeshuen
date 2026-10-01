@@ -1,7 +1,7 @@
-import { holdBackgroundSong, releaseBackgroundSong } from "./BackgroundSong.js";
+import { lowerBackgroundSong, restoreBackgroundSong } from "./BackgroundSong.js";
 import { Content } from "./Content.js";
 
-// Short voice notes from me. The song pauses under them so she can hear me.
+// Short voice notes from me. The song fades down under them so she can hear me.
 
 /** @type {HTMLAudioElement | null} */
 let speaking = null;
@@ -25,11 +25,11 @@ export function playVoice(key) {
   speaking?.pause();
   const voice = new Audio(src);
   speaking = voice;
-  holdBackgroundSong();
+  lowerBackgroundSong();
   const restore = () => {
     if (speaking === voice) {
       speaking = null;
-      releaseBackgroundSong();
+      restoreBackgroundSong();
     }
   };
   voice.addEventListener("ended", restore);
