@@ -322,7 +322,7 @@ export const Content = Object.freeze({
     Goodnight: "Assets/Voice/Recording13.m4a",
     Letter: "Assets/Voice/Recording14.m4a",
     // the lounge one only plays when she taps it
-    Lounge: "Assets/Voice/Recording15.m4a",
+    Lounge: "Assets/Voice/Recording16.m4a",
   },
 
   /** Views out of the living-room window (Unsplash, free licence: Igor Savelev, Hans Reniers,
