@@ -97,6 +97,8 @@ export const Content = Object.freeze({
     TypedLetter: "read the typed version",
     PlaySong: "▶ play our song",
     PauseSong: "❚❚ pause our song",
+    EnterFullscreen: "Full screen",
+    ExitFullscreen: "Exit full screen",
     PlayIcon: "♫",
     PauseIcon: "❚❚",
     PlayLabel: "Play our song",

@@ -71,7 +71,7 @@
   border-radius: 999px;
   background: var(--glass);
   color: var(--glass-ink);
-  font: 400 1.05rem/1.2 var(--font-hand);
+  font: 400 .95rem/1.2 var(--font-hand);
   white-space: nowrap;
   -webkit-backdrop-filter: blur(6px);
   backdrop-filter: blur(6px);
@@ -80,7 +80,7 @@
 /* exits: a doorway tag with an arrow, so the way out is never a guess */
 .spot--exit {
   gap: 6px;
-  padding: 7px 14px 7px 11px;
+  padding: .45em .9em .45em .7em;
   border-radius: 999px;
   background: rgba(247, 243, 234, .95);
   color: #2B2A27;
@@ -89,11 +89,11 @@
   animation: exit-glow 2.6s ease-in-out infinite;
 }
 
-.spot--exit .spot__label { padding: 0; background: none; color: inherit; font-size: 1.15rem; -webkit-backdrop-filter: none; backdrop-filter: none; }
+.spot--exit .spot__label { padding: 0; background: none; color: inherit; font-size: 1rem; -webkit-backdrop-filter: none; backdrop-filter: none; }
 /* turning back is always in the same corner, above the hint */
 .spot--behind { top: auto; left: 16px; bottom: calc(118px + env(safe-area-inset-bottom, 0px)); z-index: 6; transform: none; }
 
-.spot__arrow { font: 600 1.05rem/1 var(--font-note); color: #C4704F; }
+.spot__arrow { font: 600 .95rem/1 var(--font-note); color: #C4704F; }
 
 @keyframes exit-glow { 0%, 100% { box-shadow: 0 6px 18px rgba(0, 0, 0, .35), 0 0 0 4px rgba(255, 246, 220, .2); } 50% { box-shadow: 0 6px 18px rgba(0, 0, 0, .35), 0 0 0 8px rgba(255, 246, 220, .35); } }
 
@@ -162,7 +162,7 @@
 }
 
 .door-caption .label { color: #E9E1D2; }
-.door-caption__line { margin: 0; color: #FFFBF3; font: 400 1.35rem/1.25 var(--font-hand); text-shadow: 0 2px 12px rgba(0, 0, 0, .7); }
+.door-caption__line { margin: 0; color: #FFFBF3; font: 400 1.25rem/1.25 var(--font-hand); text-shadow: 0 2px 12px rgba(0, 0, 0, .7); }
 
 /* ---------- Toilet: the two photos stacked, the second fades in ---------- */
 .toilet { position: absolute; inset: 0; display: grid; place-items: center; }

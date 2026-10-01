@@ -79,7 +79,7 @@ export const Rooms = Object.freeze({
     FocusX: 50,
     Props: [{ Key: "Radio", X: 48, Y: 69.5, W: 11 }],
     Spots: [
-      { Key: "Window", X: 88, Y: 45, Action: ActionType.Window },
+      { Key: "Window", X: 90, Y: 30, Action: ActionType.Window },
       { Key: "Sofa", X: 22, Y: 64, Action: ActionType.Sofa },
       { Key: "Radio", X: 53.5, Y: 75, Action: ActionType.Radio },
       { Key: "ToKitchen", X: 43, Y: 58, Action: ActionType.Walk, To: RoomId.Kitchen, Arrow: ArrowType.Ahead },

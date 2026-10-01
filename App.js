@@ -1,6 +1,7 @@
 import { initBackgroundSong } from "./BackgroundSong.js";
 import { Content } from "./Content.js";
 import { initFrontDoor } from "./FrontDoor.js";
+import { initFullscreen } from "./Fullscreen.js";
 import { initHouse } from "./House.js";
 import { initSheet } from "./Sheet.js";
 
@@ -32,6 +33,7 @@ function init() {
   initBackgroundSong(Content.BackgroundSong);
   initHouse();
   initFrontDoor();
+  initFullscreen();
 }
 
 init();

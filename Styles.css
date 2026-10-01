@@ -52,7 +52,8 @@
 *, *::before, *::after { box-sizing: border-box; }
 
 html, body { height: 100%; }
-html { -webkit-text-size-adjust: 100%; }
+/* every size is in rem, so the whole page scales with the screen: ~14px on a phone, up to 17px on a laptop */
+html { -webkit-text-size-adjust: 100%; font-size: clamp(13px, 1.5vmin + 8.5px, 17px); }
 
 body {
   margin: 0;
@@ -113,7 +114,20 @@ img { display: block; max-width: 100%; }
   backdrop-filter: blur(8px);
 }
 
-.chip--song { display: grid; place-items: center; width: 38px; height: 38px; margin-left: auto; padding: 0; font: 400 1rem/1 var(--font-note); }
+.chip--icon { display: grid; place-items: center; width: 2.5rem; height: 2.5rem; padding: 0; font: 400 1rem/1 var(--font-note); }
+.chip--song { margin-left: auto; }
+
+/* sits in the top-left corner on every screen, even the front door */
+.chip--fullscreen {
+  position: fixed;
+  top: calc(10px + env(safe-area-inset-top, 0px));
+  left: 12px;
+  z-index: 45;
+}
+
+/* hints say their piece, then get out of the way */
+.hint.is-fresh { animation: hint-fade 7s ease forwards; }
+@keyframes hint-fade { 0%, 80% { opacity: 1; } 100% { opacity: 0; visibility: hidden; } }
 
 /* ---------- Bottom caption: hint + toast ---------- */
 .caption {

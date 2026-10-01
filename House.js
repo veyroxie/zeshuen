@@ -21,6 +21,7 @@ const IsCurrentClass = "is-current";
 const LightsOffMs = 1200;
 const FirstSpotSelector = ".spot:not([hidden])";
 const DoorSwingMs = 1100;
+const FreshHintClass = "is-fresh";
 const DoorPauseMs = 250;
 
 // Inner doors swing away from her into the next room, darkening as they turn from the light.
@@ -141,7 +142,12 @@ function showChrome(id) {
 
 /** @param {string} text */
 export function setHint(text) {
-  byId("Hint").textContent = text;
+  const hint = byId("Hint");
+  hint.textContent = text;
+  // restart the fade so each new hint gets its few seconds
+  hint.classList.remove(FreshHintClass);
+  void hint.offsetWidth;
+  hint.classList.add(FreshHintClass);
 }
 
 const SpotActions = Object.freeze({
