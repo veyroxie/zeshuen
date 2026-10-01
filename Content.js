@@ -120,11 +120,17 @@ export const Content = Object.freeze({
 
     JarCounter: "{found}/{total} jars",
 
-    /** Until she's found a jar, the hints lead her to the fridge. */
+    /** Until she's found a jar, the hints lead her to the radio, then the fridge. */
     Mission: {
-      Entryway: "your mission's in the kitchen. head through to the living room →",
-      LivingRoom: "your mission: go to the kitchen ↑ and check the fridge",
-      Kitchen: "open the fridge. your mission's inside",
+      Radio: {
+        Entryway: "your mission starts in the living room. head through the door →",
+        LivingRoom: "first, turn on the radio",
+      },
+      Fridge: {
+        Entryway: "your mission's in the kitchen. head through to the living room →",
+        LivingRoom: "now go to the kitchen ↑ and check the fridge",
+        Kitchen: "open the fridge. your mission's inside",
+      },
     },
 
     Reply: {

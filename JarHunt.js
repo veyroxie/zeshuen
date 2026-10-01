@@ -14,8 +14,6 @@ export const FridgeJarCount = 3;
 const StorageKey = "Alyesa.JarsFound";
 const SecretSpotSelector = '[data-spot="ToLounge"]';
 const AllFoundDelayMs = 900;
-const MissionSelector = '[data-spot="ToKitchen"], [data-spot="Fridge"]';
-const MissionClass = "is-mission";
 
 // Where the runaway jars hide, as % of each room photo (index into Content.Jars).
 const HiddenJars = Object.freeze([
@@ -88,8 +86,6 @@ function celebrate() {
 }
 
 function showProgress() {
-  // the way to the fridge glows until she's found her first jar
-  document.querySelectorAll(MissionSelector).forEach((spot) => spot.classList.toggle(MissionClass, hasStartedHunt() === false));
   const counter = byId("JarCounter");
   counter.hidden = found.size === 0;
   counter.textContent = fill(Content.House.JarCounter);

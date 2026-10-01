@@ -5,14 +5,16 @@ import { onBackgroundSongChange } from "./BackgroundSong.js";
 import { animate, clearMotion, Ease, wait } from "./Motion.js";
 import { centerRoom, buildRooms } from "./RoomView.js";
 import { ActionType, HingeType, RoomId } from "./Rooms.js";
-import { hasStartedHunt, initJarHunt } from "./JarHunt.js";
+import { initJarHunt } from "./JarHunt.js";
 import { initWindowViews } from "./WindowViews.js";
 import { loadRoom } from "./Preload.js";
+import { completeRadioMission, missionHint, showMission } from "./Mission.js";
 import {
   openGuardDogSheet, openLetterSheet, openLoungeSheet, openMirrorSheet, openRadioSheet, openSofaSheet, openWindowSheet,
 } from "./SheetContent.js";
 import { initLightsOut, lightsOut } from "./LightsOut.js";
 import { playClick, playCreak, playTap } from "./Sound.js";
+import { afterSheetCloses } from "./Sheet.js";
 import { showToast } from "./Toast.js";
 import { initToiletView, resetToiletPeek } from "./ToiletView.js";
 
@@ -195,15 +197,15 @@ function viewFor(id) {
 }
 
 /**
- * Shows the bar once she's inside, with the way back only at the fridge.
+ * Shows the bar once she's inside, sets the room's hint and lights up the current mission.
  * @param {string} id one of RoomId
  */
 function showChrome(id) {
   const isFridge = id === RoomId.Fridge;
   byId("Bar").hidden = id === RoomId.Door;
   const roomHint = isFridge ? Content.House.Rooms.Fridge.HintClosed : Content.House.Rooms[id]?.Hint;
-  const missionHint = hasStartedHunt() ? undefined : Content.House.Mission[id];
-  setHint(missionHint ?? roomHint ?? "");
+  setHint(missionHint(id) ?? roomHint ?? "");
+  showMission();
 }
 
 /** @param {string} text */
@@ -219,7 +221,12 @@ export function setHint(text) {
 const SpotActions = Object.freeze({
   [ActionType.Mirror]: openMirrorSheet,
   [ActionType.Window]: openWindowSheet,
-  [ActionType.Radio]: openRadioSheet,
+  [ActionType.Radio]: () => {
+    openRadioSheet();
+    completeRadioMission();
+    // once she closes it, the hint and the glow move on to the kitchen
+    afterSheetCloses(() => showChrome(house.currentId));
+  },
   [ActionType.Sofa]: openSofaSheet,
   [ActionType.Letter]: openLetterSheet,
   [ActionType.GuardDog]: openGuardDogSheet,
