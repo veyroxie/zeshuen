@@ -1,6 +1,6 @@
 import { Content } from "./Content.js";
 import { createElement } from "./Dom.js";
-import { Rooms } from "./Rooms.js";
+import { HingeType, Rooms } from "./Rooms.js";
 
 const Percent = 100;
 // Spots right of the middle put their label on the left so it stays on screen.
@@ -55,9 +55,52 @@ function buildRoom(room, onSpot) {
 function createScene(room, onSpot) {
   const scene = createElement("div", "scene");
   scene.style.setProperty("--ratio", `${room.Width} / ${room.Height}`);
-  scene.append(createPhoto(room), ...room.Spots.map((spot) => createSpot(spot, onSpot)));
+  const doors = room.Spots.filter((spot) => spot.Leaf).flatMap((spot) => createDoor(room, spot));
+  scene.append(createPhoto(room), ...doors, ...room.Spots.map((spot) => createSpot(spot, onSpot)));
 
   return scene;
+}
+
+/**
+ * A door in the photo that can swing open: the panel is cut from the room photo so it
+ * lines up exactly, and behind it the next room waits, darkened.
+ * @param {import("./Rooms.js").RoomLayout} room
+ * @param {import("./Rooms.js").SpotLayout} spot
+ * @returns {HTMLElement[]} the gap behind, then the panel
+ */
+function createDoor(room, spot) {
+  const gap = createElement("div", "room-gap");
+  const leaf = createElement("div", "room-leaf");
+  [gap, leaf].forEach((element) => placeRect(element, spot.Leaf));
+  gap.style.backgroundImage = `url(${Rooms[spot.To].Image})`;
+  gap.dataset.gap = spot.Key;
+  leaf.dataset.leaf = spot.Key;
+  leaf.style.backgroundImage = `url(${room.Image})`;
+  leaf.style.backgroundSize = `${(Percent / spot.Leaf.W) * Percent}% ${(Percent / spot.Leaf.H) * Percent}%`;
+  leaf.style.backgroundPosition = `${backgroundOffset(spot.Leaf.X, spot.Leaf.W)}% ${backgroundOffset(spot.Leaf.Y, spot.Leaf.H)}%`;
+  leaf.style.transformOrigin = spot.Leaf.Hinge === HingeType.Left ? "left center" : "right center";
+
+  return [gap, leaf];
+}
+
+/**
+ * @param {HTMLElement} element
+ * @param {import("./Rooms.js").LeafLayout} rect
+ */
+function placeRect(element, rect) {
+  Object.assign(element.style, { left: `${rect.X}%`, top: `${rect.Y}%`, width: `${rect.W}%`, height: `${rect.H}%` });
+}
+
+/**
+ * background-position % that shows the photo's [start, start + size] window in a box that big.
+ * @param {number} start percent of the photo
+ * @param {number} size percent of the photo
+ * @returns {number}
+ */
+function backgroundOffset(start, size) {
+  const leftover = Percent - size;
+
+  return leftover > 0 ? (start / leftover) * Percent : 0;
 }
 
 /**

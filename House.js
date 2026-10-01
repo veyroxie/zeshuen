@@ -1,9 +1,9 @@
 import { Content } from "./Content.js";
 import { byId, createElement } from "./Dom.js";
 import { initFridgeView, showClosedFridge } from "./FridgeView.js";
-import { animate, clearMotion, Ease } from "./Motion.js";
+import { animate, clearMotion, Ease, wait } from "./Motion.js";
 import { centerRoom, buildRooms } from "./RoomView.js";
-import { ActionType, NavRooms, RoomId } from "./Rooms.js";
+import { ActionType, HingeType, NavRooms, RoomId } from "./Rooms.js";
 import {
   openGuardDogSheet, openLetterSheet, openMirrorSheet, openPianoSheet, openSofaSheet, openWindowSheet,
 } from "./SheetContent.js";
@@ -18,6 +18,14 @@ const CenterOrigin = "50% 55%";
 const IsCurrentClass = "is-current";
 const LightsOffMs = 1200;
 const FirstSpotSelector = ".spot:not([hidden])";
+const DoorSwingMs = 1100;
+const DoorPauseMs = 250;
+
+// Inner doors swing away from her into the next room, darkening as they turn from the light.
+const DoorSwing = Object.freeze({
+  [HingeType.Left]: [{ transform: "rotateY(0deg)", filter: "brightness(1)" }, { transform: "rotateY(82deg)", filter: "brightness(.5)" }],
+  [HingeType.Right]: [{ transform: "rotateY(0deg)", filter: "brightness(1)" }, { transform: "rotateY(-82deg)", filter: "brightness(.5)" }],
+});
 const LightsOnMs = 700;
 
 const WalkFrames = Object.freeze({
@@ -25,7 +33,7 @@ const WalkFrames = Object.freeze({
   [WalkType.Back]: { Out: ["scale(1)", "scale(.86)"], In: ["scale(1.25)", "scale(1)"] },
 });
 
-const house = { currentId: RoomId.Door, isWalking: false, rooms: {} };
+const house = { currentId: RoomId.Door, isWalking: false, isSwinging: false, rooms: {} };
 
 /** Builds the rooms, the bar and the fridge, and shows the front door. */
 export function initHouse() {
@@ -148,7 +156,43 @@ const SpotActions = Object.freeze({
   [ActionType.LightsOut]: lightsOut,
   [ActionType.Toast]: (spot) => showToast(Content.House.Toasts[spot.Toast]),
   [ActionType.Walk]: (spot, event) => walkTo(spot.To, { origin: originFromTap(event), type: WalkType.Forward }),
+  [ActionType.WalkBack]: (spot) => walkTo(spot.To, { origin: CenterOrigin, type: WalkType.Back }),
+  [ActionType.Door]: (spot, event) => walkThroughDoor(spot, /** @type {HTMLElement} */ (event.currentTarget)),
 });
+
+/**
+ * Swings a door in the photo open (the next room glows behind it), then walks through.
+ * The door is shut again by the time she comes back.
+ * @param {import("./Rooms.js").SpotLayout} spot
+ * @param {HTMLElement} button the tapped spot, inside the room's scene
+ */
+async function walkThroughDoor(spot, button) {
+  const isBusy = house.isWalking || house.isSwinging;
+  if (isBusy) {
+    return;
+  }
+
+  house.isSwinging = true;
+  const scene = button.closest(".scene");
+  const leaf = scene.querySelector(`[data-leaf="${spot.Key}"]`);
+  const gap = scene.querySelector(`[data-gap="${spot.Key}"]`);
+  animate(gap, [{ opacity: 0 }, { opacity: 1 }], { duration: DoorSwingMs * 0.7, easing: Ease.Settle });
+  await animate(leaf, DoorSwing[spot.Leaf.Hinge], { duration: DoorSwingMs, easing: Ease.Swing });
+  await wait(DoorPauseMs);
+  await walkTo(spot.To, { origin: centerOf(gap), type: WalkType.Forward });
+  clearMotion(leaf, gap);
+  house.isSwinging = false;
+}
+
+/**
+ * @param {Element} element
+ * @returns {string} its middle on screen, as a CSS transform-origin
+ */
+function centerOf(element) {
+  const box = element.getBoundingClientRect();
+
+  return `${box.left + box.width / 2}px ${box.top + box.height / 2}px`;
+}
 
 /**
  * @param {import("./Rooms.js").SpotLayout} spot

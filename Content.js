@@ -32,8 +32,8 @@ export const Content = Object.freeze({
       Hint: "tap the handle to come in",
     },
     Rooms: {
-      Entryway: { Name: "entryway", Hint: "tap the mirror" },
-      LivingRoom: { Name: "living room", Hint: "tap the window, the piano or the sofa. swipe to look around" },
+      Entryway: { Name: "entryway", Hint: "tap the mirror. the door on the left goes to the living room" },
+      LivingRoom: { Name: "living room", Hint: "tap the window, the piano or the sofa, or head to the kitchen or bedroom. swipe to look around" },
       Kitchen: { Name: "kitchen", Hint: "tap the fridge" },
       Bedroom: { Name: "bedroom", Hint: "there's a letter on your pillow" },
       Fridge: { Name: "fridge", HintClosed: "tap a photo, or the handle to open it", HintOpen: "tap a jar. tap the door to close it" },
@@ -54,6 +54,9 @@ export const Content = Object.freeze({
       Blanket: "your bed",
       Handle: "the handle",
       Crisper: "the crisper",
+      ToLivingRoom: "living room",
+      ToKitchen: "kitchen",
+      ToBedroom: "bedroom",
     },
     Toasts: {
       Lamp: "left the light on for you ♡",
