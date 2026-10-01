@@ -3,7 +3,7 @@ import { createElement, SvgNamespace } from "./Dom.js";
 // Things drawn into a room photo. The radio is Marshall-style: black tolex, brass panel,
 // mesh grille, with her handwriting where the logo would be. Its power light follows the song.
 const PropMarkup = Object.freeze({
-  // two matching mugs on the counter, both with her name on (we're both Alyssa)
+  // two matching mugs on the counter: hers and mine
   Mugs: {
     ViewBox: "0 0 120 70",
     Markup: `
@@ -15,7 +15,7 @@ const PropMarkup = Object.freeze({
   </g>
   <path d="M16 6 q3 -4 0 -8 M26 6 q3 -4 0 -8 M78 10 q3 -4 0 -8" stroke="#BDB6A8" stroke-width="1.6" fill="none" stroke-linecap="round"/>
   <text x="26" y="44" text-anchor="middle" class="mug__name">Alyssa</text>
-  <text x="82" y="46" text-anchor="middle" class="mug__name">Alyssa</text>
+  <text x="82" y="46" text-anchor="middle" class="mug__name">Elyesa</text>
 `,
   },
   Radio: {

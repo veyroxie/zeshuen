@@ -76,7 +76,7 @@ export const Content = Object.freeze({
       Blanket: "my bed. no stealing my blanket",
       Crisper: "my section. don't steal my food (jk)",
       Bathtub: "bubble bath sundays, obviously",
-      Mugs: "matching mugs. yours is the one that says alyssa. so is mine",
+      Mugs: "matching mugs. yours says alyssa, mine says elyesa",
       JarFound: "found one! {found} of {total}, still fresh 🫙",
       AllJars: "you found every jar before they spoiled! something just opened in the living room…",
       Hey: "hey alyssaa, brushing teeth soon? 🪥",
